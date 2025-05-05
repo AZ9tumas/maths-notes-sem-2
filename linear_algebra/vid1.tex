@@ -1,0 +1,1254 @@
+\documentclass{article}
+\usepackage{amsmath} % For mathematical environments and symbols
+\usepackage{amsfonts} % For mathematical fonts (optional but included for caution)
+\usepackage{amssymb} % For additional math symbols (optional but included for caution)
+\usepackage{geometry} % For setting page margins
+\geometry{a4paper, margin=1in} % Set paper size and margins
+
+\title{Introduction to Matrices - The Trace and Rank}
+\author{MKS Tutorials (Content Extracted and Consolidated)}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{The Trace of a Matrix}
+
+The \textbf{Trace} is a property specifically associated with square matrices. It isn't another type of matrix itself, but a scalar value calculated from the matrix's elements.
+
+\textbf{Definition:}
+\textit{The trace of a \textbf{square matrix} $A = [a_{ij}]_{n \times n}$ of order $n$ is the sum of the elements that lie on its main diagonal.}
+
+Mathematically, the trace of an $n \times n$ matrix $A$ is given by:
+\[ \text{trace}(A) = \sum_{i=1}^{n} a_{ii} \]
+This summation formula means we add up each element $a_{ii}$ where the row index ($i$) and the column index ($i$) are the same. Expanding the summation, this is $a_{11} + a_{22} + a_{33} + \dots + a_{nn}$.
+
+\textbf{Example:}
+Consider the square matrix $A$ given by:
+\[ A = \begin{bmatrix} 1 & -2 \\ 4 & 5 \end{bmatrix}_{2 \times 2} \]
+This is a square matrix of order $n=2$. The elements on the main diagonal are $a_{11} = 1$ and $a_{22} = 5$.
+
+The trace of matrix $A$ is the sum of these main diagonal elements:
+\[ \text{trace}(A) = a_{11} + a_{22} = 1 + 5 = 6 \]
+
+For a slightly larger example, consider a $3 \times 3$ matrix:
+\[ B = \begin{bmatrix} 5 & 0 & -1 \\ 2 & 3 & 7 \\ 6 & -4 & 8 \end{bmatrix}_{3 \times 3} \]
+The elements on the main diagonal are $b_{11} = 5$, $b_{22} = 3$, and $b_{33} = 8$.
+
+The trace of matrix $B$ is:
+\[ \text{trace}(B) = b_{11} + b_{22} + b_{33} = 5 + 3 + 8 = 16 \]
+
+\textbf{Notes and Further Context:}
+\begin{enumerate}
+    \item The trace is *only* defined for square matrices. You cannot calculate the trace of a non-square matrix $(m \neq n)$.
+    \item While simply summing the main diagonal might seem basic, the trace has significant theoretical properties and applications in various fields, including simplifying matrix multiplications, determining the consistency of equations in quantum mechanics, and analyzing relationships between characteristic polynomials and eigenvalues in linear algebra. Future discussions of matrix properties might build upon the trace.
+\end{enumerate}
+
+\section{Rank of a Matrix by Reducing to Echelon Form}
+
+The \textbf{Rank} of a matrix is another fundamental property that describes the "dimension" of the vector space spanned by its rows or columns. One efficient method to find the rank is by reducing the matrix to its \textbf{Echelon form} using elementary row operations.
+
+\textbf{Key Concepts for Echelon Form Reduction:}
+\begin{itemize}
+    \item \textbf{Only Row Operations:} This method exclusively uses elementary row operations. These operations are:
+    \begin{itemize}
+        \item Swapping two rows.
+        \item Multiplying a row by a non-zero scalar.
+        \item Adding a multiple of one row to another row.
+    \end{itemize}
+    Column operations are *not* used in this specific method of finding the rank via row Echelon form.
+    \item \textbf{Reduce to Upper Triangular Form (Echelon Form):} The goal of the row operations is to transform the original matrix into an Echelon form. A matrix is in row Echelon form if:
+    \begin{itemize}
+        \item All non-zero rows are above any rows of all zeros.
+        \item The leading entry (the first non-zero element from the left, also called the pivot) of each non-zero row is always to the right of the leading entry of the row above it.
+        \item All entries in a column below a leading entry are zeros.
+    \end{itemize}
+    Reducing the matrix to a form where all elements *below* the main diagonal are zero (an upper triangular form, which is a type of Echelon form for square matrices, or extended to non-square matrices as described above) is sufficient to find the rank.
+    \item \textbf{Number of Non-Zero Rows = Rank of Matrix:} Once the matrix is in Echelon form, the rank is simply counted as the number of rows that contain at least one non-zero element. Rows consisting entirely of zeros do not contribute to the rank.
+\end{itemize}
+
+\subsection{Example 1}
+Find the rank of the matrix $A$ by reducing to echelon form:
+\[ A = \begin{bmatrix} 1 & 2 & -1 & 4 \\ 2 & 4 & 3 & 5 \\ -1 & -2 & 6 & -7 \end{bmatrix} \]
+
+\textbf{Solution:}
+
+We will use elementary row operations to transform matrix $A$ into Echelon form. The goal is to create zeros below the leading element in each column, starting from the first column.
+
+First, we want to make the elements below the leading `1` in the first column zero. We'll use the first row ($R_1$) to eliminate the entries in the second row ($R_2$) and the third row ($R_3$).
+
+The element in $R_2$, column 1 is 2. To make it zero using $R_1$ (where the element is 1), we perform the operation $R_2 \to R_2 - 2R_1$.
+The element in $R_3$, column 1 is -1. To make it zero using $R_1$ (where the element is 1), we perform the operation $R_3 \to R_3 + R_1$.
+
+Applying $R_2 \to R_2 - 2R_1$ and $R_3 \to R_3 + R_1$:
+\begin{align*} A \sim \begin{bmatrix} 1 & 2 & -1 & 4 \\ 2 - 2(1) & 4 - 2(2) & 3 - 2(-1) & 5 - 2(4) \\ -1 + 1 & -2 + 2 & 6 + (-1) & -7 + 4 \end{bmatrix} \\ = \begin{bmatrix} 1 & 2 & -1 & 4 \\ 0 & 0 & 5 & -3 \\ 0 & 0 & 5 & -3 \end{bmatrix}\end{align*}
+
+Now, the first column has zeros below the leading entry. We move to the second row. The leading entry in the second non-zero row is 5 (in the third column). We want to make the element below this leading entry zero. This element is in the third row, third column, and is also 5. We can use the second row ($R_2$) to make this element in the third row ($R_3$) zero.
+
+Perform the operation $R_3 \to R_3 - R_2$:
+\begin{align*} A \sim \begin{bmatrix} 1 & 2 & -1 & 4 \\ 0 & 0 & 5 & -3 \\ 0 - 0 & 0 - 0 & 5 - 5 & -3 - (-3) \end{bmatrix} \\ = \begin{bmatrix} 1 & 2 & -1 & 4 \\ 0 & 0 & 5 & -3 \\ 0 & 0 & 0 & 0 \end{bmatrix}\end{align*}
+
+The matrix is now in row Echelon form. We count the number of non-zero rows:
+\begin{itemize}
+    \item Row 1: $\begin{bmatrix} 1 & 2 & -1 & 4 \end{bmatrix}$ - Contains non-zero elements.
+    \item Row 2: $\begin{bmatrix} 0 & 0 & 5 & -3 \end{bmatrix}$ - Contains non-zero elements.
+    \item Row 3: $\begin{bmatrix} 0 & 0 & 0 & 0 \end{bmatrix}$ - Contains only zero elements.
+\end{itemize}
+There are 2 non-zero rows.
+
+Therefore, the rank of the matrix $A$ is 2.
+\[ \rho(A) = 2 \]
+
+This method is generally faster and more reliable than the determinant method for larger matrices, especially when using computational tools.
+
+\section{Rank of a Matrix by Reducing to Normal Form (or First Canonical Form)}
+
+The \textbf{Normal Form}, also known as the \textbf{First Canonical Form}, is another standardized form to which any matrix can be reduced using elementary transformations (both row and column operations). This form provides a direct way to determine the rank of the matrix.
+
+\textbf{Concept of Normal Form:}
+Any matrix $A$ of order $m \times n$ can be reduced by a sequence of elementary row and column transformations to one of the following four standard forms, called the Normal Form:
+\begin{itemize}
+    \item $[I_r]$ if $A$ is a square matrix and non-singular (rank $r$ equals order).
+    \item $[I_r \ 0]$ if $m \leq n$. This form has an $r \times r$ identity matrix followed by a zero matrix.
+    \item $\begin{bmatrix} I_r \\ 0 \end{bmatrix}$ if $m > n$. This form has an $r \times r$ identity matrix stacked above a zero matrix.
+    \item $\begin{bmatrix} I_r & 0 \\ 0 & 0 \end{bmatrix}$ in the general case. This form contains an $r \times r$ identity matrix as a submatrix, surrounded by zero matrices.
+\end{itemize}
+Here, $I_r$ represents the identity matrix of order $r$, and the 0 symbols represent zero matrices of appropriate sizes to complete the $m \times n$ dimension of the original matrix. The number $r$ is the \textbf{rank} of the matrix.
+
+\textbf{Corollary 1:}
+The rank of an $m \times n$ matrix $A$ is $r$ if and only if (iff) it can be reduced to the Normal Form $\begin{bmatrix} I_r & 0 \\ 0 & 0 \end{bmatrix}$ (or its special cases $[I_r]$, $[I_r \ 0]$, $\begin{bmatrix} I_r \\ 0 \end{bmatrix}$) by elementary transformations. The rank is simply the order of the identity submatrix $I_r$ in the Normal Form.
+
+\textbf{Finding Non-Singular Matrices P and Q:}
+Reducing a matrix $A$ to its Normal Form using elementary transformations is equivalent to multiplying the matrix A by some non-singular matrices. Specifically, if a matrix $A$ can be reduced to its Normal Form (let's denote it as $N$) using elementary row operations $R_1, R_2, \dots, R_k$ and elementary column operations $C_1, C_2, \dots, C_l$, then $N$ can be expressed as:
+\[ N = E_k \dots E_2 E_1 A F_1 F_2 \dots F_l \]
+where $E_i$ are the elementary matrices corresponding to the row operations and $F_j$ are the elementary matrices corresponding to the column operations.
+
+If we let $P = E_k \dots E_2 E_1$ and $Q = F_1 F_2 \dots F_l$, then $P$ and $Q$ are non-singular matrices (because elementary matrices are non-singular) such that:
+\[ PAQ = N \]
+where $N$ is the Normal Form of $A$.
+
+To find the matrices P and Q, we can use the following procedure:
+Start with the equation $A = I_m A I_n$, where $I_m$ is the identity matrix of order $m$ (the number of rows in A) and $I_n$ is the identity matrix of order $n$ (the number of columns in A).
+\[ A_{m \times n} = I_m A_{m \times n} I_n \]
+Now, apply the elementary row and column transformations required to reduce the LHS matrix (A) to its Normal Form.
+\begin{itemize}
+    \item \textbf{Row Transformations:} If a row transformation is applied to the matrix $A$ on the Left Hand Side (LHS), the *same* row transformation must be applied to the *pre-factor* identity matrix $I_m$ on the Right Hand Side (RHS). The matrix $A$ in the middle and the post-factor identity matrix $I_n$ on the RHS are *not* affected by row operations performed on the LHS for the purpose of finding P and Q.
+    \item \textbf{Column Transformations:} If a column transformation is applied to the matrix $A$ on the LHS, the *same* column transformation must be applied to the *post-factor* identity matrix $I_n$ on the RHS. The pre-factor identity matrix $I_m$ and the matrix $A$ in the middle on the RHS are *not* affected by column operations performed on the LHS for the purpose of finding P and Q.
+\end{itemize}
+Continue applying elementary row and column transformations to the LHS matrix $A$ until it is reduced to its Normal Form, $N$. Simultaneously, apply the corresponding row operations to $I_m$ and column operations to $I_n$ on the RHS. The equation will transform as follows:
+\[ A \xrightarrow{\text{Row and Column Ops}} N \]
+\[ I_m A I_n \xrightarrow{\text{Same Row Ops on } I_m, \text{Same Col Ops on } I_n} (E_k \dots E_1) A (F_1 \dots F_l) \]
+So, when the LHS becomes $N$, the RHS will be $PAQ$, where $P = E_k \dots E_1$ and $Q = F_1 \dots F_l$.
+\[ N = PAQ \]
+
+The matrix that results from applying all the row operations to $I_m$ will be $P$.
+The matrix that results from applying all the column operations to $I_n$ will be $Q$.
+
+\textbf{Corollary 2:}
+For every matrix $A$ of rank $r$, there exist non-singular matrices $P$ and $Q$ such that $PAQ$ is in the Normal Form $\begin{bmatrix} I_r & 0 \\ 0 & 0 \end{bmatrix}$ (or one of the other standard forms).
+
+\textbf{Note:}
+The matrices P and Q obtained through this process are \textbf{not unique}. Different sequences of elementary transformations applied to reduce A to Normal Form will result in different non-singular matrices P and Q. However, the Normal Form $N$ itself is unique for any given matrix $A$, and the rank $r$ (the order of $I_r$) is also unique.
+
+\subsection{Example 2}
+Find the rank of the matrix $A$ by reducing it to normal form:
+\[ A = \begin{bmatrix} 1 & 2 & -1 & 3 \\ 3 & 4 & 0 & -1 \\ -1 & 0 & -2 & 7 \end{bmatrix} \]
+This is a $3 \times 4$ matrix. We aim to reduce it to the form $[I_r \ 0]$.
+
+\textbf{Solution:}
+
+We will use a sequence of elementary row and column operations to transform matrix $A$ into its Normal Form. The strategy is to create an identity submatrix in the top-left corner and zeros everywhere else.
+
+Start with the given matrix $A$:
+\[ A = \begin{bmatrix} 1 & 2 & -1 & 3 \\ 3 & 4 & 0 & -1 \\ -1 & 0 & -2 & 7 \end{bmatrix} \]
+
+Step 1: The element $a_{11}$ is already 1. We first make the other elements in the first column zero using row operations involving $R_1$.
+Apply $R_2 \to R_2 - 3R_1$ and $R_3 \to R_3 + R_1$:
+\begin{align*} A \sim \begin{bmatrix} 1 & 2 & -1 & 3 \\ 3 - 3(1) & 4 - 3(2) & 0 - 3(-1) & -1 - 3(3) \\ -1 + 1 & 0 + 2 & -2 + (-1) & 7 + 3 \end{bmatrix} \\ = \begin{bmatrix} 1 & 2 & -1 & 3 \\ 0 & -2 & 3 & -10 \\ 0 & 2 & -3 & 10 \end{bmatrix}\end{align*}
+
+Step 2: Now, make the other elements in the first row (elements to the right of $a_{11}$) zero using column operations involving $C_1$.
+Apply $C_2 \to C_2 - 2C_1$, $C_3 \to C_3 - (-1)C_1 = C_3 + C_1$, and $C_4 \to C_4 - 3C_1$:
+\begin{align*} A \sim \begin{bmatrix} 1 & 2 - 2(1) & -1 + 1(1) & 3 - 3(1) \\ 0 & -2 - 2(0) & 3 + 1(0) & -10 - 3(0) \\ 0 & 2 - 2(0) & -3 + 1(0) & 10 - 3(0) \end{bmatrix} \\ = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & -2 & 3 & -10 \\ 0 & 2 & -3 & 10 \end{bmatrix}\end{align*}
+The first row and first column (except the leading element $a_{11}$) are now zero.
+
+Step 3: Focus on the element $a_{22} = -2$. Make the element below it ($a_{32}=2$) zero using row operations involving $R_2$.
+Apply $R_3 \to R_3 - (-1)R_2 = R_3 + R_2$:
+\begin{align*} A \sim \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & -2 & 3 & -10 \\ 0 + 0 & 2 + (-2) & -3 + 3 & 10 + (-10) \end{bmatrix} \\ = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & -2 & 3 & -10 \\ 0 & 0 & 0 & 0 \end{bmatrix}\end{align*}
+
+Step 4: Now the matrix is $\begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & -2 & 3 & -10 \\ 0 & 0 & 0 & 0 \end{bmatrix}$. Focus on the leading non-zero element in the second row, which is -2 in the second column ($a_{22}$). We need to make this element 1 and then make the elements to its right in the second row zero using column operations involving the second column ($C_2$).
+Scale $C_2 \to (-\frac{1}{2})C_2$:
+\begin{align*} A \sim \begin{bmatrix} 1 & (-\frac{1}{2})(0) & 0 & 0 \\ 0 & (-\frac{1}{2})(-2) & 3 & -10 \\ 0 & (-\frac{1}{2})(0) & 0 & 0 \end{bmatrix} \\ = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 3 & -10 \\ 0 & 0 & 0 & 0 \end{bmatrix}\end{align*}
+Now make the elements to the right of the leading 1 in the second row ($a_{23}=3$ and $a_{24}=-10$) zero using column operations involving $C_2$.
+Apply $C_3 \to C_3 - 3C_2$ and $C_4 \to C_4 - (-10)C_2 = C_4 + 10C_2$:
+\begin{align*} A \sim \begin{bmatrix} 1 & 0 & 0 - 3(0) & 0 + 10(0) \\ 0 & 1 & 3 - 3(1) & -10 + 10(1) \\ 0 & 0 & 0 - 3(0) & 0 + 10(0) \end{bmatrix} \\ = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{bmatrix}\end{align*}
+This matrix is in the Normal Form $[I_r \ 0]$. Specifically, it is $[I_2 \ 0]$ where $I_2$ is the identity matrix of order 2, and 0 represents zero matrices of appropriate sizes ($2 \times 2$ and $1 \times 2$).
+
+The order of the identity submatrix $I_r$ in the Normal Form is $r=2$.
+
+Therefore, the rank of the matrix $A$ is 2.
+\[ \rho(A) = 2 \]
+
+This example illustrates the process of using both row and column operations to simplify the matrix to its Normal Form, from which the rank is readily determined.
+
+\subsection{Example 3}
+Find the rank of the matrix $A$ by reducing it to normal form:
+\[ A = \begin{bmatrix} 1 & 2 & 3 & 4 \\ 2 & 1 & 4 & 3 \\ 3 & 0 & 5 & -10 \end{bmatrix} \]
+This is a $3 \times 4$ matrix. We aim to reduce it to the form $[I_r \ 0]$.
+
+\textbf{Solution:}
+
+We will use a sequence of elementary row and column operations to transform matrix $A$ into its Normal Form. The strategy is to create an identity submatrix in the top-left corner and zeros everywhere else.
+
+Start with the given matrix $A$:
+\[ A = \begin{bmatrix} 1 & 2 & 3 & 4 \\ 2 & 1 & 4 & 3 \\ 3 & 0 & 5 & -10 \end{bmatrix} \]
+
+Step 1: The element $a_{11}$ is already 1. We now make the other elements in the first column zero using row operations involving $R_1$.
+Apply $R_2 \to R_2 - 2R_1$ and $R_3 \to R_3 - 3R_1$:
+\begin{align*} A \sim \begin{bmatrix} 1 & 2 & 3 & 4 \\ 2 - 2(1) & 1 - 2(2) & 4 - 2(3) & 3 - 2(4) \\ 3 - 3(1) & 0 - 3(2) & 5 - 3(3) & -10 - 3(4) \end{bmatrix} \\ = \begin{bmatrix} 1 & 2 & 3 & 4 \\ 0 & -3 & -2 & -5 \\ 0 & -6 & -4 & -22 \end{bmatrix}\end{align*}
+
+Step 2: Now, make the other elements in the first row (elements to the right of $a_{11}$) zero using column operations involving $C_1$.
+Apply $C_2 \to C_2 - 2C_1$, $C_3 \to C_3 - 3C_1$, and $C_4 \to C_4 - 4C_1$:
+\begin{align*} A \sim \begin{bmatrix} 1 & 2 - 2(1) & 3 - 3(1) & 4 - 4(1) \\ 0 & -3 - 2(0) & -2 - 3(0) & -5 - 4(0) \\ 0 & -6 - 2(0) & -4 - 3(0) & -22 - 4(0) \end{bmatrix} \\ = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & -3 & -2 & -5 \\ 0 & -6 & -4 & -22 \end{bmatrix}\end{align*}
+The first row and first column (except the leading element $a_{11}$) are now zero.
+
+Step 3: Focus on the element $a_{22} = -3$. We can make it 1 by scaling the second column or the second row. Let's make $a_{22}$ the pivot and clear its row (to the right) and column (below).
+Apply $R_3 \to R_3 - 2R_2$:
+\begin{align*} A \sim \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & -3 & -2 & -5 \\ 0 - 2(0) & -6 - 2(-3) & -4 - 2(-2) & -22 - 2(-5) \end{bmatrix} \\ = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & -3 & -2 & -5 \\ 0 & -6 + 6 & -4 + 4 & -22 + 10 \end{bmatrix} \\ = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & -3 & -2 & -5 \\ 0 & 0 & 0 & -12 \end{bmatrix}\end{align*}
+
+Step 4: Now, make $a_{22}=-3$ into 1 by scaling $R_2$.
+Apply $R_2 \to (-\frac{1}{3})R_2$:
+\begin{align*} A \sim \begin{bmatrix} 1 & 0 & 0 & 0 \\ (-\frac{1}{3})(0) & (-\frac{1}{3})(-3) & (-\frac{1}{3})(-2) & (-\frac{1}{3})(-5) \\ 0 & 0 & 0 & -12 \end{bmatrix} \\ = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & \frac{2}{3} & \frac{5}{3} \\ 0 & 0 & 0 & -12 \end{bmatrix}\end{align*}
+
+Step 5: Make the elements to the right of $a_{22}=1$ in $R_2$ zero using column operations involving $C_2$.
+Apply $C_3 \to C_3 - \frac{2}{3}C_2$ and $C_4 \to C_4 - \frac{5}{3}C_2$:
+\begin{align*} A \sim \begin{bmatrix} 1 & 0 & 0 - \frac{2}{3}(0) & 0 - \frac{5}{3}(0) \\ 0 & 1 & \frac{2}{3} - \frac{2}{3}(1) & \frac{5}{3} - \frac{5}{3}(1) \\ 0 & 0 & 0 - \frac{2}{3}(0) & -12 - \frac{5}{3}(0) \end{bmatrix} \\ = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & -12 \end{bmatrix}\end{align*}
+
+Step 6: The next non-zero element is $a_{34}=-12$. We need to make it 1 by scaling its column ($C_4$).
+Apply $C_4 \to (-\frac{1}{12})C_4$:
+\begin{align*} A \sim \begin{bmatrix} 1 & 0 & 0 & (-\frac{1}{12})(0) \\ 0 & 1 & 0 & (-\frac{1}{12})(0) \\ 0 & 0 & 0 & (-\frac{1}{12})(-12) \end{bmatrix} \\ = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}\end{align*}
+
+Step 7: The matrix is now $\begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}$. To get the standard Normal Form $[I_r \ 0]$, we can swap $C_3$ and $C_4$.
+Apply $C_3 \leftrightarrow C_4$:
+\[ A \sim \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix} \]
+This matrix is in the Normal Form $[I_3 \ 0]$, where $I_3$ is the identity matrix of order 3 and 0 is the zero matrix of size $3 \times 1$.
+
+The order of the identity submatrix $I_r$ in the Normal Form is $r=3$.
+
+Therefore, the rank of the matrix $A$ is 3.
+\[ \rho(A) = 3 \]
+
+This process demonstrates how using both row and column operations allows us to transform a matrix into a very simple structure (the Normal Form) from which the rank can be easily determined by the size of the identity block.
+
+\subsection{Example 4}
+Find the rank of the matrix $A$ by reducing it to normal form:
+\[ A = \begin{bmatrix} 1 & 2 & 3 & -1 \\ 2 & 1 & 3 & 1 \\ 1 & 0 & 1 & 1 \\ 0 & 1 & 1 & -1 \end{bmatrix} \]
+This is a $4 \times 4$ matrix. We aim to reduce it to the form $\begin{bmatrix} I_r & 0 \\ 0 & 0 \end{bmatrix}$.
+
+\textbf{Solution:}
+
+We will use a sequence of elementary row and column operations to transform matrix $A$ into its Normal Form. The strategy is to create an identity submatrix in the top-left corner and zeros everywhere else.
+
+Start with the given matrix $A$:
+\[ A = \begin{bmatrix} 1 & 2 & 3 & -1 \\ 2 & 1 & 3 & 1 \\ 1 & 0 & 1 & 1 \\ 0 & 1 & 1 & -1 \end{bmatrix} \]
+
+Step 1: The element $a_{11}$ is already 1. We first make the other elements in the first column zero using row operations involving $R_1$.
+Apply $R_2 \to R_2 - 2R_1$, $R_3 \to R_3 - R_1$. $R_4$ already has a zero in the first column.
+\begin{align*} A \sim \begin{bmatrix} 1 & 2 & 3 & -1 \\ 2 - 2(1) & 1 - 2(2) & 3 - 2(3) & 1 - 2(-1) \\ 1 - 1(1) & 0 - 1(2) & 1 - 1(3) & 1 - 1(-1) \\ 0 & 1 & 1 & -1 \end{bmatrix} \\ = \begin{bmatrix} 1 & 2 & 3 & -1 \\ 0 & -3 & -3 & 3 \\ 0 & -2 & -2 & 2 \\ 0 & 1 & 1 & -1 \end{bmatrix}\end{align*}
+
+Step 2: Now, make the other elements in the first row (elements to the right of $a_{11}$) zero using column operations involving $C_1$.
+Apply $C_2 \to C_2 - 2C_1$, $C_3 \to C_3 - 3C_1$, and $C_4 \to C_4 - (-1)C_1 = C_4 + C_1$:
+\begin{align*} A \sim \begin{bmatrix} 1 & 2 - 2(1) & 3 - 3(1) & -1 + 1(1) \\ 0 & -3 - 2(0) & -3 - 3(0) & 3 + 1(0) \\ 0 & -2 - 2(0) & -2 - 3(0) & 2 + 1(0) \\ 0 & 1 - 2(0) & 1 - 3(0) & -1 + 1(0) \end{bmatrix} \\ = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & -3 & -3 & 3 \\ 0 & -2 & -2 & 2 \\ 0 & 1 & 1 & -1 \end{bmatrix}\end{align*}
+The first row and first column (except the leading element $a_{11}$) are now zero.
+
+Step 3: Focus on the element $a_{22} = -3$. We use column operations involving $C_2$ to make the elements to its right in the second row zero.
+Apply $C_3 \to C_3 - (-3/-3)C_2 = C_3 - C_2$ and $C_4 \to C_4 - (3/-3)C_2 = C_4 - (-1)C_2 = C_4 + C_2$.
+\begin{align*} A \sim \begin{bmatrix} 1 & 0 & 0 - 1(0) & 0 + 1(0) \\ 0 & -3 & -3 - 1(-3) & 3 + 1(-3) \\ 0 & -2 & -2 - 1(-2) & 2 + 1(-2) \\ 0 & 1 & 1 - 1(1) & -1 + 1(1) \end{bmatrix} \\ = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & -3 & 0 & 0 \\ 0 & -2 & 0 & 0 \\ 0 & 1 & 0 & 0 \end{bmatrix}\end{align*}
+
+Step 4: Focus on the element $a_{22} = -3$. We can simplify this by swapping $R_2$ with $R_4$ to get a 1 in the pivot position $a_{22}$.
+Apply $R_2 \leftrightarrow R_4$:
+\[ A \sim \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & -2 & 0 & 0 \\ 0 & -3 & 0 & 0 \end{bmatrix} \]
+
+Step 5: Make the elements below $a_{22}=1$ zero using row operations involving $R_2$.
+Apply $R_3 \to R_3 - (-2)R_2 = R_3 + 2R_2$ and $R_4 \to R_4 - (-3)R_2 = R_4 + 3R_2$:
+\begin{align*} A \sim \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 + 2(0) & -2 + 2(1) & 0 + 2(0) & 0 + 2(0) \\ 0 + 3(0) & -3 + 3(1) & 0 + 3(0) & 0 + 3(0) \end{bmatrix} \\ = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 \end{bmatrix}\end{align*}
+
+The matrix is now in the Normal Form $\begin{bmatrix} I_r & 0 \\ 0 & 0 \end{bmatrix}$. Specifically, it is $\begin{bmatrix} I_2 & 0 \\ 0 & 0 \end{bmatrix}$ where $I_2$ is the identity matrix of order 2, and 0 represents zero matrices of appropriate sizes ($2 \times 2$ for the top right, and $2 \times 4$ for the bottom block).
+
+The order of the identity submatrix $I_r$ in the Normal Form is $r=2$.
+
+Therefore, the rank of the matrix $A$ is 2.
+\[ \rho(A) = 2 \]
+
+\subsection{Example 5}
+Find the non-singular matrices P and Q such that PAQ is in normal form. Hence, find the rank of the matrix $A$:
+\[ A = \begin{bmatrix} 2 & -2 & 3 \\ 3 & -1 & 2 \\ 1 & 2 & -1 \end{bmatrix} \]
+This is a $3 \times 3$ matrix. We will reduce it to its Normal Form $[I_r]$ and find P and Q.
+
+\textbf{Solution:}
+
+We start with the equation $A = I_3 A I_3$:
+\[ \begin{bmatrix} 2 & -2 & 3 \\ 3 & -1 & 2 \\ 1 & 2 & -1 \end{bmatrix} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} A \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \]
+Let $A_{LHS} = \begin{bmatrix} 2 & -2 & 3 \\ 3 & -1 & 2 \\ 1 & 2 & -1 \end{bmatrix}$, $I_P = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}$, $I_Q = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}$. We apply row operations to $A_{LHS}$ and $I_P$, and column operations to $A_{LHS}$ and $I_Q$.
+
+Step 1: Get a 1 in the $a_{11}$ position. Swap $R_1$ and $R_3$. Apply $R_1 \leftrightarrow R_3$.
+\[ \begin{bmatrix} 1 & 2 & -1 \\ 3 & -1 & 2 \\ 2 & -2 & 3 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ 1 & 0 & 0 \end{bmatrix} A \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \]
+
+Step 2: Make elements below the pivot $a_{11}=1$ zero using row operations.
+Apply $R_2 \to R_2 - 3R_1$ and $R_3 \to R_3 - 2R_1$.
+\begin{align*} \begin{bmatrix} 1 & 2 & -1 \\ 3 - 3(1) & -1 - 3(2) & 2 - 3(-1) \\ 2 - 2(1) & -2 - 2(2) & 3 - 2(-1) \end{bmatrix} &= \begin{bmatrix} 1 & 2 & -1 \\ 0 & -7 & 5 \\ 0 & -6 & 5 \end{bmatrix} \\ \begin{bmatrix} 0 & 0 & 1 \\ 0 - 3(0) & 1 - 3(0) & 0 - 3(1) \\ 1 - 2(0) & 0 - 2(0) & 0 - 2(1) \end{bmatrix} &= \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 1 & 0 & -2 \end{bmatrix}\end{align*}
+So,
+\[ \begin{bmatrix} 1 & 2 & -1 \\ 0 & -7 & 5 \\ 0 & -6 & 5 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 1 & 0 & -2 \end{bmatrix} A \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \]
+
+Step 3: Make elements to the right of the pivot $a_{11}=1$ zero using column operations.
+Apply $C_2 \to C_2 - 2C_1$ and $C_3 \to C_3 - (-1)C_1 = C_3 + C_1$.
+\begin{align*} \begin{bmatrix} 1 & 2 - 2(1) & -1 + 1(1) \\ 0 & -7 - 2(0) & 5 + 1(0) \\ 0 & -6 - 2(0) & 5 + 1(0) \end{bmatrix} &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & -7 & 5 \\ 0 & -6 & 5 \end{bmatrix} \\ \begin{bmatrix} 1 & 0 - 2(1) & 0 + 1(1) \\ 0 & 1 - 2(0) & 0 + 1(0) \\ 0 & 0 - 2(0) & 1 + 1(0) \end{bmatrix} &= \begin{bmatrix} 1 & -2 & 1 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}\end{align*}
+So,
+\[ \begin{bmatrix} 1 & 0 & 0 \\ 0 & -7 & 5 \\ 0 & -6 & 5 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 1 & 0 & -2 \end{bmatrix} A \begin{bmatrix} 1 & -2 & 1 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \]
+
+Step 4: Focus on the submatrix starting from $a_{22}$. Make the element below $a_{22}=-7$ zero using row operations.
+Apply $R_3 \to R_3 - \frac{-6}{-7}R_2 = R_3 - \frac{6}{7}R_2$.
+\begin{align*} \begin{bmatrix} 1 & 0 & 0 \\ 0 & -7 & 5 \\ 0 - \frac{6}{7}(0) & -6 - \frac{6}{7}(-7) & 5 - \frac{6}{7}(5) \end{bmatrix} &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & -7 & 5 \\ 0 & -6 + 6 & 5 - \frac{30}{7} \end{bmatrix} \\ &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & -7 & 5 \\ 0 & 0 & \frac{35-30}{7} \end{bmatrix} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & -7 & 5 \\ 0 & 0 & \frac{5}{7} \end{bmatrix} \\ \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 1 - \frac{6}{7}(0) & 0 - \frac{6}{7}(1) & -2 - \frac{6}{7}(-3) \end{bmatrix} &= \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 1 & -6/7 & -2 + 18/7 \end{bmatrix} \\ &= \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 1 & -6/7 & \frac{-14+18}{7} \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 1 & -6/7 & 4/7 \end{bmatrix}\end{align*}
+So,
+\[ \begin{bmatrix} 1 & 0 & 0 \\ 0 & -7 & 5 \\ 0 & 0 & 5/7 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 1 & -6/7 & 4/7 \end{bmatrix} A \begin{bmatrix} 1 & -2 & 1 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \]
+
+Step 5: Make the element $a_{22}=-7$ into 1 by scaling the second column or row. Let's scale the column.
+Apply $C_2 \to (-\frac{1}{7})C_2$.
+\begin{align*} \begin{bmatrix} 1 & (-\frac{1}{7})(0) & 0 \\ 0 & (-\frac{1}{7})(-7) & 5 \\ 0 & (-\frac{1}{7})(0) & 5/7 \end{bmatrix} &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 5 \\ 0 & 0 & 5/7 \end{bmatrix} \\ \begin{bmatrix} 1 & (-\frac{1}{7})(-2) & 1 \\ 0 & (-\frac{1}{7})(1) & 0 \\ 0 & (-\frac{1}{7})(0) & 1 \end{bmatrix} &= \begin{bmatrix} 1 & 2/7 & 1 \\ 0 & -1/7 & 0 \\ 0 & 0 & 1 \end{bmatrix}\end{align*}
+So,
+\[ \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 5 \\ 0 & 0 & 5/7 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 1 & -6/7 & 4/7 \end{bmatrix} A \begin{bmatrix} 1 & 2/7 & 1 \\ 0 & -1/7 & 0 \\ 0 & 0 & 1 \end{bmatrix} \]
+
+Step 6: Make the element $a_{23}=5$ zero using column operations involving $C_2$.
+Apply $C_3 \to C_3 - 5C_2$.
+\begin{align*} \begin{bmatrix} 1 & 0 & 0 - 5(0) \\ 0 & 1 & 5 - 5(1) \\ 0 & 0 & 5/7 - 5(0) \end{bmatrix} &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 5/7 \end{bmatrix} \\ \begin{bmatrix} 1 & 2/7 & 1 - 5(2/7) \\ 0 & -1/7 & 0 - 5(-1/7) \\ 0 & 0 & 1 - 5(0) \end{bmatrix} &= \begin{bmatrix} 1 & 2/7 & 1 - 10/7 \\ 0 & -1/7 & 5/7 \\ 0 & 0 & 1 \end{bmatrix} \\ &= \begin{bmatrix} 1 & 2/7 & -3/7 \\ 0 & -1/7 & 5/7 \\ 0 & 0 & 1 \end{bmatrix}\end{align*}
+So,
+\[ \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 5/7 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 1 & -6/7 & 4/7 \end{bmatrix} A \begin{bmatrix} 1 & 2/7 & -3/7 \\ 0 & -1/7 & 5/7 \\ 0 & 0 & 1 \end{bmatrix} \]
+
+Step 7: Make the element $a_{33}=5/7$ into 1 by scaling the third row or column. Let's scale the row.
+Apply $R_3 \to (\frac{7}{5})R_3$.
+\begin{align*} \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ (\frac{7}{5})(0) & (\frac{7}{5})(0) & (\frac{7}{5})(5/7) \end{bmatrix} &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \\ \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ (\frac{7}{5})(1) & (\frac{7}{5})(-6/7) & (\frac{7}{5})(4/7) \end{bmatrix} &= \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 7/5 & -6/5 & 4/5 \end{bmatrix}\end{align*}
+So,
+\[ \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 7/5 & -6/5 & 4/5 \end{bmatrix} A \begin{bmatrix} 1 & 2/7 & -3/7 \\ 0 & -1/7 & 5/7 \\ 0 & 0 & 1 \end{bmatrix} \]
+The leftmost matrix is the identity matrix $I_3$. This is the Normal Form $[I_3]$ for a $3 \times 3$ matrix.
+
+Thus, we have $I_3 = PAQ$, where:
+\[ P = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 7/5 & -6/5 & 4/5 \end{bmatrix} \quad \text{and} \quad Q = \begin{bmatrix} 1 & 2/7 & -3/7 \\ 0 & -1/7 & 5/7 \\ 0 & 0 & 1 \end{bmatrix} \]
+These matrices P and Q are non-singular.
+
+The Normal Form obtained is $I_3$, which is an identity matrix of order 3.
+
+Therefore, the rank of the matrix $A$ is 3.
+\[ \rho(A) = 3 \]
+
+\subsection{Example 6}
+Find the non-singular matrices P and Q such that PAQ is in normal form. Hence, find the rank of the matrix $A$:
+\[ A = \begin{bmatrix} 2 & 1 & -3 & 6 \\ 3 & 3 & 1 & 2 \\ 1 & 1 & 1 & 2 \end{bmatrix} \]
+This is a $3 \times 4$ matrix. We will reduce it to its Normal Form $[I_r \ 0]$ and find P and Q.
+
+\textbf{Solution:}
+
+We start with the equation $A = I_3 A I_4$:
+\[ \begin{bmatrix} 2 & 1 & -3 & 6 \\ 3 & 3 & 1 & 2 \\ 1 & 1 & 1 & 2 \end{bmatrix} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} A \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix} \]
+Let $A_{LHS} = \begin{bmatrix} 2 & 1 & -3 & 6 \\ 3 & 3 & 1 & 2 \\ 1 & 1 & 1 & 2 \end{bmatrix}$, $I_P = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}$, $I_Q = \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}$.
+
+Step 1: Get a 1 in the $a_{11}$ position. Swap $R_1$ and $R_3$. Apply $R_1 \leftrightarrow R_3$.
+\begin{align*} \begin{bmatrix} 1 & 1 & 1 & 2 \\ 3 & 3 & 1 & 2 \\ 2 & 1 & -3 & 6 \end{bmatrix} &= \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ 1 & 0 & 0 \end{bmatrix} A \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}\end{align*}
+
+Step 2: Make elements below the pivot $a_{11}=1$ zero using row operations.
+Apply $R_2 \to R_2 - 3R_1$ and $R_3 \to R_3 - 2R_1$.
+\begin{align*} \begin{bmatrix} 1 & 1 & 1 & 2 \\ 3 - 3(1) & 3 - 3(1) & 1 - 3(1) & 2 - 3(2) \\ 2 - 2(1) & 1 - 2(1) & -3 - 2(1) & 6 - 2(2) \end{bmatrix} &= \begin{bmatrix} 1 & 1 & 1 & 2 \\ 0 & 0 & -2 & -4 \\ 0 & -1 & -5 & 2 \end{bmatrix} \\ \begin{bmatrix} 0 & 0 & 1 \\ 0 - 3(0) & 1 - 3(0) & 0 - 3(1) \\ 1 - 2(0) & 0 - 2(0) & 0 - 2(1) \end{bmatrix} &= \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 1 & 0 & -2 \end{bmatrix}\end{align*}
+So,
+\[ \begin{bmatrix} 1 & 1 & 1 & 2 \\ 0 & 0 & -2 & -4 \\ 0 & -1 & -5 & 2 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 1 & 0 & -2 \end{bmatrix} A \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix} \]
+
+Step 3: Make elements to the right of the pivot $a_{11}=1$ zero using column operations.
+Apply $C_2 \to C_2 - C_1$, $C_3 \to C_3 - C_1$, and $C_4 \to C_4 - 2C_1$.
+\begin{align*} \begin{bmatrix} 1 & 1 - 1(1) & 1 - 1(1) & 2 - 2(1) \\ 0 & 0 - 1(0) & -2 - 1(0) & -4 - 2(0) \\ 0 & -1 - 1(0) & -5 - 1(0) & 2 - 2(0) \end{bmatrix} &= \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 0 & -2 & -4 \\ 0 & -1 & -5 & 2 \end{bmatrix} \\ \begin{bmatrix} 1 & 0 - 1(1) & 0 - 1(1) & 0 - 2(1) \\ 0 & 1 - 1(0) & 0 - 1(0) & 0 - 2(0) \\ 0 & 0 - 1(0) & 1 - 1(0) & 0 - 2(0) \\ 0 & 0 - 1(0) & 0 - 1(0) & 1 - 2(0) \end{bmatrix} &= \begin{bmatrix} 1 & -1 & -1 & -2 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}\end{align*}
+So,
+\[ \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 0 & -2 & -4 \\ 0 & -1 & -5 & 2 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -3 \\ 1 & 0 & -2 \end{bmatrix} A \begin{bmatrix} 1 & -1 & -1 & -2 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix} \]
+
+Step 4: Focus on the submatrix starting from $a_{22}$. We need a non-zero element in the $a_{22}$ position. Swap $R_2$ and $R_3$. Apply $R_2 \leftrightarrow R_3$.
+\begin{align*} \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & -1 & -5 & 2 \\ 0 & 0 & -2 & -4 \end{bmatrix} &= \begin{bmatrix} 0 & 0 & 1 \\ 1 & 0 & -2 \\ 0 & 1 & -3 \end{bmatrix} A \begin{bmatrix} 1 & -1 & -1 & -2 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}\end{align*}
+
+Step 5: Make the element $a_{22}=-1$ into 1 by scaling the second row.
+Apply $R_2 \to -R_2$.
+\begin{align*} \begin{bmatrix} 1 & 0 & 0 & 0 \\ -1(0) & -1(-1) & -1(-5) & -1(2) \\ 0 & 0 & -2 & -4 \end{bmatrix} &= \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 5 & -2 \\ 0 & 0 & -2 & -4 \end{bmatrix} \\ \begin{bmatrix} 0 & 0 & 1 \\ -1(1) & -1(0) & -1(-2) \\ 0 & 1 & -3 \end{bmatrix} &= \begin{bmatrix} 0 & 0 & 1 \\ -1 & 0 & 2 \\ 0 & 1 & -3 \end{bmatrix}\end{align*}
+So,
+\[ \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 5 & -2 \\ 0 & 0 & -2 & -4 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ -1 & 0 & 2 \\ 0 & 1 & -3 \end{bmatrix} A \begin{bmatrix} 1 & -1 & -1 & -2 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix} \]
+
+Step 6: Make elements to the right of the pivot $a_{22}=1$ zero using column operations.
+Apply $C_3 \to C_3 - 5C_2$ and $C_4 \to C_4 - (-2)C_2 = C_4 + 2C_2$.
+\begin{align*} \begin{bmatrix} 1 & 0 & 0 - 5(0) & 0 + 2(0) \\ 0 & 1 & 5 - 5(1) & -2 + 2(1) \\ 0 & 0 & -2 - 5(0) & -4 + 2(0) \end{bmatrix} &= \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & -2 & -4 \end{bmatrix} \\ \begin{bmatrix} 1 & -1 & -1 - 5(-1) & -2 + 2(-1) \\ 0 & 1 & 0 - 5(1) & 0 + 2(1) \\ 0 & 0 & 1 - 5(0) & 0 + 2(0) \\ 0 & 0 & 0 - 5(0) & 1 + 2(0) \end{bmatrix} &= \begin{bmatrix} 1 & -1 & -1 + 5 & -2 - 2 \\ 0 & 1 & -5 & 2 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix} \\ &= \begin{bmatrix} 1 & -1 & 4 & -4 \\ 0 & 1 & -5 & 2 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix}\end{align*}
+So,
+\[ \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & -2 & -4 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ -1 & 0 & 2 \\ 0 & 1 & -3 \end{bmatrix} A \begin{bmatrix} 1 & -1 & 4 & -4 \\ 0 & 1 & -5 & 2 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix} \]
+
+Step 7: Focus on the submatrix starting from $a_{33}$. Make the element $a_{33}=-2$ into 1 by scaling the third row.
+Apply $R_3 \to (-\frac{1}{2})R_3$.
+\begin{align*} \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ (-\frac{1}{2})(0) & (-\frac{1}{2})(0) & (-\frac{1}{2})(-2) & (-\frac{1}{2})(-4) \end{bmatrix} &= \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 2 \end{bmatrix} \\ \begin{bmatrix} 0 & 0 & 1 \\ -1 & 0 & 2 \\ (-\frac{1}{2})(0) & (-\frac{1}{2})(1) & (-\frac{1}{2})(-3) \end{bmatrix} &= \begin{bmatrix} 0 & 0 & 1 \\ -1 & 0 & 2 \\ 0 & -1/2 & 3/2 \end{bmatrix}\end{align*}
+So,
+\[ \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 2 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ -1 & 0 & 2 \\ 0 & -1/2 & 3/2 \end{bmatrix} A \begin{bmatrix} 1 & -1 & 4 & -4 \\ 0 & 1 & -5 & 2 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \end{bmatrix} \]
+
+Step 8: Make the element $a_{34}=2$ zero using column operations involving $C_3$.
+Apply $C_4 \to C_4 - 2C_3$.
+\begin{align*} \begin{bmatrix} 1 & 0 & 0 & 0 - 2(0) \\ 0 & 1 & 0 & 0 - 2(0) \\ 0 & 0 & 1 & 2 - 2(1) \end{bmatrix} &= \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix} \\ \begin{bmatrix} 1 & -1 & 4 & -4 - 2(4) \\ 0 & 1 & -5 & 2 - 2(-5) \\ 0 & 0 & 1 & 0 - 2(1) \\ 0 & 0 & 0 & 1 - 2(0) \end{bmatrix} &= \begin{bmatrix} 1 & -1 & 4 & -4 - 8 \\ 0 & 1 & -5 & 2 + 10 \\ 0 & 0 & 1 & -2 \\ 0 & 0 & 0 & 1 \end{bmatrix} \\ &= \begin{bmatrix} 1 & -1 & 4 & -12 \\ 0 & 1 & -5 & 12 \\ 0 & 0 & 1 & -2 \\ 0 & 0 & 0 & 1 \end{bmatrix}\end{align*}
+So,
+\[ \begin{bmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ -1 & 0 & 2 \\ 0 & -1/2 & 3/2 \end{bmatrix} A \begin{bmatrix} 1 & -1 & 4 & -12 \\ 0 & 1 & -5 & 12 \\ 0 & 0 & 1 & -2 \\ 0 & 0 & 0 & 1 \end{bmatrix} \]
+The leftmost matrix is now $\begin{bmatrix} I_3 & 0 \end{bmatrix}$, which is the Normal Form for a $3 \times 4$ matrix.
+
+Thus, we have $[I_3 \ 0] = PAQ$, where:
+\[ P = \begin{bmatrix} 0 & 0 & 1 \\ -1 & 0 & 2 \\ 0 & -1/2 & 3/2 \end{bmatrix} \quad \text{and} \quad Q = \begin{bmatrix} 1 & -1 & 4 & -12 \\ 0 & 1 & -5 & 12 \\ 0 & 0 & 1 & -2 \\ 0 & 0 & 0 & 1 \end{bmatrix} \]
+These matrices P and Q are non-singular.
+
+The Normal Form obtained is $[I_3 \ 0]$, where $I_3$ is an identity matrix of order 3.
+
+Therefore, the rank of the matrix $A$ is 3.
+\[ \rho(A) = 3 \]
+
+\section{Inverse of a Matrix using Elementary Row Transformation}
+
+The inverse of a square matrix $A$, denoted by $A^{-1}$, exists only if $A$ is a non-singular matrix (i.e., $\text{det}(A) \neq 0$). One method to find the inverse of a non-singular matrix is by using elementary transformations. Specifically, we can use either elementary row transformations or elementary column transformations, but we must be consistent and use only one type throughout the process. Here, we will outline the method using elementary row transformations.
+
+Let $A$ be any non-singular square matrix of order $n$. We know that multiplying a matrix by the identity matrix of the same order does not change the matrix. Thus, we can write the matrix $A$ as:
+\[ A = I \cdot A \]
+where $I$ is the identity matrix of order $n$.
+
+The method involves applying a sequence of suitable elementary \textbf{row} transformations to the matrix $A$ on the Left Hand Side (LHS) of this equation. Simultaneously, the \textbf{same} sequence of elementary \textbf{row} transformations must be applied to the identity matrix $I$ on the Right Hand Side (RHS). The second matrix $A$ on the RHS remains unchanged during this process.
+
+The objective is to transform the matrix $A$ on the LHS into the identity matrix $I$ by applying elementary row operations. As we apply these operations to the LHS matrix $A$ to transform it into $I$, the identity matrix $I$ on the RHS will be transformed into some other matrix, say $B$.
+
+So, after applying a series of elementary row transformations, the initial equation $A = I \cdot A$ transforms into the form:
+\[ I = B \cdot A \]
+According to the definition of the inverse of a matrix, if $BA = I$ (and $AB=I$), then $B$ is the inverse of $A$, i.e., $B = A^{-1}$.
+
+Therefore, the matrix $B$ obtained on the RHS when the matrix $A$ on the LHS is reduced to the identity matrix $I$ by elementary row transformations is the inverse of matrix $A$.
+\[ A^{-1} = B \]
+
+\textbf{Procedure Outline:}
+\begin{enumerate}
+    \item Start with the matrix equation $A = I \cdot A$.
+    \item Apply a sequence of elementary row transformations to the matrix $A$ on the LHS to transform it into the identity matrix $I$.
+    \item Apply the \textbf{exact same sequence} of elementary row transformations to the matrix $I$ on the RHS. The second matrix $A$ on the RHS is kept as is.
+    \item Once the LHS matrix becomes the identity matrix $I$, the RHS equation will be in the form $I = B \cdot A$.
+    \item The matrix $B$ obtained on the RHS is the inverse of the original matrix $A$.
+\end{enumerate}
+
+\textbf{Important Note:} When using elementary row transformations to find the inverse, you must \textbf{only} use row operations. You cannot mix row and column operations in this method. Similarly, if choosing to use elementary column transformations, you must \textbf{only} use column operations.
+
+This method provides a systematic way to compute the inverse matrix by manipulating the original matrix alongside an identity matrix.
+
+\subsection{Example 1} % Content expanded from subsequent video segment
+Find the inverse of the matrix $A$ by elementary transformations:
+\[ A = \begin{bmatrix} 2 & 3 & 4 \\ 4 & 3 & 1 \\ 1 & 2 & 4 \end{bmatrix} \]
+This is a $3 \times 3$ matrix. Its order is 3.
+
+\textbf{Solution:}
+
+We start with the equation $A = I_3 A$, where $I_3$ is the identity matrix of order 3.
+\[ \begin{bmatrix} 2 & 3 & 4 \\ 4 & 3 & 1 \\ 1 & 2 & 4 \end{bmatrix} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} A \]
+Our goal is to transform the matrix on the Left Hand Side (LHS) into $I_3$ by applying elementary row operations. The same operations will be applied to the identity matrix on the Right Hand Side (RHS).
+
+Step 1: Get a 1 in the $a_{11}$ position. Swap $R_1$ and $R_3$ to achieve this.
+Apply the operation $R_1 \leftrightarrow R_3$:
+\[ \begin{bmatrix} 1 & 2 & 4 \\ 4 & 3 & 1 \\ 2 & 3 & 4 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ 1 & 0 & 0 \end{bmatrix} A \]
+
+Step 2: Make the elements below the leading 1 in the first column ($a_{21}=4$ and $a_{31}=2$) zero using row operations involving $R_1$.
+Apply $R_2 \to R_2 - 4R_1$ and $R_3 \to R_3 - 2R_1$:
+\begin{align*} \begin{bmatrix} 1 & 2 & 4 \\ 4 - 4(1) & 3 - 4(2) & 1 - 4(4) \\ 2 - 2(1) & 3 - 2(2) & 4 - 2(4) \end{bmatrix} &= \begin{bmatrix} 1 & 2 & 4 \\ 0 & -5 & -15 \\ 0 & -1 & -4 \end{bmatrix} \\ \begin{bmatrix} 0 & 0 & 1 \\ 0 - 4(0) & 1 - 4(0) & 0 - 4(1) \\ 1 - 2(0) & 0 - 2(0) & 0 - 2(1) \end{bmatrix} &= \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -4 \\ 1 & 0 & -2 \end{bmatrix}\end{align*}
+So, the equation becomes:
+\[ \begin{bmatrix} 1 & 2 & 4 \\ 0 & -5 & -15 \\ 0 & -1 & -4 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 1 & -4 \\ 1 & 0 & -2 \end{bmatrix} A \]
+
+Step 3: Focus on the second row. Make the diagonal element $a_{22}=-5$ into 1 by multiplying $R_2$ by $-1/5$.
+Apply $R_2 \to (-\frac{1}{5})R_2$:
+\begin{align*} \begin{bmatrix} 1 & 2 & 4 \\ -\frac{1}{5}(0) & -\frac{1}{5}(-5) & -\frac{1}{5}(-15) \\ 0 & -1 & -4 \end{bmatrix} &= \begin{bmatrix} 1 & 2 & 4 \\ 0 & 1 & 3 \\ 0 & -1 & -4 \end{bmatrix} \\ \begin{bmatrix} 0 & 0 & 1 \\ -\frac{1}{5}(0) & -\frac{1}{5}(1) & -\frac{1}{5}(-4) \\ 1 & 0 & -2 \end{bmatrix} &= \begin{bmatrix} 0 & 0 & 1 \\ 0 & -1/5 & 4/5 \\ 1 & 0 & -2 \end{bmatrix}\end{align*}
+So, the equation becomes:
+\[ \begin{bmatrix} 1 & 2 & 4 \\ 0 & 1 & 3 \\ 0 & -1 & -4 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & -1/5 & 4/5 \\ 1 & 0 & -2 \end{bmatrix} A \]
+
+Step 4: Make the element below the leading 1 in the second column ($a_{32}=-1$) zero using row operations involving $R_2$.
+Apply $R_3 \to R_3 + R_2$:
+\begin{align*} \begin{bmatrix} 1 & 2 & 4 \\ 0 & 1 & 3 \\ 0 + 0 & -1 + 1 & -4 + 3 \end{bmatrix} &= \begin{bmatrix} 1 & 2 & 4 \\ 0 & 1 & 3 \\ 0 & 0 & -1 \end{bmatrix} \\ \begin{bmatrix} 0 & 0 & 1 \\ 0 & -1/5 & 4/5 \\ 1 + 0 & 0 + (-1/5) & -2 + 4/5 \end{bmatrix} &= \begin{bmatrix} 0 & 0 & 1 \\ 0 & -1/5 & 4/5 \\ 1 & -1/5 & -6/5 \end{bmatrix}\end{align*}
+So, the equation becomes:
+\[ \begin{bmatrix} 1 & 2 & 4 \\ 0 & 1 & 3 \\ 0 & 0 & -1 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & -1/5 & 4/5 \\ 1 & -1/5 & -6/5 \end{bmatrix} A \]
+
+Step 5: Focus on the third row. Make the diagonal element $a_{33}=-1$ into 1 by multiplying $R_3$ by -1.
+Apply $R_3 \to (-1)R_3$:
+\begin{align*} \begin{bmatrix} 1 & 2 & 4 \\ 0 & 1 & 3 \\ -1(0) & -1(0) & -1(-1) \end{bmatrix} &= \begin{bmatrix} 1 & 2 & 4 \\ 0 & 1 & 3 \\ 0 & 0 & 1 \end{bmatrix} \\ \begin{bmatrix} 0 & 0 & 1 \\ 0 & -1/5 & 4/5 \\ -1(1) & -1(-1/5) & -1(-6/5) \end{bmatrix} &= \begin{bmatrix} 0 & 0 & 1 \\ 0 & -1/5 & 4/5 \\ -1 & 1/5 & 6/5 \end{bmatrix}\end{align*}
+So, the equation becomes:
+\[ \begin{bmatrix} 1 & 2 & 4 \\ 0 & 1 & 3 \\ 0 & 0 & 1 \end{bmatrix} = \begin{bmatrix} 0 & 0 & 1 \\ 0 & -1/5 & 4/5 \\ -1 & 1/5 & 6/5 \end{bmatrix} A \]
+
+Step 6: Now that the diagonal elements are 1, make the elements above the diagonal elements zero, working from the rightmost column ($a_{33}$). Make $a_{13}=4$ and $a_{23}=3$ zero using row operations involving $R_3$.
+Apply $R_2 \to R_2 - 3R_3$ and $R_1 \to R_1 - 4R_3$:
+\begin{align*} \begin{bmatrix} 1 - 4(0) & 2 - 4(0) & 4 - 4(1) \\ 0 - 3(0) & 1 - 3(0) & 3 - 3(1) \\ 0 & 0 & 1 \end{bmatrix} &= \begin{bmatrix} 1 & 2 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \\ \begin{bmatrix} 0 - 4(-1) & 0 - 4(1/5) & 1 - 4(6/5) \\ 0 - 3(-1) & -1/5 - 3(1/5) & 4/5 - 3(6/5) \\ -1 & 1/5 & 6/5 \end{bmatrix} &= \begin{bmatrix} 4 & -4/5 & (5 - 24)/5 \\ 3 & (-1 - 3)/5 & (4 - 18)/5 \\ -1 & 1/5 & 6/5 \end{bmatrix} \\ &= \begin{bmatrix} 4 & -4/5 & -19/5 \\ 3 & -4/5 & -14/5 \\ -1 & 1/5 & 6/5 \end{bmatrix}\end{align*}
+So, the equation becomes:
+\[ \begin{bmatrix} 1 & 2 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} = \begin{bmatrix} 4 & -4/5 & -19/5 \\ 3 & -4/5 & -14/5 \\ -1 & 1/5 & 6/5 \end{bmatrix} A \]
+
+Step 7: Finally, make the element above the leading 1 in the second column ($a_{12}=2$) zero using row operations involving $R_2$.
+Apply $R_1 \to R_1 - 2R_2$:
+\begin{align*} \begin{bmatrix} 1 - 2(0) & 2 - 2(1) & 0 - 2(0) \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} &= \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \\ \begin{bmatrix} 4 - 2(3) & -4/5 - 2(-4/5) & -19/5 - 2(-14/5) \\ 3 & -4/5 & -14/5 \\ -1 & 1/5 & 6/5 \end{bmatrix} &= \begin{bmatrix} 4 - 6 & -4/5 + 8/5 & -19/5 + 28/5 \\ 3 & -4/5 & -14/5 \\ -1 & 1/5 & 6/5 \end{bmatrix} \\ &= \begin{bmatrix} -2 & 4/5 & 9/5 \\ 3 & -4/5 & -14/5 \\ -1 & 1/5 & 6/5 \end{bmatrix}\end{align*}
+The LHS matrix is now the identity matrix $I_3$. The equation is in the form $I_3 = B \cdot A$.
+\[ \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} = \begin{bmatrix} -2 & 4/5 & 9/5 \\ 3 & -4/5 & -14/5 \\ -1 & 1/5 & 6/5 \end{bmatrix} A \]
+Therefore, the matrix $B$ on the RHS is the inverse of $A$.
+\[ A^{-1} = \begin{bmatrix} -2 & 4/5 & 9/5 \\ 3 & -4/5 & -14/5 \\ -1 & 1/5 & 6/5 \end{bmatrix} \]
+
+This concludes the process of finding the inverse of the given matrix using elementary row transformations.
+
+\subsection{Finding Inverse using Gauss-Jordan Method (Elementary Row Transformations)} % New subsection for the specific method
+
+The \textbf{Gauss-Jordan Method} is a specific application of elementary row transformations used to find the inverse of a non-singular square matrix. It relies on transforming the original matrix into the identity matrix while simultaneously applying the same operations to an identity matrix placed alongside it.
+
+Let $A$ be any non-singular square matrix of order $n$. We begin by forming an augmented matrix $[A | I_n]$, where $I_n$ is the identity matrix of the same order $n$.
+\[ [A | I_n] \]
+The method involves applying a sequence of suitable elementary \textbf{row} transformations to this augmented matrix. The objective is to transform the left side of the augmented matrix (the original matrix $A$) into the identity matrix $I_n$. As we apply these row operations to the entire augmented matrix, the matrix on the right side (initially $I_n$) will be transformed into the inverse of $A$.
+
+So, after applying a series of elementary row transformations, the augmented matrix $[A | I_n]$ is transformed into the form $[I_n | B]$.
+\[ [A | I_n] \xrightarrow{\text{Elementary Row Ops}} [I_n | B] \]
+According to the properties of elementary matrices, if a sequence of row operations transforms $A$ into $I_n$, then applying the same sequence to $I_n$ results in $A^{-1}$. Thus, the matrix $B$ obtained on the right side is the inverse of $A$, i.e., $B = A^{-1}$.
+\[ [A | I_n] \xrightarrow{\text{Row Ops}} [I_n | A^{-1}] \]
+
+\textbf{Procedure Outline (Gauss-Jordan using Row Operations):}
+\begin{enumerate}
+    \item Form the augmented matrix $[A | I_n]$.
+    \item Use elementary row transformations to transform the left side ($A$) into the identity matrix ($I_n$). The standard approach is to work column by column:
+    \begin{itemize}
+        \item Get a 1 in the diagonal position ($a_{ii}$).
+        \item Make all other elements in that column zero.
+    \end{itemize}
+    Repeat this for each column until the left side is $I_n$.
+    \item Apply the \textbf{exact same sequence} of elementary row transformations to the entire augmented matrix.
+    \item Once the left side becomes $I_n$, the matrix on the right side will be $A^{-1}$.
+\end{enumerate}
+
+\textbf{Important Note:} When using the Gauss-Jordan method with elementary row transformations, you must \textbf{only} use row operations. Mixing row and column operations is not permitted in this specific method for finding the inverse.
+
+This method provides a systematic way to compute the inverse matrix by simultaneously manipulating the original matrix and an identity matrix.
+
+\subsection{Example 1} % Example 1 moved under the new subsection
+Find the inverse of the matrix $A$ by elementary transformations:
+\[ A = \begin{bmatrix} 2 & 3 & 4 \\ 4 & 3 & 1 \\ 1 & 2 & 4 \end{bmatrix} \]
+This is a $3 \times 3$ matrix. Its order is 3.
+
+\textbf{Solution:}
+
+We start with the augmented matrix $[A | I_3]$.
+\[ [A | I_3] = \begin{bmatrix} 2 & 3 & 4 & | & 1 & 0 & 0 \\ 4 & 3 & 1 & | & 0 & 1 & 0 \\ 1 & 2 & 4 & | & 0 & 0 & 1 \end{bmatrix} \]
+Our goal is to transform the matrix on the Left Hand Side (LHS) into $I_3$ by applying elementary row operations to the entire augmented matrix.
+
+Step 1: Get a 1 in the $a_{11}$ position. Swap $R_1$ and $R_3$ to achieve this.
+Apply the operation $R_1 \leftrightarrow R_3$:
+\[ \sim \begin{bmatrix} 1 & 2 & 4 & | & 0 & 0 & 1 \\ 4 & 3 & 1 & | & 0 & 1 & 0 \\ 2 & 3 & 4 & | & 1 & 0 & 0 \end{bmatrix} \]
+
+Step 2: Make the elements below the leading 1 in the first column ($a_{21}=4$ and $a_{31}=2$) zero using row operations involving $R_1$.
+Apply $R_2 \to R_2 - 4R_1$ and $R_3 \to R_3 - 2R_1$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 2 & 4 & | & 0 & 0 & 1 \\ 4 - 4(1) & 3 - 4(2) & 1 - 4(4) & | & 0 - 4(0) & 1 - 4(0) & 0 - 4(1) \\ 2 - 2(1) & 3 - 2(2) & 4 - 2(4) & | & 1 - 2(0) & 0 - 2(0) & 0 - 2(1) \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 2 & 4 & | & 0 & 0 & 1 \\ 0 & -5 & -15 & | & 0 & 1 & -4 \\ 0 & -1 & -4 & | & 1 & 0 & -2 \end{bmatrix}\end{align*}
+
+Step 3: Focus on the second column. Get a non-zero element in the $a_{22}$ position. Swap $R_2$ and $R_3$ to bring $-1$ up, then make it 1.
+Apply $R_2 \leftrightarrow R_3$:
+\[ \sim \begin{bmatrix} 1 & 2 & 4 & | & 0 & 0 & 1 \\ 0 & -1 & -4 & | & 1 & 0 & -2 \\ 0 & -5 & -15 & | & 0 & 1 & -4 \end{bmatrix} \]
+Apply $R_2 \to (-1)R_2$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 2 & 4 & | & 0 & 0 & 1 \\ -1(0) & -1(-1) & -1(-4) & | & -1(1) & -1(0) & -1(-2) \\ 0 & -5 & -15 & | & 0 & 1 & -4 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 2 & 4 & | & 0 & 0 & 1 \\ 0 & 1 & 4 & | & -1 & 0 & 2 \\ 0 & -5 & -15 & | & 0 & 1 & -4 \end{bmatrix}\end{align*}
+
+Step 4: Make the element below the leading 1 in the second column ($a_{32}=-5$) zero using row operations involving $R_2$.
+Apply $R_3 \to R_3 + 5R_2$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 2 & 4 & | & 0 & 0 & 1 \\ 0 & 1 & 4 & | & -1 & 0 & 2 \\ 0 + 5(0) & -5 + 5(1) & -15 + 5(4) & | & 0 + 5(-1) & 1 + 5(0) & -4 + 5(2) \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 2 & 4 & | & 0 & 0 & 1 \\ 0 & 1 & 4 & | & -1 & 0 & 2 \\ 0 & 0 & 5 & | & -5 & 1 & 6 \end{bmatrix}\end{align*}
+
+Step 5: Focus on the third column. Make the diagonal element $a_{33}=5$ into 1 by dividing $R_3$ by 5.
+Apply $R_3 \to (\frac{1}{5})R_3$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 2 & 4 & | & 0 & 0 & 1 \\ 0 & 1 & 4 & | & -1 & 0 & 2 \\ \frac{1}{5}(0) & \frac{1}{5}(0) & \frac{1}{5}(5) & | & \frac{1}{5}(-5) & \frac{1}{5}(1) & \frac{1}{5}(6) \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 2 & 4 & | & 0 & 0 & 1 \\ 0 & 1 & 4 & | & -1 & 0 & 2 \\ 0 & 0 & 1 & | & -1 & 1/5 & 6/5 \end{bmatrix}\end{align*}
+
+Step 6: Now that the diagonal elements are 1, make the elements above the diagonal elements zero, working upwards from the third column ($a_{33}$). Make $a_{13}=4$ and $a_{23}=4$ zero using row operations involving $R_3$.
+Apply $R_2 \to R_2 - 4R_3$ and $R_1 \to R_1 - 4R_3$:
+\begin{align*} \sim &\begin{bmatrix} 1 - 4(0) & 2 - 4(0) & 4 - 4(1) & | & 0 - 4(-1) & 0 - 4(1/5) & 1 - 4(6/5) \\ 0 - 4(0) & 1 - 4(0) & 4 - 4(1) & | & -1 - 4(-1) & 0 - 4(1/5) & 2 - 4(6/5) \\ 0 & 0 & 1 & | & -1 & 1/5 & 6/5 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 2 & 0 & | & 4 & -4/5 & (5 - 24)/5 \\ 0 & 1 & 0 & | & -1 + 4 & -4/5 & (10 - 24)/5 \\ 0 & 0 & 1 & | & -1 & 1/5 & 6/5 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 2 & 0 & | & 4 & -4/5 & -19/5 \\ 0 & 1 & 0 & | & 3 & -4/5 & -14/5 \\ 0 & 0 & 1 & | & -1 & 1/5 & 6/5 \end{bmatrix}\end{align*}
+
+Step 7: Finally, make the element above the leading 1 in the second column ($a_{12}=2$) zero using row operations involving $R_2$.
+Apply $R_1 \to R_1 - 2R_2$:
+\begin{align*} \sim &\begin{bmatrix} 1 - 2(0) & 2 - 2(1) & 0 - 2(0) & | & 4 - 2(3) & -4/5 - 2(-4/5) & -19/5 - 2(-14/5) \\ 0 & 1 & 0 & | & 3 & -4/5 & -14/5 \\ 0 & 0 & 1 & | & -1 & 1/5 & 6/5 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 0 & 0 & | & 4 - 6 & -4/5 + 8/5 & -19/5 + 28/5 \\ 0 & 1 & 0 & | & 3 & -4/5 & -14/5 \\ 0 & 0 & 1 & | & -1 & 1/5 & 6/5 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 0 & 0 & | & -2 & 4/5 & 9/5 \\ 0 & 1 & 0 & | & 3 & -4/5 & -14/5 \\ 0 & 0 & 1 & | & -1 & 1/5 & 6/5 \end{bmatrix}\end{align*}
+The left side of the augmented matrix is now the identity matrix $I_3$. The right side is the inverse matrix $A^{-1}$.
+\[ [I_3 | A^{-1}] = \begin{bmatrix} 1 & 0 & 0 & | & -2 & 4/5 & 9/5 \\ 0 & 1 & 0 & | & 3 & -4/5 & -14/5 \\ 0 & 0 & 1 & | & -1 & 1/5 & 6/5 \end{bmatrix} \]
+Therefore, the inverse of matrix $A$ is:
+\[ A^{-1} = \begin{bmatrix} -2 & 4/5 & 9/5 \\ 3 & -4/5 & -14/5 \\ -1 & 1/5 & 6/5 \end{bmatrix} \]
+
+\hfill $\blacksquare$
+
+\subsection{Example 2} % Example 2 moved under the new subsection
+Find the inverse of the matrix $A$ by elementary transformations (Gauss-Jordan Method):
+\[ A = \begin{bmatrix} 3 & -3 & 4 \\ 2 & -3 & 4 \\ 0 & -1 & 1 \end{bmatrix} \]
+This is a $3 \times 3$ matrix. Its order is 3.
+
+\textbf{Solution:}
+
+We start with the augmented matrix $[A | I_3]$.
+\[ [A | I_3] = \begin{bmatrix} 3 & -3 & 4 & | & 1 & 0 & 0 \\ 2 & -3 & 4 & | & 0 & 1 & 0 \\ 0 & -1 & 1 & | & 0 & 0 & 1 \end{bmatrix} \]
+Our goal is to transform the left side into the identity matrix using only row operations.
+
+Step 1: Get a 1 in the $a_{11}$ position. We can subtract $R_2$ from $R_1$.
+Apply the operation $R_1 \to R_1 - R_2$:
+\begin{align*} \sim &\begin{bmatrix} 3 - 2 & -3 - (-3) & 4 - 4 & | & 1 - 0 & 0 - 1 & 0 - 0 \\ 2 & -3 & 4 & | & 0 & 1 & 0 \\ 0 & -1 & 1 & | & 0 & 0 & 1 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 0 & 0 & | & 1 & -1 & 0 \\ 2 & -3 & 4 & | & 0 & 1 & 0 \\ 0 & -1 & 1 & | & 0 & 0 & 1 \end{bmatrix}\end{align*}
+
+Step 2: Make the elements below the leading 1 in the first column ($a_{21}=2$ and $a_{31}=0$) zero using row operations involving $R_1$. The element $a_{31}$ is already zero.
+Apply $R_2 \to R_2 - 2R_1$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 0 & 0 & | & 1 & -1 & 0 \\ 2 - 2(1) & -3 - 2(0) & 4 - 2(0) & | & 0 - 2(1) & 1 - 2(-1) & 0 - 2(0) \\ 0 & -1 & 1 & | & 0 & 0 & 1 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 0 & 0 & | & 1 & -1 & 0 \\ 0 & -3 & 4 & | & -2 & 1 + 2 & 0 \\ 0 & -1 & 1 & | & 0 & 0 & 1 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 0 & 0 & | & 1 & -1 & 0 \\ 0 & -3 & 4 & | & -2 & 3 & 0 \\ 0 & -1 & 1 & | & 0 & 0 & 1 \end{bmatrix}\end{align*}
+
+Step 3: Focus on the second column. Get a non-zero element in the $a_{22}$ position. Swap $R_2$ and $R_3$ to bring $-1$ up.
+Apply $R_2 \leftrightarrow R_3$:
+\[ \sim \begin{bmatrix} 1 & 0 & 0 & | & 1 & -1 & 0 \\ 0 & -1 & 1 & | & 0 & 0 & 1 \\ 0 & -3 & 4 & | & -2 & 3 & 0 \end{bmatrix} \]
+
+Step 4: Make the diagonal element $a_{22}=-1$ into 1 by multiplying $R_2$ by -1.
+Apply $R_2 \to (-1)R_2$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 0 & 0 & | & 1 & -1 & 0 \\ -1(0) & -1(-1) & -1(1) & | & -1(0) & -1(0) & -1(1) \\ 0 & -3 & 4 & | & -2 & 3 & 0 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 0 & 0 & | & 1 & -1 & 0 \\ 0 & 1 & -1 & | & 0 & 0 & -1 \\ 0 & -3 & 4 & | & -2 & 3 & 0 \end{bmatrix}\end{align*}
+
+Step 5: Make the element below the leading 1 in the second column ($a_{32}=-3$) zero using row operations involving $R_2$.
+Apply $R_3 \to R_3 + 3R_2$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 0 & 0 & | & 1 & -1 & 0 \\ 0 & 1 & -1 & | & 0 & 0 & -1 \\ 0 + 3(0) & -3 + 3(1) & 4 + 3(-1) & | & -2 + 3(0) & 3 + 3(0) & 0 + 3(-1) \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 0 & 0 & | & 1 & -1 & 0 \\ 0 & 1 & -1 & | & 0 & 0 & -1 \\ 0 & 0 & 4 - 3 & | & -2 & 3 & -3 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 0 & 0 & | & 1 & -1 & 0 \\ 0 & 1 & -1 & | & 0 & 0 & -1 \\ 0 & 0 & 1 & | & -2 & 3 & -3 \end{bmatrix}\end{align*}
+
+Step 6: Focus on the third column. The diagonal element $a_{33}=1$ is already 1. Now, make the elements above the leading 1 in the third column ($a_{13}=0$ and $a_{23}=-1$) zero using row operations involving $R_3$. The element $a_{13}$ is already zero.
+Apply $R_2 \to R_2 + R_3$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 0 & 0 & | & 1 & -1 & 0 \\ 0 + 0 & 1 + 0 & -1 + 1 & | & 0 + (-2) & 0 + 3 & -1 + (-3) \\ 0 & 0 & 1 & | & -2 & 3 & -3 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 0 & 0 & | & 1 & -1 & 0 \\ 0 & 1 & 0 & | & -2 & 3 & -4 \\ 0 & 0 & 1 & | & -2 & 3 & -3 \end{bmatrix}\end{align*}
+The left side of the augmented matrix is now the identity matrix $I_3$. The right side is the inverse matrix $A^{-1}$.
+\[ [I_3 | A^{-1}] = \begin{bmatrix} 1 & 0 & 0 & | & 1 & -1 & 0 \\ 0 & 1 & 0 & | & -2 & 3 & -4 \\ 0 & 0 & 1 & | & -2 & 3 & -3 \end{bmatrix} \]
+Therefore, the inverse of matrix $A$ is:
+\[ A^{-1} = \begin{bmatrix} 1 & -1 & 0 \\ -2 & 3 & -4 \\ -2 & 3 & -3 \end{bmatrix} \]
+
+\section{System of Non-Homogeneous Linear Equations} % New section for this distinct topic
+
+A \textbf{system of non-homogeneous linear equations} is a set of linear equations where at least one equation has a non-zero constant term. Such a system involving $m$ linear equations in $n$ unknowns $(x_1, x_2, x_3, \dots, x_n)$ can be represented in a general form.
+
+A system of $m$ non-homogeneous linear equations in $n$ unknowns is represented by:
+\begin{align*} a_{11} x_1 + a_{12} x_2 + \dots + a_{1n} x_n &= b_1 \\ a_{21} x_1 + a_{22} x_2 + \dots + a_{2n} x_n &= b_2 \\ &\vdots \\ a_{m1} x_1 + a_{m2} x_2 + \dots + a_{mn} x_n &= b_m \end{align*}
+Here, $a_{ij}$ are the coefficients of the variables, and $b_i$ are the constant terms. For a non-homogeneous system, at least one of the $b_i$ values must be non-zero. If all $b_i$ are zero, the system is called a homogeneous system, which is a special case.
+
+\subsection{Matrix Representation of a System of Linear Equations}
+
+The system of linear equations given above can be concisely written in matrix form as:
+\[ AX = B \]
+where:
+\begin{itemize}
+    \item $A$ is the \textbf{coefficient matrix} of order $m \times n$. It contains the coefficients of the unknowns:
+    \[ A = \begin{bmatrix} a_{11} & a_{12} & \dots & a_{1n} \\ a_{21} & a_{22} & \dots & a_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{m1} & a_{m2} & \dots & a_{mn} \end{bmatrix}_{m \times n} \]
+    \item $X$ is the \textbf{variable matrix} (or column vector) of order $n \times 1$. It contains the unknowns:
+    \[ X = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix}_{n \times 1} \]
+    \item $B$ is the \textbf{constant matrix} (or column vector) of order $m \times 1$. It contains the constant terms from the right-hand side of the equations:
+    \[ B = \begin{bmatrix} b_1 \\ b_2 \\ \vdots \\ b_m \end{bmatrix}_{m \times 1} \]
+\end{itemize}
+This matrix equation $AX = B$ is a compact way to represent the entire system of linear equations.
+
+\subsection{Augmented Matrix}
+
+For analyzing the consistency and finding the solutions of a system of linear equations, we often form an \textbf{augmented matrix}. The augmented matrix is created by combining the coefficient matrix $A$ and the constant matrix $B$.
+
+The augmented matrix of the given system of linear equations is denoted by $[A:B]$ and is constructed by adding the column vector $B$ to the matrix $A$:
+\[ [A:B] = \begin{bmatrix} a_{11} & a_{12} & \dots & a_{1n} & : & b_1 \\ a_{21} & a_{22} & \dots & a_{2n} & : & b_2 \\ \vdots & \vdots & \ddots & \vdots & : & \vdots \\ a_{m1} & a_{m2} & \dots & a_{mn} & : & b_m \end{bmatrix}_{m \times (n+1)} \]
+A vertical dotted line is typically used to separate the elements of matrix $A$ from the elements of matrix $B$. This augmented matrix is a single matrix that conveniently represents the entire system.
+
+\subsection{Condition for Consistency}
+
+A system of linear equations is said to be \textbf{consistent} if it has at least one solution. A system is \textbf{inconsistent} if it has no solution. The consistency of a non-homogeneous system $AX = B$ is determined by comparing the rank of the coefficient matrix $A$ and the rank of the augmented matrix $[A:B]$.
+
+The \textbf{condition for consistency} of the system $AX = B$ is:
+The system of equations $AX = B$ is consistent if and only if the rank of the coefficient matrix $A$ is equal to the rank of the augmented matrix $[A:B]$.
+\[ \text{System is consistent} \iff \rho(A) = \rho(A:B) \]
+If the ranks are not equal, the system is inconsistent.
+
+Based on the equality of the ranks and their value relative to the number of unknowns ($n$), we can determine the nature of the solutions (unique, many/infinite, or no solution).
+
+\textbf{Cases for Consistency and Solutions:}
+\begin{itemize}
+    \item \textbf{Case I: Consistent system with a Unique Solution}
+    If the rank of the coefficient matrix $A$ is equal to the rank of the augmented matrix $[A:B]$, and this common rank is equal to the number of unknowns ($n$):
+    \[ \rho(A) = \rho(A:B) = n \quad (\text{number of unknowns}) \]
+    Then, the system of linear equations has a \textbf{unique solution}. This means there is exactly one set of values for $x_1, x_2, \dots, x_n$ that satisfies all equations in the system.
+
+    \item \textbf{Case II: Consistent system with Many (Infinite) Solutions}
+    If the rank of the coefficient matrix $A$ is equal to the rank of the augmented matrix $[A:B]$, but this common rank is less than the number of unknowns ($n$):
+    \[ \rho(A) = \rho(A:B) < n \]
+    Then, the system of linear equations has \textbf{many solutions} (also referred to as infinitely many solutions). In this case, $n - r$ (where $r = \rho(A)$) variables can be assigned arbitrary values, and the remaining $r$ variables can be expressed in terms of these.
+
+    \item \textbf{Case III: Inconsistent system with No Solution}
+    If the rank of the coefficient matrix $A$ is not equal to the rank of the augmented matrix $[A:B]$:
+    \[ \rho(A) \neq \rho(A:B) \]
+    Then, the system of equations is \textbf{inconsistent}, and it has \textbf{no solution}. There is no set of values for the unknowns that can satisfy all the equations simultaneously.
+\end{itemize}
+Determining the ranks of $A$ and $[A:B]$ (often done by reducing the augmented matrix to Echelon form) is a crucial step in analyzing the solvability and finding the solutions of a system of non-homogeneous linear equations.
+
+\subsection{Example 1: Proving Inconsistency} % Content appended from subsequent video segment (Video 19)
+Show that the following system of equations is inconsistent:
+\begin{align*} x + y + z &= -3 \\ 3x + y - 2z &= -2 \\ 2x + 4y + 7z &= 7 \end{align*}
+This is a system of 3 non-homogeneous linear equations in 3 unknowns ($x, y, z$).
+
+\textbf{Solution:}
+
+First, we write the given system of equations in matrix form, $AX = B$, where:
+\[ A = \begin{bmatrix} 1 & 1 & 1 \\ 3 & 1 & -2 \\ 2 & 4 & 7 \end{bmatrix}, \quad X = \begin{bmatrix} x \\ y \\ z \end{bmatrix}, \quad B = \begin{bmatrix} -3 \\ -2 \\ 7 \end{bmatrix} \]
+To check for consistency, we form the augmented matrix $[A:B]$ and reduce it to Echelon form using elementary row transformations.
+\[ [A:B] = \begin{bmatrix} 1 & 1 & 1 & : & -3 \\ 3 & 1 & -2 & : & -2 \\ 2 & 4 & 7 & : & 7 \end{bmatrix} \]
+The goal is to make the elements below the leading entry in each column zero.
+
+Step 1: The element $a_{11}$ is already 1. Make the elements below it ($a_{21}=3$ and $a_{31}=2$) zero using row operations involving $R_1$.
+Apply $R_2 \to R_2 - 3R_1$ and $R_3 \to R_3 - 2R_1$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 1 & 1 & : & -3 \\ 3 - 3(1) & 1 - 3(1) & -2 - 3(1) & : & -2 - 3(-3) \\ 2 - 2(1) & 4 - 2(1) & 7 - 2(1) & : & 7 - 2(-3) \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 1 & 1 & : & -3 \\ 0 & -2 & -5 & : & -2 + 9 \\ 0 & 2 & 5 & : & 7 + 6 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 1 & 1 & : & -3 \\ 0 & -2 & -5 & : & 7 \\ 0 & 2 & 5 & : & 13 \end{bmatrix}\end{align*}
+The first column now has zeros below the leading entry.
+
+Step 2: Focus on the second column. The leading non-zero element in the second row is $a_{22}=-2$. We want to make the element below it ($a_{32}=2$) zero using row operations involving $R_2$.
+Apply $R_3 \to R_3 + R_2$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 1 & 1 & : & -3 \\ 0 & -2 & -5 & : & 7 \\ 0 + 0 & 2 + (-2) & 5 + (-5) & : & 13 + 7 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 1 & 1 & : & -3 \\ 0 & -2 & -5 & : & 7 \\ 0 & 0 & 0 & : & 20 \end{bmatrix}\end{align*}
+The augmented matrix is now in row Echelon form. We can determine the ranks of $A$ and $[A:B]$.
+
+The coefficient matrix $A$ corresponds to the first three columns of the reduced augmented matrix:
+\[ A \sim \begin{bmatrix} 1 & 1 & 1 \\ 0 & -2 & -5 \\ 0 & 0 & 0 \end{bmatrix} \]
+The rank of matrix $A$, denoted $\rho(A)$, is the number of non-zero rows in its Echelon form. Here, there are 2 non-zero rows.
+\[ \rho(A) = 2 \]
+The augmented matrix $[A:B]$ is the entire reduced matrix:
+\[ [A:B] \sim \begin{bmatrix} 1 & 1 & 1 & : & -3 \\ 0 & -2 & -5 & : & 7 \\ 0 & 0 & 0 & : & 20 \end{bmatrix} \]
+The rank of the augmented matrix $[A:B]$, denoted $\rho(A:B)$, is the number of non-zero rows in its Echelon form. Here, the first row is non-zero, the second row is non-zero, and the third row is also non-zero because of the entry '20' in the last column. Thus, there are 3 non-zero rows.
+\[ \rho(A:B) = 3 \]
+We compare the ranks:
+\[ \rho(A) = 2 \quad \text{and} \quad \rho(A:B) = 3 \]
+Since $\rho(A) \neq \rho(A:B)$, the condition for consistency is not met.
+
+Therefore, the given system of equations is inconsistent and has no solution.
+
+Hence, the given equations are inconsistent and has no solution.
+
+\subsection{Example 2: Consistent System with Unique Solution} % Content appended from subsequent video segment (Video 20)
+Examine the consistency of the system and if found consistent, then solve the equations:
+\begin{align*} x + y + 2z &= 9 \\ 2x + 4y - 3z &= 1 \\ 3x + 6y - 5z &= 0 \end{align*}
+This is a system of 3 non-homogeneous linear equations in 3 unknowns ($x, y, z$).
+
+\textbf{Solution:}
+
+First, we write the given system of equations in matrix form, $AX = B$, where:
+\[ A = \begin{bmatrix} 1 & 1 & 2 \\ 2 & 4 & -3 \\ 3 & 6 & -5 \end{bmatrix}, \quad X = \begin{bmatrix} x \\ y \\ z \end{bmatrix}, \quad B = \begin{bmatrix} 9 \\ 1 \\ 0 \end{bmatrix} \]
+To check for consistency and solve the system, we form the augmented matrix $[A:B]$ and reduce it to Echelon form using elementary row transformations.
+\[ [A:B] = \begin{bmatrix} 1 & 1 & 2 & : & 9 \\ 2 & 4 & -3 & : & 1 \\ 3 & 6 & -5 & : & 0 \end{bmatrix} \]
+The goal is to make the elements below the leading entry in each column zero, starting from the first column.
+
+Step 1: The element $a_{11}$ is already 1. Make the elements below it ($a_{21}=2$ and $a_{31}=3$) zero using row operations involving $R_1$.
+Apply $R_2 \to R_2 - 2R_1$ and $R_3 \to R_3 - 3R_1$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 1 & 2 & : & 9 \\ 2 - 2(1) & 4 - 2(1) & -3 - 2(2) & : & 1 - 2(9) \\ 3 - 3(1) & 6 - 3(1) & -5 - 3(2) & : & 0 - 3(9) \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 1 & 2 & : & 9 \\ 0 & 2 & -7 & : & 1 - 18 \\ 0 & 3 & -5 - 6 & : & 0 - 27 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 1 & 2 & : & 9 \\ 0 & 2 & -7 & : & -17 \\ 0 & 3 & -11 & : & -27 \end{bmatrix}\end{align*}
+The first column now has zeros below the leading entry.
+
+Step 2: Focus on the second column. Make the leading non-zero element in the second row ($a_{22}=2$) into 1 by multiplying $R_2$ by $\frac{1}{2}$.
+Apply $R_2 \to \frac{1}{2}R_2$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 1 & 2 & : & 9 \\ \frac{1}{2}(0) & \frac{1}{2}(2) & \frac{1}{2}(-7) & : & \frac{1}{2}(-17) \\ 0 & 3 & -11 & : & -27 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 1 & 2 & : & 9 \\ 0 & 1 & -7/2 & : & -17/2 \\ 0 & 3 & -11 & : & -27 \end{bmatrix}\end{align*}
+
+Step 3: Make the element below the leading 1 in the second column ($a_{32}=3$) zero using row operations involving $R_2$.
+Apply $R_3 \to R_3 - 3R_2$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 1 & 2 & : & 9 \\ 0 & 1 & -7/2 & : & -17/2 \\ 0 - 3(0) & 3 - 3(1) & -11 - 3(-7/2) & : & -27 - 3(-17/2) \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 1 & 2 & : & 9 \\ 0 & 1 & -7/2 & : & -17/2 \\ 0 & 0 & -11 + 21/2 & : & -27 + 51/2 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 1 & 2 & : & 9 \\ 0 & 1 & -7/2 & : & -17/2 \\ 0 & 0 & (-22 + 21)/2 & : & (-54 + 51)/2 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 1 & 2 & : & 9 \\ 0 & 1 & -7/2 & : & -17/2 \\ 0 & 0 & -1/2 & : & -3/2 \end{bmatrix}\end{align*}
+The augmented matrix is now in row Echelon form.
+
+We determine the ranks of the coefficient matrix $A$ and the augmented matrix $[A:B]$ from this Echelon form.
+
+The coefficient matrix $A$ corresponds to the first three columns:
+\[ A \sim \begin{bmatrix} 1 & 1 & 2 \\ 0 & 1 & -7/2 \\ 0 & 0 & -1/2 \end{bmatrix} \]
+The number of non-zero rows in $A$'s Echelon form is 3.
+\[ \rho(A) = 3 \]
+The augmented matrix $[A:B]$ is the entire reduced matrix:
+\[ [A:B] \sim \begin{bmatrix} 1 & 1 & 2 & : & 9 \\ 0 & 1 & -7/2 & : & -17/2 \\ 0 & 0 & -1/2 & : & -3/2 \end{bmatrix} \]
+The number of non-zero rows in $[A:B]$'s Echelon form is 3.
+\[ \rho(A:B) = 3 \]
+The number of unknowns is $n=3$.
+We observe that $\rho(A) = \rho(A:B) = 3 = n$.
+
+According to the consistency condition, since the rank of the coefficient matrix equals the rank of the augmented matrix and this common rank is equal to the number of unknowns, the given system of equations is consistent and has a unique solution.
+
+Now, we find the unique solution by converting the reduced augmented matrix back into a system of linear equations:
+\begin{align*} 1x + 1y + 2z &= 9 &\implies x + y + 2z &= 9 \quad &(1) \\ 0x + 1y - \frac{7}{2}z &= -\frac{17}{2} &\implies y - \frac{7}{2}z &= -\frac{17}{2} \quad &(2) \\ 0x + 0y - \frac{1}{2}z &= -\frac{3}{2} &\implies -\frac{1}{2}z &= -\frac{3}{2} \quad &(3) \end{align*}
+We solve this system using back-substitution.
+
+From equation (3):
+\[ -\frac{1}{2}z = -\frac{3}{2} \implies z = 3 \]
+Substitute $z=3$ into equation (2):
+\begin{align*} y - \frac{7}{2}(3) &= -\frac{17}{2} \\ y - \frac{21}{2} &= -\frac{17}{2} \\ y &= -\frac{17}{2} + \frac{21}{2} = \frac{-17 + 21}{2} = \frac{4}{2} \\ y &= 2 \end{align*}
+Substitute $y=2$ and $z=3$ into equation (1):
+\begin{align*} x + 2 + 2(3) &= 9 \\ x + 2 + 6 &= 9 \\ x + 8 &= 9 \\ x &= 9 - 8 \\ x &= 1 \end{align*}
+Thus, the unique solution to the system of linear equations is $x=1, y=2, z=3$.
+
+The unique solution is:
+\[ x=1, y=2, z=3 \]
+
+\subsection{Example 3: Consistent System with Many Solutions} % Content appended from subsequent video segment (Video 21)
+Examine the consistency of the following system of equations and if found consistent, then solve the equations:
+\begin{align*} 2x - y - z &= 2 \\ x + 2y + z &= 2 \\ 4x - 7y - 5z &= 2 \end{align*}
+This is a system of 3 non-homogeneous linear equations in 3 unknowns ($x, y, z$).
+
+\textbf{Solution:}
+
+First, we write the given system of equations in matrix form, $AX = B$, where:
+\[ A = \begin{bmatrix} 2 & -1 & -1 \\ 1 & 2 & 1 \\ 4 & -7 & -5 \end{bmatrix}, \quad X = \begin{bmatrix} x \\ y \\ z \end{bmatrix}, \quad B = \begin{bmatrix} 2 \\ 2 \\ 2 \end{bmatrix} \]
+To check for consistency and solve the system, we form the augmented matrix $[A:B]$ and reduce it to Echelon form using elementary row transformations.
+\[ [A:B] = \begin{bmatrix} 2 & -1 & -1 & : & 2 \\ 1 & 2 & 1 & : & 2 \\ 4 & -7 & -5 & : & 2 \end{bmatrix} \]
+The goal is to make the elements below the leading entry in each column zero, starting from the first column.
+
+Step 1: Get a 1 in the $a_{11}$ position. Swap $R_1$ and $R_2$ to achieve this.
+Apply the operation $R_1 \leftrightarrow R_2$:
+\[ \sim \begin{bmatrix} 1 & 2 & 1 & : & 2 \\ 2 & -1 & -1 & : & 2 \\ 4 & -7 & -5 & : & 2 \end{bmatrix} \]
+
+Step 2: Make the elements below the leading 1 in the first column ($a_{21}=2$ and $a_{31}=4$) zero using row operations involving $R_1$.
+Apply $R_2 \to R_2 - 2R_1$ and $R_3 \to R_3 - 4R_1$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 2 & 1 & : & 2 \\ 2 - 2(1) & -1 - 2(2) & -1 - 2(1) & : & 2 - 2(2) \\ 4 - 4(1) & -7 - 4(2) & -5 - 4(1) & : & 2 - 4(2) \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 2 & 1 & : & 2 \\ 0 & -5 & -3 & : & 2 - 4 \\ 0 & -7 - 8 & -5 - 4 & : & 2 - 8 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 2 & 1 & : & 2 \\ 0 & -5 & -3 & : & -2 \\ 0 & -15 & -9 & : & -6 \end{bmatrix}\end{align*}
+The first column now has zeros below the leading entry.
+
+Step 3: Focus on the second column. Make the element below the leading non-zero element in the second row ($a_{32}=-15$) zero using row operations involving $R_2$ ($a_{22}=-5$).
+Apply $R_3 \to R_3 - 3R_2$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 2 & 1 & : & 2 \\ 0 & -5 & -3 & : & -2 \\ 0 - 3(0) & -15 - 3(-5) & -9 - 3(-3) & : & -6 - 3(-2) \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 2 & 1 & : & 2 \\ 0 & -5 & -3 & : & -2 \\ 0 & -15 + 15 & -9 + 9 & : & -6 + 6 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 2 & 1 & : & 2 \\ 0 & -5 & -3 & : & -2 \\ 0 & 0 & 0 & : & 0 \end{bmatrix}\end{align*}
+The augmented matrix is now in row Echelon form.
+
+We determine the ranks of the coefficient matrix $A$ and the augmented matrix $[A:B]$ from this Echelon form.
+
+The coefficient matrix $A$ corresponds to the first three columns:
+\[ A \sim \begin{bmatrix} 1 & 2 & 1 \\ 0 & -5 & -3 \\ 0 & 0 & 0 \end{bmatrix} \]
+The number of non-zero rows in $A$'s Echelon form is 2.
+\[ \rho(A) = 2 \]
+The augmented matrix $[A:B]$ is the entire reduced matrix:
+\[ [A:B] \sim \begin{bmatrix} 1 & 2 & 1 & : & 2 \\ 0 & -5 & -3 & : & -2 \\ 0 & 0 & 0 & : & 0 \end{bmatrix} \]
+The number of non-zero rows in $[A:B]$'s Echelon form is 2.
+\[ \rho(A:B) = 2 \]
+The number of unknowns is $n=3$.
+We observe that $\rho(A) = \rho(A:B) = 2$.
+Since the common rank is 2, which is less than the number of unknowns (3), the system is consistent and has many solutions.
+\[ \rho(A) = \rho(A:B) = 2 < 3 = n \]
+Hence, the system of equations is consistent and has many solutions.
+
+To find the many solutions, we convert the reduced augmented matrix back into a system of linear equations:
+\begin{align*} 1x + 2y + 1z &= 2 &\implies x + 2y + z &= 2 \quad &(1) \\ 0x - 5y - 3z &= -2 &\implies -5y - 3z &= -2 \quad &(2) \\ 0x + 0y + 0z &= 0 &\implies 0 &= 0 \quad &(3) \end{align*}
+Equation (3) is a trivial identity ($0=0$), which indicates the presence of infinitely many solutions. The number of free variables is $n - \rho(A) = 3 - 2 = 1$. We can express the variables in terms of one parameter. Let's choose $z$ as the free variable and assign it an arbitrary value, say $t$.
+Let $z = t$, where $t$ is any parameter.
+
+Substitute $z=t$ into equation (2) to find $y$ in terms of $t$:
+\begin{align*} -5y - 3(t) &= -2 \\ -5y &= -2 + 3t \\ 5y &= 2 - 3t \\ y &= \frac{2 - 3t}{5} \end{align*}
+Substitute $y = \frac{2 - 3t}{5}$ and $z=t$ into equation (1) to find $x$ in terms of $t$:
+\begin{align*} x + 2\left(\frac{2 - 3t}{5}\right) + t &= 2 \\ x + \frac{4 - 6t}{5} + t &= 2 \\ x &= 2 - t - \frac{4 - 6t}{5} \\ x &= \frac{5(2) - 5(t) - (4 - 6t)}{5} \\ x &= \frac{10 - 5t - 4 + 6t}{5} \\ x &= \frac{6 + t}{5} \end{align*}
+Thus, the general solution to the system of linear equations, expressed in terms of the parameter $t$, is:
+\[ x = \frac{6 + t}{5}, \quad y = \frac{2 - 3t}{5}, \quad z = t \]
+where $t$ can be any real number (any parameter).
+
+Hence, the solution of the given system of equations is:
+\[ x = \frac{6 + t}{5} \]
+\[ y = \frac{2 - 3t}{5} \]
+\[ z = t \]
+where $t \to \text{any parameter}$.
+
+\subsection{Example 4: Consistency and Solution for Equations with Reciprocal Variables} % Content appended from subsequent video segment (Video 22)
+Examine the consistency of the following system of equations and if found consistent, then solve the equations:
+\begin{align*} -\frac{1}{x} + \frac{3}{y} + \frac{4}{z} &= 30 \\ \frac{3}{x} + \frac{2}{y} - \frac{1}{z} &= 9 \\ \frac{2}{x} - \frac{1}{y} + \frac{2}{z} &= 10 \end{align*}
+This system involves variables in the denominator. We can treat $1/x$, $1/y$, and $1/z$ as our unknowns. Let $X' = 1/x$, $Y' = 1/y$, and $Z' = 1/z$. Then the system becomes:
+\begin{align*} -X' + 3Y' + 4Z' &= 30 \\ 3X' + 2Y' - Z' &= 9 \\ 2X' - Y' + 2Z' &= 10 \end{align*}
+This is a system of 3 non-homogeneous linear equations in 3 unknowns ($X', Y', Z'$).
+
+\textbf{Solution:}
+
+First, we write this system of equations in matrix form, $AX = B$, where:
+\[ A = \begin{bmatrix} -1 & 3 & 4 \\ 3 & 2 & -1 \\ 2 & -1 & 2 \end{bmatrix}, \quad X = \begin{bmatrix} X' \\ Y' \\ Z' \end{bmatrix}, \quad B = \begin{bmatrix} 30 \\ 9 \\ 10 \end{bmatrix} \]
+To check for consistency and solve the system, we form the augmented matrix $[A:B]$ and reduce it to Echelon form using elementary row transformations.
+\[ [A:B] = \begin{bmatrix} -1 & 3 & 4 & : & 30 \\ 3 & 2 & -1 & : & 9 \\ 2 & -1 & 2 & : & 10 \end{bmatrix} \]
+The goal is to make the elements below the leading entry in each column zero, starting from the first column.
+
+Step 1: Get a 1 in the $a_{11}$ position. Multiply $R_1$ by -1.
+Apply the operation $R_1 \to (-1)R_1$:
+\[ \sim \begin{bmatrix} 1 & -3 & -4 & : & -30 \\ 3 & 2 & -1 & : & 9 \\ 2 & -1 & 2 & : & 10 \end{bmatrix} \]
+
+Step 2: Make the elements below the leading 1 in the first column ($a_{21}=3$ and $a_{31}=2$) zero using row operations involving the new $R_1$.
+Apply $R_2 \to R_2 - 3R_1$ and $R_3 \to R_3 - 2R_1$:
+\begin{align*} \sim &\begin{bmatrix} 1 & -3 & -4 & : & -30 \\ 3 - 3(1) & 2 - 3(-3) & -1 - 3(-4) & : & 9 - 3(-30) \\ 2 - 2(1) & -1 - 2(-3) & 2 - 2(-4) & : & 10 - 2(-30) \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & -3 & -4 & : & -30 \\ 0 & 2 + 9 & -1 + 12 & : & 9 + 90 \\ 0 & -1 + 6 & 2 + 8 & : & 10 + 60 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & -3 & -4 & : & -30 \\ 0 & 11 & 11 & : & 99 \\ 0 & 5 & 10 & : & 70 \end{bmatrix}\end{align*}
+The first column now has zeros below the leading entry.
+
+Step 3: Focus on the second column. We can simplify $R_2$ and $R_3$ by dividing by common factors before making $a_{32}$ zero.
+Apply $R_2 \to (\frac{1}{11})R_2$ and $R_3 \to (\frac{1}{5})R_3$:
+\begin{align*} \sim &\begin{bmatrix} 1 & -3 & -4 & : & -30 \\ \frac{1}{11}(0) & \frac{1}{11}(11) & \frac{1}{11}(11) & : & \frac{1}{11}(99) \\ \frac{1}{5}(0) & \frac{1}{5}(5) & \frac{1}{5}(10) & : & \frac{1}{5}(70) \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & -3 & -4 & : & -30 \\ 0 & 1 & 1 & : & 9 \\ 0 & 1 & 2 & : & 14 \end{bmatrix}\end{align*}
+
+Step 4: Make the element below the leading 1 in the second column ($a_{32}=1$) zero using row operations involving $R_2$.
+Apply $R_3 \to R_3 - R_2$:
+\begin{align*} \sim &\begin{bmatrix} 1 & -3 & -4 & : & -30 \\ 0 & 1 & 1 & : & 9 \\ 0 - 0 & 1 - 1 & 2 - 1 & : & 14 - 9 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & -3 & -4 & : & -30 \\ 0 & 1 & 1 & : & 9 \\ 0 & 0 & 1 & : & 5 \end{bmatrix}\end{align*}
+The augmented matrix is now in row Echelon form.
+
+We determine the ranks of the coefficient matrix $A$ and the augmented matrix $[A:B]$ from this Echelon form.
+
+The coefficient matrix $A$ corresponds to the first three columns:
+\[ A \sim \begin{bmatrix} 1 & -3 & -4 \\ 0 & 1 & 1 \\ 0 & 0 & 1 \end{bmatrix} \]
+The number of non-zero rows in $A$'s Echelon form is 3.
+\[ \rho(A) = 3 \]
+The augmented matrix $[A:B]$ is the entire reduced matrix:
+\[ [A:B] \sim \begin{bmatrix} 1 & -3 & -4 & : & -30 \\ 0 & 1 & 1 & : & 9 \\ 0 & 0 & 1 & : & 5 \end{bmatrix} \]
+The number of non-zero rows in $[A:B]$'s Echelon form is 3.
+\[ \rho(A:B) = 3 \]
+The number of unknowns ($X', Y', Z'$) is $n=3$.
+We observe that $\rho(A) = \rho(A:B) = 3 = n$.
+
+According to the consistency condition, since the rank of the coefficient matrix equals the rank of the augmented matrix and this common rank is equal to the number of unknowns, the given system of equations is consistent and has a unique solution.
+
+Now, we find the unique solution for $X', Y', Z'$ by converting the reduced augmented matrix back into a system of linear equations:
+\begin{align*} 1 \cdot X' - 3 \cdot Y' - 4 \cdot Z' &= -30 &\implies X' - 3Y' - 4Z' &= -30 \quad &(1) \\ 0 \cdot X' + 1 \cdot Y' + 1 \cdot Z' &= 9 &\implies Y' + Z' &= 9 \quad &(2) \\ 0 \cdot X' + 0 \cdot Y' + 1 \cdot Z' &= 5 &\implies Z' &= 5 \quad &(3) \end{align*}
+We solve this system using back-substitution.
+
+From equation (3):
+\[ Z' = 5 \]
+Substitute $Z'=5$ into equation (2):
+\begin{align*} Y' + 5 &= 9 \\ Y' &= 9 - 5 \\ Y' &= 4 \end{align*}
+Substitute $Y'=4$ and $Z'=5$ into equation (1):
+\begin{align*} X' - 3(4) - 4(5) &= -30 \\ X' - 12 - 20 &= -30 \\ X' - 32 &= -30 \\ X' &= -30 + 32 \\ X' &= 2 \end{align*}
+So, we have the solution for the new variables: $X'=2$, $Y'=4$, $Z'=5$.
+
+Now, we find the solution for the original variables $x, y, z$ using our substitution:
+\begin{align*} X' = \frac{1}{x} &\implies 2 = \frac{1}{x} \implies x = \frac{1}{2} \\ Y' = \frac{1}{y} &\implies 4 = \frac{1}{y} \implies y = \frac{1}{4} \\ Z' = \frac{1}{z} &\implies 5 = \frac{1}{z} \implies z = \frac{1}{5} \end{align*}
+Thus, the unique solution to the system of linear equations is $x=1/2, y=1/4, z=1/5$.
+
+The unique solution is:
+\[ x = \frac{1}{2}, \quad y = \frac{1}{4}, \quad z = \frac{1}{5} \]
+
+\subsection{Example 5: Determining Parameters for Different Solution Types} % Content appended from subsequent video segment (Video 24)
+Determine for what values of $\lambda$ and $\mu$, the following system of equations has:
+(i) No solution.
+(ii) Unique solutions.
+(iii) Infinite solutions.
+The equations are:
+\begin{align*} x + y + z &= 6 \\ x + 2y + 3z &= 10 \\ x + 2y + \lambda z &= \mu \end{align*}
+This is a system of 3 non-homogeneous linear equations in 3 unknowns ($x, y, z$).
+
+\textbf{Solution:}
+
+First, we write the given system of equations in matrix form, $AX = B$, where:
+\[ A = \begin{bmatrix} 1 & 1 & 1 \\ 1 & 2 & 3 \\ 1 & 2 & \lambda \end{bmatrix}, \quad X = \begin{bmatrix} x \\ y \\ z \end{bmatrix}, \quad B = \begin{bmatrix} 6 \\ 10 \\ \mu \end{bmatrix} \]
+To analyze the consistency and determine the number of solutions based on $\lambda$ and $\mu$, we form the augmented matrix $[A:B]$ and reduce it to Echelon form using elementary row transformations.
+\[ [A:B] = \begin{bmatrix} 1 & 1 & 1 & : & 6 \\ 1 & 2 & 3 & : & 10 \\ 1 & 2 & \lambda & : & \mu \end{bmatrix} \]
+We apply row operations to transform the matrix into Echelon form. The goal is to create zeros below the leading entry in each column.
+
+Step 1: The element $a_{11}$ is already 1. Make the elements below it ($a_{21}=1$ and $a_{31}=1$) zero using row operations involving $R_1$.
+Apply $R_2 \to R_2 - R_1$ and $R_3 \to R_3 - R_1$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 1 & 1 & : & 6 \\ 1 - 1 & 2 - 1 & 3 - 1 & : & 10 - 6 \\ 1 - 1 & 2 - 1 & \lambda - 1 & : & \mu - 6 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 1 & 1 & : & 6 \\ 0 & 1 & 2 & : & 4 \\ 0 & 1 & \lambda - 1 & : & \mu - 6 \end{bmatrix}\end{align*}
+The first column now has zeros below the leading entry.
+
+Step 2: Focus on the second column. The leading non-zero element in the second row is $a_{22}=1$. Make the element below it ($a_{32}=1$) zero using row operations involving $R_2$.
+Apply $R_3 \to R_3 - R_2$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 1 & 1 & : & 6 \\ 0 & 1 & 2 & : & 4 \\ 0 - 0 & 1 - 1 & (\lambda - 1) - 2 & : & (\mu - 6) - 4 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 1 & 1 & : & 6 \\ 0 & 1 & 2 & : & 4 \\ 0 & 0 & \lambda - 3 & : & \mu - 10 \end{bmatrix}\end{align*}
+The augmented matrix is now in row Echelon form.
+
+Let's analyze the ranks of the coefficient matrix $A$ and the augmented matrix $[A:B]$ based on the value of the entries in the last row, specifically $\lambda - 3$ and $\mu - 10$. The number of unknowns is $n=3$.
+
+From the Echelon form:
+The coefficient matrix $A$ corresponds to the first three columns: $\begin{bmatrix} 1 & 1 & 1 \\ 0 & 1 & 2 \\ 0 & 0 & \lambda-3 \end{bmatrix}$.
+The augmented matrix $[A:B]$ is the entire matrix: $\begin{bmatrix} 1 & 1 & 1 & : & 6 \\ 0 & 1 & 2 & : & 4 \\ 0 & 0 & \lambda-3 & : & \mu-10 \end{bmatrix}$.
+
+We analyze the three possible cases for solutions:
+
+\textbf{(i) No Solution:}
+A system has no solution if and only if $\rho(A) \neq \rho(A:B)$.
+This occurs when the Echelon form of $[A:B]$ has a row where the part corresponding to $A$ is all zeros, but the augmented part is non-zero. In our reduced matrix, this corresponds to the last row.
+For the $A$ part of the last row to be zero, we need $\lambda - 3 = 0$.
+For the augmented part of the last row to be non-zero (given $\lambda - 3 = 0$), we need $\mu - 10 \neq 0$.
+If $\lambda - 3 = 0$, then the $A$ part is $\begin{bmatrix} 1 & 1 & 1 \\ 0 & 1 & 2 \\ 0 & 0 & 0 \end{bmatrix}$, which has 2 non-zero rows. So, $\rho(A) = 2$.
+If $\mu - 10 \neq 0$ when $\lambda - 3 = 0$, the last row is $\begin{bmatrix} 0 & 0 & 0 & : & \text{non-zero} \end{bmatrix}$, which is a non-zero row. The first two rows are also non-zero. So, $\rho(A:B) = 3$.
+Thus, for no solution, we need $\rho(A) = 2$ and $\rho(A:B) = 3$.
+Conditions: $\lambda - 3 = 0 \implies \lambda = 3$ AND $\mu - 10 \neq 0 \implies \mu \neq 10$.
+
+The system has No Solution if $\lambda = 3$ and $\mu \neq 10$.
+
+\textbf{(ii) Unique Solution:}
+A system has a unique solution if and only if $\rho(A) = \rho(A:B) = n$, where $n$ is the number of unknowns. Here $n=3$.
+For $\rho(A)$ to be 3, the Echelon form of $A$ must have 3 non-zero rows. This requires the last row of $A$ in the Echelon form to be non-zero. This means $\lambda - 3 \neq 0$.
+If $\lambda - 3 \neq 0$, the $A$ part is $\begin{bmatrix} 1 & 1 & 1 \\ 0 & 1 & 2 \\ 0 & 0 & \text{non-zero} \end{bmatrix}$, which has 3 non-zero rows. So, $\rho(A) = 3$.
+If $\lambda - 3 \neq 0$, the last row of $[A:B]$ is $\begin{bmatrix} 0 & 0 & \text{non-zero} & : & \mu - 10 \end{bmatrix}$. This row is non-zero regardless of the value of $\mu - 10$. So, $\rho(A:B) = 3$.
+In this case, $\rho(A) = 3$ and $\rho(A:B) = 3$. Since the number of unknowns $n=3$, the condition $\rho(A) = \rho(A:B) = n$ is satisfied.
+Conditions: $\lambda - 3 \neq 0 \implies \lambda \neq 3$. The value of $\mu$ does not affect the rank in this case, so $\mu$ can be any real number.
+
+The system has Unique Solutions if $\lambda \neq 3$ and $\mu$ is any real number.
+
+\textbf{(iii) Infinite Solutions:}
+A system has infinite solutions if and only if $\rho(A) = \rho(A:B) < n$, where $n$ is the number of unknowns. Here $n=3$.
+For the rank to be less than 3, the last row in the Echelon form must be all zeros. This requires both the $A$ part and the augmented part of the last row to be zero.
+This means $\lambda - 3 = 0$ AND $\mu - 10 = 0$.
+If $\lambda - 3 = 0$, then $\rho(A) = 2$.
+If $\mu - 10 = 0$ when $\lambda - 3 = 0$, the last row is $\begin{bmatrix} 0 & 0 & 0 & : & 0 \end{bmatrix}$, which is a zero row. The first two rows are non-zero. So, $\rho(A:B) = 2$.
+In this case, $\rho(A) = 2$ and $\rho(A:B) = 2$. Since the number of unknowns $n=3$, the condition $\rho(A) = \rho(A:B) < n$ is satisfied.
+Conditions: $\lambda - 3 = 0 \implies \lambda = 3$ AND $\mu - 10 = 0 \implies \mu = 10$.
+
+The system has Infinite Solutions if $\lambda = 3$ and $\mu = 10$.
+
+\textbf{Summary of Results:}
+Based on the analysis of the ranks of the coefficient matrix and the augmented matrix after reduction to Echelon form:
+\begin{enumerate}
+    \item The system has \textbf{No Solution} if $\lambda = 3$ and $\mu \neq 10$.
+    \item The system has \textbf{Unique Solutions} if $\lambda \neq 3$ and $\mu$ is any real number.
+    \item The system has \textbf{Infinite Solutions} if $\lambda = 3$ and $\mu = 10$.
+\end{enumerate}
+
+These are the conditions on $\lambda$ and $\mu$ for the system to have the specified types of solutions.
+
+\section{System of Homogeneous Linear Equations} % New section for this distinct topic
+
+A \textbf{system of homogeneous linear equations} is a special case of a system of linear equations where the constant term in every equation is zero. Such a system involving $m$ linear equations in $n$ unknowns $(x_1, x_2, x_3, \dots, x_n)$ is represented by:
+\begin{align*} a_{11} x_1 + a_{12} x_2 + \dots + a_{1n} x_n &= 0 \\ a_{21} x_1 + a_{22} x_2 + \dots + a_{2n} x_n &= 0 \\ &\vdots \\ a_{m1} x_1 + a_{m2} x_2 + \dots + a_{mn} x_n &= 0 \end{align*}
+Here, $a_{ij}$ are the coefficients of the variables. For a homogeneous system, all the constant terms on the right-hand side are zero.
+
+\subsection{Matrix Representation}
+
+Similar to non-homogeneous systems, a system of $m$ homogeneous linear equations in $n$ unknowns can be written in a compact matrix form:
+\[ AX = \mathbf{0} \]
+where:
+\begin{itemize}
+    \item $A$ is the \textbf{coefficient matrix} of order $m \times n$. It contains the coefficients of the unknowns:
+    \[ A = \begin{bmatrix} a_{11} & a_{12} & \dots & a_{1n} \\ a_{21} & a_{22} & \dots & a_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{m1} & a_{m2} & \dots & a_{mn} \end{bmatrix}_{m \times n} \]
+    \item $X$ is the \textbf{variable matrix} (or column vector) of order $n \times 1$. It contains the unknowns:
+    \[ X = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix}_{n \times 1} \]
+    \item $\mathbf{0}$ is the \textbf{null vector} (or zero vector) of order $m \times 1$. It represents the column of zeros on the right-hand side of the equations:
+    \[ \mathbf{0} = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix}_{m \times 1} \]
+\end{itemize}
+The equation $AX = \mathbf{0}$ represents the entire homogeneous system.
+
+\subsection{Solutions of a System of Homogeneous Linear Equations}
+
+A key characteristic of any homogeneous system $AX=\mathbf{0}$ is that it is always consistent. This is because $x_1=0, x_2=0, \dots, x_n=0$ is always a solution, as $A\mathbf{0} = \mathbf{0}$. This solution is called the \textbf{trivial solution}.
+
+The nature of the solutions (whether it has only the trivial solution or also non-trivial solutions) depends on the rank of the coefficient matrix $A$ compared to the number of unknowns $n$.
+
+Since the constant terms are all zero, the augmented matrix $[A:\mathbf{0}]$ will simply have a column of zeros appended to $A$. Elementary row operations on $[A:\mathbf{0}]$ will never make the zero column non-zero. Thus, the rank of the coefficient matrix $A$ is always equal to the rank of the augmented matrix $[A:\mathbf{0}]$ in a homogeneous system:
+\[ \rho(A) = \rho(A:\mathbf{0}) \]
+This equality confirms that homogeneous systems are always consistent.
+
+The number of linearly independent solutions of the equation $AX = \mathbf{0}$ is given by $n - r$, where $n$ is the number of unknowns and $r$ is the rank of the coefficient matrix $A$.
+
+Let $r = \rho(A)$ be the rank of the coefficient matrix and $n$ be the number of unknowns.
+
+\textbf{Case I: Trivial Solution (Unique Solution)}
+If the rank of the coefficient matrix $A$ is equal to the number of unknowns ($n$):
+\[ \rho(A) = n \]
+Then the number of linearly independent solutions is $n - r = n - n = 0$. This means there are no linearly independent solutions other than the one where all variables are zero.
+In this case, the homogeneous system $AX = \mathbf{0}$ has only the \textbf{trivial solution}:
+\[ X = \begin{bmatrix} 0 \\ 0 \\ \vdots \\ 0 \end{bmatrix} \]
+That is, $x_1 = 0, x_2 = 0, \dots, x_n = 0$. This is the only solution when $\rho(A) = n$.
+
+\textbf{Case II: Non-Trivial Solutions (Infinite Solutions)}
+If the rank of the coefficient matrix $A$ is less than the number of unknowns ($n$):
+\[ \rho(A) < n \]
+Then the number of linearly independent solutions is $n - r$, which is a positive integer. This indicates that there are solutions other than the trivial one.
+In this case, the homogeneous system $AX = \mathbf{0}$ has \textbf{non-trivial solutions} in addition to the trivial solution. There are infinitely many solutions. The number of linearly independent solutions is $n - r$.
+
+\textbf{Note (for square matrices):}
+For a homogeneous system with a square coefficient matrix $A$ (where $m=n$), the existence of non-trivial solutions has a direct connection to the determinant of $A$:
+The system of equations $AX=\mathbf{0}$ where $A$ is an $n \times n$ matrix has a non-trivial solution if and only if the determinant of the coefficient matrix $A$ is zero.
+\[ \text{System has non-trivial solution} \iff \text{det}(A) = 0 \quad (\text{when } A \text{ is square}) \]
+If $\text{det}(A) \neq 0$, then $A$ is non-singular, $\rho(A) = n$, and the only solution is the trivial one.
+If $\text{det}(A) = 0$, then $A$ is singular, $\rho(A) < n$, and there are infinite (non-trivial) solutions.
+
+The analysis of homogeneous systems is simpler than non-homogeneous ones because consistency is guaranteed. The focus shifts to whether solutions exist beyond the trivial zero solution.
+
+\subsection{Example 1} % Content appended from subsequent video segment (Video 26)
+Solve the following system of equations:
+\begin{align*} 2x_1 + x_2 + 3x_3 &= 0 \\ x_1 + 2x_2 \quad &= 0 \\ x_2 + x_3 &= 0 \end{align*}
+This is a system of 3 homogeneous linear equations in 3 unknowns ($x_1, x_2, x_3$), as the constant terms on the right-hand side are all zeros.
+
+\textbf{Solution:}
+
+First, we write the given system of equations in matrix form, $AX = \mathbf{0}$, where:
+\[ A = \begin{bmatrix} 2 & 1 & 3 \\ 1 & 2 & 0 \\ 0 & 1 & 1 \end{bmatrix}, \quad X = \begin{bmatrix} x_1 \\ x_2 \\ x_3 \end{bmatrix}, \quad \mathbf{0} = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} \]
+To determine the nature of the solution and solve the system, we need to find the rank of the coefficient matrix $A$. We reduce matrix $A$ to Echelon form using elementary row transformations.
+\[ A = \begin{bmatrix} 2 & 1 & 3 \\ 1 & 2 & 0 \\ 0 & 1 & 1 \end{bmatrix} \]
+The goal is to make the elements below the main diagonal zero.
+
+Step 1: Get a 1 in the $a_{11}$ position. Swap $R_1$ and $R_2$.
+Apply the operation $R_1 \leftrightarrow R_2$:
+\[ \sim \begin{bmatrix} 1 & 2 & 0 \\ 2 & 1 & 3 \\ 0 & 1 & 1 \end{bmatrix} \]
+
+Step 2: Make the element below the leading 1 in the first column ($a_{21}=2$) zero using row operations involving $R_1$. The element $a_{31}=0$ is already zero.
+Apply $R_2 \to R_2 - 2R_1$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 2 & 0 \\ 2 - 2(1) & 1 - 2(2) & 3 - 2(0) \\ 0 & 1 & 1 \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 2 & 0 \\ 0 & -3 & 3 \\ 0 & 1 & 1 \end{bmatrix}\end{align*}
+The first column now has zeros below the leading entry.
+
+Step 3: Focus on the second column. Make the leading non-zero element in the second row ($a_{22}=-3$) into 1 by multiplying $R_2$ by $-1/3$. Alternatively, we can swap $R_2$ and $R_3$ to get a 1 in the $a_{22}$ position, which simplifies calculations. Let's swap $R_2$ and $R_3$.
+Apply $R_2 \leftrightarrow R_3$:
+\[ \sim \begin{bmatrix} 1 & 2 & 0 \\ 0 & 1 & 1 \\ 0 & -3 & 3 \end{bmatrix} \]
+Now, make the element below the leading 1 in the second column ($a_{32}=-3$) zero using row operations involving the new $R_2$.
+Apply $R_3 \to R_3 + 3R_2$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 2 & 0 \\ 0 & 1 & 1 \\ 0 + 3(0) & -3 + 3(1) & 3 + 3(1) \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 2 & 0 \\ 0 & 1 & 1 \\ 0 & 0 & 6 \end{bmatrix}\end{align*}
+The matrix is now in row Echelon form.
+
+The rank of matrix $A$, denoted $\rho(A)$, is the number of non-zero rows in its Echelon form. In the final Echelon form $\begin{bmatrix} 1 & 2 & 0 \\ 0 & 1 & 1 \\ 0 & 0 & 6 \end{bmatrix}$, there are 3 non-zero rows.
+\[ \rho(A) = 3 \]
+The number of unknowns is $n=3$.
+
+We compare the rank of the coefficient matrix with the number of unknowns.
+\[ \rho(A) = 3 \quad \text{and} \quad n = 3 \]
+Since $\rho(A) = n = 3$, according to the condition for homogeneous systems, the system of equations has only the trivial solution.
+
+The trivial solution is when all variables are equal to zero:
+\[ x_1 = 0, \quad x_2 = 0, \quad x_3 = 0 \]
+
+Alternatively, we could also check the determinant of the original square matrix $A$. If $\text{det}(A) \neq 0$, the rank is 3, and the only solution is the trivial one.
+\[ \text{det}(A) = \begin{vmatrix} 2 & 1 & 3 \\ 1 & 2 & 0 \\ 0 & 1 & 1 \end{vmatrix} \]
+Expanding along the first row:
+\begin{align*} \text{det}(A) &= 2 \begin{vmatrix} 2 & 0 \\ 1 & 1 \end{vmatrix} - 1 \begin{vmatrix} 1 & 0 \\ 0 & 1 \end{vmatrix} + 3 \begin{vmatrix} 1 & 2 \\ 0 & 1 \end{vmatrix} \\ &= 2((2)(1) - (0)(1)) - 1((1)(1) - (0)(0)) + 3((1)(1) - (2)(0)) \\ &= 2(2 - 0) - 1(1 - 0) + 3(1 - 0) \\ &= 2(2) - 1(1) + 3(1) \\ &= 4 - 1 + 3 \\ &= 6 \end{align*}
+Since $\text{det}(A) = 6 \neq 0$, the matrix $A$ is non-singular, $\rho(A) = 3$. As $\rho(A) = n$, the system has only the trivial solution.
+
+Hence, the system of equations has a trivial solution, given by:
+\[ x_1 = 0 \]
+\[ x_2 = 0 \]
+\[ x_3 = 0 \]
+
+\subsection{Example 2} % Content appended from subsequent video segment (Video 27)
+Solve the following system of equations:
+\begin{align*} 3x - y - z &= 0 \\ x + y + 2z &= 0 \\ 5x + y + 3z &= 0 \end{align*}
+This is a system of 3 homogeneous linear equations in 3 unknowns ($x, y, z$), as the constant terms on the right-hand side are all zeros.
+
+\textbf{Solution:}
+
+First, we write the given system of equations in matrix form, $AX = \mathbf{0}$, where:
+\[ A = \begin{bmatrix} 3 & -1 & -1 \\ 1 & 1 & 2 \\ 5 & 1 & 3 \end{bmatrix}, \quad X = \begin{bmatrix} x \\ y \\ z \end{bmatrix}, \quad \mathbf{0} = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} \]
+Before solving, for a square matrix like $A$, we can check if non-trivial solutions exist by calculating its determinant. If $\text{det}(A) = 0$, non-trivial solutions exist ($\rho(A) < n$). If $\text{det}(A) \neq 0$, only the trivial solution exists ($\rho(A) = n$).
+\[ \text{det}(A) = \begin{vmatrix} 3 & -1 & -1 \\ 1 & 1 & 2 \\ 5 & 1 & 3 \end{vmatrix} \]
+Expanding along the first row:
+\begin{align*} \text{det}(A) &= 3 \begin{vmatrix} 1 & 2 \\ 1 & 3 \end{vmatrix} - (-1) \begin{vmatrix} 1 & 2 \\ 5 & 3 \end{vmatrix} + (-1) \begin{vmatrix} 1 & 1 \\ 5 & 1 \end{vmatrix} \\ &= 3((1)(3) - (2)(1)) + 1((1)(3) - (2)(5)) - 1((1)(1) - (1)(5)) \\ &= 3(3 - 2) + 1(3 - 10) - 1(1 - 5) \\ &= 3(1) + 1(-7) - 1(-4) \\ &= 3 - 7 + 4 \\ &= 7 - 7 \\ &= 0 \end{align*}
+Since $\text{det}(A) = 0$, the matrix $A$ is singular, meaning $\rho(A) < n=3$. Thus, the system has non-trivial solutions.
+
+To find these solutions, we reduce the coefficient matrix $A$ to Echelon form using elementary row transformations.
+\[ A = \begin{bmatrix} 3 & -1 & -1 \\ 1 & 1 & 2 \\ 5 & 1 & 3 \end{bmatrix} \]
+The goal is to make the elements below the main diagonal zero.
+
+Step 1: Get a 1 in the $a_{11}$ position. Swap $R_1$ and $R_2$.
+Apply the operation $R_1 \leftrightarrow R_2$:
+\[ \sim \begin{bmatrix} 1 & 1 & 2 \\ 3 & -1 & -1 \\ 5 & 1 & 3 \end{bmatrix} \]
+
+Step 2: Make the elements below the leading 1 in the first column ($a_{21}=3$ and $a_{31}=5$) zero using row operations involving $R_1$.
+Apply $R_2 \to R_2 - 3R_1$ and $R_3 \to R_3 - 5R_1$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 1 & 2 \\ 3 - 3(1) & -1 - 3(1) & -1 - 3(2) \\ 5 - 5(1) & 1 - 5(1) & 3 - 5(2) \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 1 & 2 \\ 0 & -4 & -7 \\ 0 & -4 & -7 \end{bmatrix}\end{align*}
+The first column now has zeros below the leading entry.
+
+Step 3: Focus on the second column. Make the element below the leading non-zero element in the second row ($a_{32}=-4$) zero using row operations involving $R_2$ ($a_{22}=-4$).
+Apply $R_3 \to R_3 - R_2$:
+\begin{align*} \sim &\begin{bmatrix} 1 & 1 & 2 \\ 0 & -4 & -7 \\ 0 - 0 & -4 - (-4) & -7 - (-7) \end{bmatrix} \\ \sim &\begin{bmatrix} 1 & 1 & 2 \\ 0 & -4 & -7 \\ 0 & 0 & 0 \end{bmatrix}\end{align*}
+The matrix is now in row Echelon form.
+
+The rank of matrix $A$, denoted $\rho(A)$, is the number of non-zero rows in its Echelon form. In the final Echelon form $\begin{bmatrix} 1 & 1 & 2 \\ 0 & -4 & -7 \\ 0 & 0 & 0 \end{bmatrix}$, there are 2 non-zero rows.
+\[ \rho(A) = 2 \]
+The number of unknowns is $n=3$.
+
+We compare the rank of the coefficient matrix with the number of unknowns:
+\[ \rho(A) = 2 \quad \text{and} \quad n = 3 \]
+Since $\rho(A) = 2 < n = 3$, the homogeneous system has non-trivial solutions. The number of linearly independent solutions is $n - \rho(A) = 3 - 2 = 1$.
+
+To find the non-trivial solutions, we convert the Echelon form of matrix $A$ back into a system of linear equations, remembering the right-hand side is the zero vector $\mathbf{0}$.
+\begin{align*} 1x + 1y + 2z &= 0 &\implies x + y + 2z &= 0 \quad &(1) \\ 0x - 4y - 7z &= 0 &\implies -4y - 7z &= 0 \quad &(2) \\ 0x + 0y + 0z &= 0 &\implies 0 &= 0 \quad &(3) \end{align*}
+Equation (3) is trivial. We have 2 equations and 3 unknowns. We need to introduce a parameter for one variable. Since the number of free variables is 1, let's choose $z$ as the free variable and set $z=t$, where $t$ is any parameter (any real number).
+
+Substitute $z=t$ into equation (2) to find $y$ in terms of $t$:
+\begin{align*} -4y - 7t &= 0 \\ -4y &= 7t \\ y &= -\frac{7t}{4} \end{align*}
+Substitute $y = -\frac{7t}{4}$ and $z=t$ into equation (1) to find $x$ in terms of $t$:
+\begin{align*} x + \left(-\frac{7t}{4}\right) + 2t &= 0 \\ x - \frac{7t}{4} + 2t &= 0 \\ x &= \frac{7t}{4} - 2t \\ x &= \frac{7t - 8t}{4} \\ x &= \frac{-t}{4} \end{align*}
+Thus, the general non-trivial solution to the system of linear equations, expressed in terms of the parameter $t$, is:
+\[ x = -\frac{t}{4}, \quad y = -\frac{7t}{4}, \quad z = t \]
+where $t$ can be any real number. Any specific value of $t$ (other than $t=0$) will give a particular non-trivial solution. For $t=0$, we get the trivial solution $(0, 0, 0)$.
+
+Hence, the non-trivial solution of the given equations is:
+\[ x = -\frac{t}{4} \]
+\[ y = -\frac{7t}{4} \]
+\[ z = t \]
+where $t$ is a parameter.
+
+\section{Expressing a Matrix as the Sum of Symmetric and Skew-Symmetric Matrices} % New section for this specific property
+
+Any \textbf{square matrix} can be uniquely expressed as the sum of a symmetric matrix and a skew-symmetric matrix. This is a fundamental property of square matrices.
+
+Let $A$ be any square matrix of order $n$. We can write $A$ using the following identity:
+\[ A = \frac{1}{2}(A + A^T) + \frac{1}{2}(A - A^T) \]
+We define two matrices, $P$ and $Q$, based on this identity:
+\[ P = \frac{1}{2}(A + A^T) \]
+\[ Q = \frac{1}{2}(A - A^T) \]
+The identity can then be written as $A = P + Q$.
+
+The matrix $P$ is a \textbf{symmetric matrix}. We can verify this by taking its transpose:
+\[ P^T = \left( \frac{1}{2}(A + A^T) \right)^T = \frac{1}{2}(A + A^T)^T = \frac{1}{2}(A^T + (A^T)^T) = \frac{1}{2}(A^T + A) = \frac{1}{2}(A + A^T) = P \]
+Since $P^T = P$, the matrix $P = \frac{1}{2}(A + A^T)$ is symmetric.
+
+The matrix $Q$ is a \textbf{skew-symmetric matrix}. We can verify this by taking its transpose:
+\[ Q^T = \left( \frac{1}{2}(A - A^T) \right)^T = \frac{1}{2}(A - A^T)^T = \frac{1}{2}(A^T - (A^T)^T) = \frac{1}{2}(A^T - A) = -\frac{1}{2}(A - A^T) = -Q \]
+Since $Q^T = -Q$, the matrix $Q = \frac{1}{2}(A - A^T)$ is skew-symmetric.
+
+Thus, any square matrix $A$ can be expressed as the sum of a symmetric matrix $P$ and a skew-symmetric matrix $Q$, where $P = \frac{1}{2}(A + A^T)$ and $Q = \frac{1}{2}(A - A^T)$.
+
+\subsection{Example 1} % Content appended from subsequent video segment (Video 30)
+Express the matrix $A$ as the sum of a symmetric and a skew-symmetric matrix:
+\[ A = \begin{bmatrix} 1 & 5 & 7 \\ -1 & -2 & -4 \\ 8 & 2 & 13 \end{bmatrix} \]
+This is a square matrix of order $3 \times 3$.
+
+\textbf{Solution:}
+
+We need to express $A$ in the form $A = P + Q$, where $P$ is symmetric and $Q$ is skew-symmetric. We use the formulas:
+\[ P = \frac{1}{2}(A + A^T) \]
+\[ Q = \frac{1}{2}(A - A^T) \]
+First, we find the transpose of matrix $A$, denoted by $A^T$. To get $A^T$, we swap the rows and columns of $A$:
+\[ A^T = \begin{bmatrix} 1 & -1 & 8 \\ 5 & -2 & 2 \\ 7 & -4 & 13 \end{bmatrix} \]
+Now, we calculate $P = \frac{1}{2}(A + A^T)$:
+\begin{align*} P &= \frac{1}{2} \left( \begin{bmatrix} 1 & 5 & 7 \\ -1 & -2 & -4 \\ 8 & 2 & 13 \end{bmatrix} + \begin{bmatrix} 1 & -1 & 8 \\ 5 & -2 & 2 \\ 7 & -4 & 13 \end{bmatrix} \right) \\ &= \frac{1}{2} \begin{bmatrix} 1+1 & 5+(-1) & 7+8 \\ -1+5 & -2+(-2) & -4+2 \\ 8+7 & 2+(-4) & 13+13 \end{bmatrix} \\ &= \frac{1}{2} \begin{bmatrix} 2 & 4 & 15 \\ 4 & -4 & -2 \\ 15 & -2 & 26 \end{bmatrix} \end{align*}
+Multiplying each element by $\frac{1}{2}$:
+\[ P = \begin{bmatrix} 1 & 2 & 15/2 \\ 2 & -2 & -1 \\ 15/2 & -1 & 13 \end{bmatrix} \]
+To verify that $P$ is symmetric, we can check if $P^T = P$. The elements symmetric about the main diagonal should be equal ($p_{ij} = p_{ji}$). For example, $p_{12}=2$ and $p_{21}=2$, $p_{13}=15/2$ and $p_{31}=15/2$, $p_{23}=-1$ and $p_{32}=-1$. The diagonal elements are real (1, -2, 13). This visually confirms $P$ is symmetric.
+
+Next, we calculate $Q = \frac{1}{2}(A - A^T)$:
+\begin{align*} Q &= \frac{1}{2} \left( \begin{bmatrix} 1 & 5 & 7 \\ -1 & -2 & -4 \\ 8 & 2 & 13 \end{bmatrix} - \begin{bmatrix} 1 & -1 & 8 \\ 5 & -2 & 2 \\ 7 & -4 & 13 \end{bmatrix} \right) \\ &= \frac{1}{2} \begin{bmatrix} 1-1 & 5-(-1) & 7-8 \\ -1-5 & -2-(-2) & -4-2 \\ 8-7 & 2-(-4) & 13-13 \end{bmatrix} \\ &= \frac{1}{2} \begin{bmatrix} 0 & 6 & -1 \\ -6 & 0 & -6 \\ 1 & 6 & 0 \end{bmatrix} \end{align*}
+Multiplying each element by $\frac{1}{2}$:
+\[ Q = \begin{bmatrix} 0 & 3 & -1/2 \\ -3 & 0 & -3 \\ 1/2 & 3 & 0 \end{bmatrix} \]
+To verify that $Q$ is skew-symmetric, we can check if $Q^T = -Q$. The main diagonal elements must be zero ($q_{ii}=0$), and elements symmetric about the diagonal must be opposite ($q_{ij} = -q_{ji}$). For example, $q_{11}=0$, $q_{22}=0$, $q_{33}=0$. Also, $q_{12}=3$ and $q_{21}=-3$ ($3 = -(-3)$), $q_{13}=-1/2$ and $q_{31}=1/2$ ($-1/2 = -(1/2)$), $q_{23}=-3$ and $q_{32}=3$ ($-3 = -(3)$). This visually confirms $Q$ is skew-symmetric.
+
+Finally, we express the original matrix $A$ as the sum of $P$ and $Q$:
+\begin{align*} P + Q &= \begin{bmatrix} 1 & 2 & 15/2 \\ 2 & -2 & -1 \\ 15/2 & -1 & 13 \end{bmatrix} + \begin{bmatrix} 0 & 3 & -1/2 \\ -3 & 0 & -3 \\ 1/2 & 3 & 0 \end{bmatrix} \\ &= \begin{bmatrix} 1+0 & 2+3 & 15/2+(-1/2) \\ 2+(-3) & -2+0 & -1+(-3) \\ 15/2+1/2 & -1+3 & 13+0 \end{bmatrix} \\ &= \begin{bmatrix} 1 & 5 & 14/2 \\ -1 & -2 & -4 \\ 16/2 & 2 & 13 \end{bmatrix} \\ &= \begin{bmatrix} 1 & 5 & 7 \\ -1 & -2 & -4 \\ 8 & 2 & 13 \end{bmatrix} \end{align*}
+This sum is indeed the original matrix $A$.
+
+Therefore, the matrix $A$ is expressed as the sum of the symmetric matrix $P$ and the skew-symmetric matrix $Q$:
+\[ A = \begin{bmatrix} 1 & 2 & 15/2 \\ 2 & -2 & -1 \\ 15/2 & -1 & 13 \end{bmatrix} + \begin{bmatrix} 0 & 3 & -1/2 \\ -3 & 0 & -3 \\ 1/2 & 3 & 0 \end{bmatrix} \]
+
+\section{Orthogonal Matrix} % New section for this distinct topic
+
+An \textbf{Orthogonal Matrix} is a special type of square matrix. The definition and key property are crucial for understanding these matrices.
+
+\textbf{Definition:}
+A square matrix $A$ is called \textbf{orthogonal} if the product of the matrix and its transpose (in either order) results in the identity matrix.
+Mathematically, a square matrix $A$ is orthogonal if:
+\[ A \cdot A^T = A^T \cdot A = I \]
+where $A^T$ is the transpose of matrix $A$, and $I$ is the identity matrix of the same order as $A$. The order of the identity matrix $I$ must be the same as the order of the square matrix $A$.
+
+\textbf{Property related to Inverse:}
+If a square matrix $A$ is orthogonal, the definition $A \cdot A^T = I$ has a significant implication regarding its inverse. We know that for any invertible matrix $A$, its inverse $A^{-1}$ satisfies $A \cdot A^{-1} = I$ and $A^{-1} \cdot A = I$.
+Comparing the definition of an orthogonal matrix ($A \cdot A^T = I$) with the definition of an inverse ($A \cdot A^{-1} = I$), we can see that for an orthogonal matrix, its transpose $A^T$ behaves like its inverse $A^{-1}$.
+Thus, for an orthogonal matrix $A$, its inverse is equal to its transpose:
+\[ A^{-1} = A^T \]
+This property is valid *if and only if* the matrix $A$ is orthogonal. This provides a very easy way to find the inverse of a matrix if it is known to be orthogonal – simply compute its transpose.
+
+\subsection{Example 1} % Content appended from subsequent video segment (Video 31)
+Verify if the matrix $A$ is orthogonal and hence find its inverse:
+\[ A = \frac{1}{3} \begin{bmatrix} 1 & 2 & 2 \\ 2 & 1 & -2 \\ -2 & 2 & -1 \end{bmatrix} \]
+This is a square matrix of order $3 \times 3$.
+
+\textbf{Solution:}
+
+To verify if matrix $A$ is orthogonal, we need to check if $A \cdot A^T = I$. First, we find the transpose of matrix $A$, denoted by $A^T$. Remember that when taking the transpose of a matrix multiplied by a scalar, the scalar remains outside.
+\[ A^T = \left( \frac{1}{3} \begin{bmatrix} 1 & 2 & 2 \\ 2 & 1 & -2 \\ -2 & 2 & -1 \end{bmatrix} \right)^T = \frac{1}{3} \begin{bmatrix} 1 & 2 & -2 \\ 2 & 1 & 2 \\ 2 & -2 & -1 \end{bmatrix} \]
+Now, we calculate the product $A \cdot A^T$:
+\begin{align*} A \cdot A^T &= \left( \frac{1}{3} \begin{bmatrix} 1 & 2 & 2 \\ 2 & 1 & -2 \\ -2 & 2 & -1 \end{bmatrix} \right) \left( \frac{1}{3} \begin{bmatrix} 1 & 2 & -2 \\ 2 & 1 & 2 \\ 2 & -2 & -1 \end{bmatrix} \right) \\ &= \frac{1}{3} \cdot \frac{1}{3} \begin{bmatrix} 1 & 2 & 2 \\ 2 & 1 & -2 \\ -2 & 2 & -1 \end{bmatrix} \begin{bmatrix} 1 & 2 & -2 \\ 2 & 1 & 2 \\ 2 & -2 & -1 \end{bmatrix} \\ &= \frac{1}{9} \begin{bmatrix} (1)(1)+(2)(2)+(2)(2) & (1)(2)+(2)(1)+(2)(-2) & (1)(-2)+(2)(2)+(2)(-1) \\ (2)(1)+(1)(2)+(-2)(2) & (2)(2)+(1)(1)+(-2)(2) & (2)(-2)+(1)(2)+(-2)(-1) \\ (-2)(1)+(2)(2)+(-1)(2) & (-2)(2)+(2)(1)+(-1)(-2) & (-2)(-2)+(2)(2)+(-1)(-1) \end{bmatrix} \\ &= \frac{1}{9} \begin{bmatrix} 1+4+4 & 2+2-4 & -2+4-2 \\ 2+2-4 & 4+1-4 & -4+2+2 \\ -2+4-2 & -4+2+2 & 4+4+1 \end{bmatrix} \\ &= \frac{1}{9} \begin{bmatrix} 9 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 9 \end{bmatrix} \end{align*}
+Something is not right with the calculation in the video at 5:24. Let's recheck the matrix multiplication for the diagonal elements.
+Row 1 * Column 1: $(1)(1)+(2)(2)+(2)(2) = 1+4+4=9$. Correct.
+Row 2 * Column 2: $(2)(2)+(1)(1)+(-2)(2) = 4+1-4=1$. Correct.
+Row 3 * Column 3: $(-2)(-2)+(2)(2)+(-1)(-1) = 4+4+1=9$. Correct.
+
+Let's recheck the off-diagonal elements:
+Row 1 * Column 2: $(1)(2)+(2)(1)+(2)(-2) = 2+2-4=0$. Correct.
+Row 1 * Column 3: $(1)(-2)+(2)(2)+(2)(-1) = -2+4-2=0$. Correct.
+Row 2 * Column 1: $(2)(1)+(1)(2)+(-2)(2) = 2+2-4=0$. Correct.
+Row 2 * Column 3: $(2)(-2)+(1)(2)+(-2)(-1) = -4+2+2=0$. Correct.
+Row 3 * Column 1: $(-2)(1)+(2)(2)+(-1)(2) = -2+4-2=0$. Correct.
+Row 3 * Column 2: $(-2)(2)+(2)(1)+(-1)(-2) = -4+2+2=0$. Correct.
+
+Ah, the matrix shown at 5:25 in the video is $\begin{bmatrix} 9 & 0 & 0 \\ 0 & 9 & 0 \\ 0 & 0 & 9 \end{bmatrix}$, not $\begin{bmatrix} 9 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 9 \end{bmatrix}$. The multiplication result in the video is correct.
+
+So, continuing from:
+\[ A \cdot A^T = \frac{1}{9} \begin{bmatrix} 9 & 0 & 0 \\ 0 & 9 & 0 \\ 0 & 0 & 9 \end{bmatrix} \]
+Now, multiply the scalar $\frac{1}{9}$ into the matrix:
+\[ A \cdot A^T = \begin{bmatrix} 9/9 & 0/9 & 0/9 \\ 0/9 & 9/9 & 0/9 \\ 0/9 & 0/9 & 9/9 \end{bmatrix} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \]
+This is the identity matrix $I_3$ of order 3.
+
+We have shown that $A \cdot A^T = I_3$. We could also show $A^T \cdot A = I_3$, but for square matrices, one equality implies the other for orthogonality.
+
+Therefore, the matrix $A$ is an orthogonal matrix.
+
+Since $A$ is an orthogonal matrix, its inverse $A^{-1}$ is equal to its transpose $A^T$.
+We have already calculated $A^T$:
+\[ A^T = \frac{1}{3} \begin{bmatrix} 1 & 2 & -2 \\ 2 & 1 & 2 \\ 2 & -2 & -1 \end{bmatrix} \]
+So, the inverse of matrix $A$ is:
+\[ A^{-1} = A^T = \frac{1}{3} \begin{bmatrix} 1 & 2 & -2 \\ 2 & 1 & 2 \\ 2 & -2 & -1 \end{bmatrix} \]
+
+Hence, the matrix $A$ is orthogonal, and its inverse is $A^{-1} = \frac{1}{3} \begin{bmatrix} 1 & 2 & -2 \\ 2 & 1 & 2 \\ 2 & -2 & -1 \end{bmatrix}$.
+
+\end{document}
