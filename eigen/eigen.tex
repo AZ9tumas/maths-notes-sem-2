@@ -1,0 +1,116 @@
+\documentclass{article}
+\usepackage{amsmath} % For mathematical environments and symbols
+\usepackage{amsfonts} % For mathematical fonts (optional but included for caution)
+\usepackage{amssymb} % For additional math symbols (optional but included for caution)
+\usepackage{geometry} % For setting page margins
+\geometry{a4paper, margin=1in} % Set paper size and margins
+
+\title{Eigen Values and Vectors}
+\author{MKS Tutorials (Content Extracted and Consolidated)}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Eigenvalues and Eigenvectors} % New section for Eigenvalues and Eigenvectors
+
+Eigenvalues and eigenvectors are fundamental concepts in linear algebra with wide applications in various fields like physics, engineering, and data science. They provide insights into the geometric properties and behavior of linear transformations represented by matrices. Specifically for B.Tech students, they are essential for topics such as diagonalizing matrices, solving systems of differential equations, and understanding stability in dynamic systems. In this document, we will begin by defining Eigenvalues and the process for calculating them.
+
+\subsection{Definition of Eigenvalue and Characteristic Equation} % New subsection for definitions
+
+An \textbf{Eigenvalue} (also known as a \textbf{Proper value}, \textbf{Latent value}, \textbf{Characteristic value}, or \textbf{Spectral value/root}) is a scalar associated with a given linear transformation (represented by a square matrix) that, when multiplied by a non-zero vector (the corresponding eigenvector), results in the same vector's direction being preserved by the transformation, only scaled by the eigenvalue.
+
+\textbf{Definition:}
+Let $A = [a_{ij}]_{n \times n}$ be a square matrix of order $n$ over a field $F$. An element $\lambda$ in $F$ is called an \textbf{Eigenvalue} of $A$ if there exists a non-zero column vector $X$ of order $n \times 1$ such that $AX = \lambda X$.
+The fundamental condition derived from this definition, used to find $\lambda$, is given by the characteristic equation:
+\[ |A - \lambda I| = 0 \]
+where $I$ is the identity (unit) matrix of order $n$. The term $|A - \lambda I|$ represents the determinant of the matrix $(A - \lambda I)$, and setting this determinant to zero forms the basis for finding Eigenvalues.
+
+\subsection{Procedure for Finding Eigenvalues} % New subsection for the procedure
+
+To find the eigenvalues of a square matrix $A$, we follow a systematic procedure:
+
+1.  \textbf{Form the Characteristic Matrix:} Construct the matrix $[A - \lambda I]$, where $I$ is the identity matrix of the same order as $A$, and $\lambda$ is a scalar. This involves subtracting $\lambda$ from each element on the main diagonal of $A$, while keeping the off-diagonal elements unchanged.
+    For a $3 \times 3$ matrix like the example discussed in Video 32, $A = \begin{bmatrix} 2 & 2 & 1 \\ 1 & 3 & 1 \\ 1 & 2 & 2 \end{bmatrix}$, the identity matrix of order 3 is $I = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}$.
+    Then $\lambda I = \begin{bmatrix} \lambda & 0 & 0 \\ 0 & \lambda & 0 \\ 0 & 0 & \lambda \end{bmatrix}$.
+    The Characteristic Matrix is:
+    \[ [A - \lambda I] = \begin{bmatrix} 2 & 2 & 1 \\ 1 & 3 & 1 \\ 1 & 2 & 2 \end{bmatrix} - \begin{bmatrix} \lambda & 0 & 0 \\ 0 & \lambda & 0 \\ 0 & 0 & \lambda \end{bmatrix} = \begin{bmatrix} 2 - \lambda & 2 & 1 \\ 1 & 3 - \lambda & 1 \\ 1 & 2 & 2 - \lambda \end{bmatrix} \]
+
+2.  \textbf{Form the Characteristic Polynomial:} Calculate the determinant of the characteristic matrix $|A - \lambda I|$. This determinant will be a polynomial in terms of $\lambda$. Its degree will be equal to the order of the matrix $n$.
+    \textbf{Note:} How to calculate the determinant of a $3 \times 3$ matrix and derive the polynomial is demonstrated step-by-step in subsequent videos (e.g., Video 36). However, for this example, the resulting characteristic polynomial obtained in Video 32 (at 00:58) is:
+    \[ |A - \lambda I| = -\lambda^3 + 7\lambda^2 - 11\lambda + 5 \]
+
+3.  \textbf{Form the Characteristic Equation:} Set the characteristic polynomial equal to zero. This is the characteristic equation (also sometimes called the secular equation).
+    \[ |A - \lambda I| = 0 \]
+    Using the polynomial from the example above:
+    \[ -\lambda^3 + 7\lambda^2 - 11\lambda + 5 = 0 \]
+    Multiplying by -1 to make the leading term positive (as shown in the video at 01:04):
+    \[ \lambda^3 - 7\lambda^2 + 11\lambda - 5 = 0 \]
+
+4.  \textbf{Solve the Characteristic Equation for $\lambda$:} The roots of this polynomial equation are the Eigenvalues of the matrix $A$. Since this is a cubic equation (degree 3), it will have three roots (counting multiplicity) in the field over which the matrix is defined.
+    Solving this cubic equation (methods for solving cubic equations are shown visually and mentioned in subsequent videos) yields the roots. For the example shown in Video 32, the characteristic values (roots) given (at 01:09) are:
+    \[ \lambda = 1, 1, 5 \]
+    These are the Eigenvalues of the matrix $A$. For a matrix of order $n$, there will be $n$ eigenvalues (some may be repeated).
+
+This procedure outlines the general steps for finding the Eigenvalues of a square matrix by hand. For larger matrices, computational tools are typically used.
+
+
+% Content Appended from Video 32. Please refer to the specific start and end times for the presented content.
+
+\subsection{Properties of Eigenvalues} % New subsection for Eigenvalue Poperties
+% Content Appended from Video 33
+
+Understanding the properties of eigenvalues can often simplify their calculation or provide insight into the nature of the matrix and its linear transformations without requiring a full characteristic equation analysis. Here are some important properties of eigenvalues:
+
+\begin{itemize}
+    \item \textbf{Property 1: Transpose Invariance}
+    Any square matrix $A$ and its transpose $A^T$ will have the same eigenvalues. This means that the set of roots of $|A - \lambda I| = 0$ is identical to the set of roots of $|A^T - \lambda I| = 0$. While the eigenvectors of $A$ and $A^T$ are generally different, their eigenvalues are always the same.
+
+    \item \textbf{Property 2: Eigenvalue Nature for Symmetric Matrices}
+    For a \textbf{symmetric matrix}, all the eigenvalues are always real. A symmetric matrix is a square matrix $A$ such that $A^T = A$.
+    Example of a $3 \times 3$ symmetric matrix (as shown partially in the video from 01:21):
+    \[ \begin{bmatrix} 0 & 2 & 3 \\ 2 & 3 & -1 \\ 3 & -1 & 4 \end{bmatrix} \]
+    This matrix is symmetric because the elements across the main diagonal are equal (e.g., $a_{12}=2$ and $a_{21}=2$, $a_{13}=3$ and $a_{31}=3$, $a_{23}=-1$ and $a_{32}=-1$), and the diagonal elements are real (0, 3, 4). For *any* such symmetric matrix, calculating its eigenvalues will always result in real numbers.
+
+    \item \textbf{Property 3: Eigenvalue Nature for Skew-Symmetric Matrices}
+    For a \textbf{skew-symmetric matrix}, the eigenvalues are either zero or purely imaginary (i.e., of the form $bi$ where $b$ is a real number, so the real part is zero). A skew-symmetric matrix is a square matrix $A$ such that $A^T = -A$. The diagonal elements must be zero.
+    Example of a $3 \times 3$ skew-symmetric matrix (as shown partially in the video from 02:34):
+    \[ \begin{bmatrix} 0 & 3 & 2 \\ -3 & 0 & 1 \\ -2 & -1 & 0 \end{bmatrix} \]
+    This matrix is skew-symmetric because the diagonal elements are zero (0, 0, 0), and the elements across the main diagonal are negatives of each other (e.g., $a_{12}=3$ and $a_{21}=-3$, $a_{13}=2$ and $a_{31}=-2$, $a_{23}=1$ and $a_{32}=-1$). For *any* such matrix, the eigenvalues will be just 0 or lie on the imaginary axis in the complex plane.
+
+    \item \textbf{Property 4: Eigenvalues for Triangular or Diagonal Matrices}
+    For a \textbf{triangular matrix} (including both upper triangular and lower triangular matrices) or a \textbf{diagonal matrix}, the eigenvalues are simply the elements on the main diagonal.
+    \begin{itemize}
+        \item \textbf{Upper Triangular Matrix}: All elements below the main diagonal are zero.
+        Example (as shown in the video from 04:19):
+        \[ \begin{bmatrix} 1 & 2 & 3 \\ 0 & 4 & 5 \\ 0 & 0 & 6 \end{bmatrix} \]
+        The eigenvalues are the diagonal elements: 1, 4, and 6.
+        \item \textbf{Lower Triangular Matrix}: All elements above the main diagonal are zero.
+        Example (as shown implicitly as opposite of upper triangular, then explicitly with 1s below diagonal from 04:42 to 05:05):
+        \[ \begin{bmatrix} 1 & 0 & 0 \\ 2 & 3 & 0 \\ 4 & 5 & 6 \end{bmatrix} \]
+        The eigenvalues are the diagonal elements: 1, 3, and 6.
+        \item \textbf{Diagonal Matrix}: All off-diagonal elements are zero.
+        Example (as shown in the video from 05:29):
+        \[ \begin{bmatrix} 1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 1 \end{bmatrix} \]
+        The eigenvalues are the diagonal elements: 1, 2, and 1.
+    \end{itemize}
+    This property is extremely useful because it allows us to find eigenvalues by simple inspection for these types of matrices, without solving the characteristic equation.
+
+    \item \textbf{Property 5: Eigenvalue Modulus for Orthogonal Matrices}
+    For an \textbf{orthogonal matrix} $A$, the modulus (or magnitude) of each eigenvalue is always unity (1). Recall that an orthogonal matrix satisfies $A \cdot A^T = I$ (or $A^T \cdot A = I$). If $\lambda$ is an eigenvalue, then $| \lambda | = 1$. The eigenvalues can be real (1 或 -1) or complex (of the form $e^{i\theta}$). However, if they are complex, their modulus will be 1.
+    If $\lambda_1, \lambda_2, \dots, \lambda_n$ are the eigenvalues of an orthogonal matrix $A$, then $|\lambda_1|=1, |\lambda_2|=1, \dots, |\lambda_n|=1$. The visual example shows $|\lambda|=1$, $|\lambda|=1$, $|\lambda|=1$ (approximated from the handwriting $\left|\lambda_{1}\right|,\left|\lambda_{2}\right|,\left|\lambda_{3}\right|=1$ at 07:15-07:22, intended to mean the modulus of each eigenvalue is 1).
+
+    \item \textbf{Property 6: Transformations of Eigenvalues}
+    If $\lambda_1, \lambda_2, \dots, \lambda_n$ are the eigenvalues of a square matrix $A$ of order $n$, then:
+    \begin{enumerate}
+        \item The eigenvalues of the matrix $kA$ (where $k$ is a scalar) are $k\lambda_1, k\lambda_2, \dots, k\lambda_n$. Each eigenvalue is simply multiplied by the scalar $k$.
+        \item The eigenvalues of the matrix $A^m$ (where $m$ is a positive integer) are $\lambda_1^m, \lambda_2^m, \dots, \lambda_n^m$. Each eigenvalue is raised to the power $m$.
+        \item The eigenvalues of the inverse matrix $A^{-1}$ (assuming $A$ is non-singular, so $A^{-1}$ exists) are $1/\lambda_1, 1/\lambda_2, \dots, 1/\lambda_n$. The eigenvalues of the inverse are the reciprocals of the original eigenvalues. This property implies that if $A$ has a zero eigenvalue, it is singular and its inverse does not exist. (Shown as handwritten $\mathbf{1/ \lambda _ { 1 } , 1/ \lambda _ { 2 } , 1/ \lambda _ { 3 } , \cdots , 1/ \lambda _ { n }}$ at 10:37-11:02 manual translation).
+    \end{enumerate}
+   These transformation properties are very useful for finding eigenvalues of related matrices based on the known eigenvalues of the original matrix $A$.
+
+\end{itemize}
+
+These properties provide foundational knowledge about the characteristics and behavior of eigenvalues in specific matrix types and under elementary transformations of the matrix.
+
+\end{document}
