@@ -1,1 +1,1331 @@
+\documentclass{article}
+\usepackage{amsmath} % For math environments like align
+\usepackage{amssymb} % For math symbols
+\usepackage[margin=1in]{geometry} % Adjust margins for better layout
+\usepackage{amsfonts} % For math fonts if needed
+\usepackage{amsthm} % For theorem-like environments (optional, for structure)
+\usepackage{xcolor} % Added for highlighting
 
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}[section] % Number definitions within sections
+\newtheorem{method}{Method}[section]      % Number methods within sections
+\newtheorem{example}{Example}[section]    % Number examples within sections
+
+% Custom environments for better structure
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+\newtheorem{procedure}{Procedure}[subsection] % Number procedure within subsections
+\newtheorem{applicability}{Applicability}[subsection] % Number applicability within subsections
+
+\title{PDE: Lagrange's and Charpit's Methods}
+\author{Lagrange Section Summary: MKS Tutorials Videos (Videos 8, 9, 10, 11, 12, \& 14) \\ Charpit Section Explanation: Provided Example}
+\date{} % No date to be displayed
+
+\begin{document}
+	
+	\maketitle
+	
+	\section{Lagrange's Method for Linear First-Order PDEs}
+	\label{sec:lagrange}
+	
+	This section provides a comprehensive overview of Lagrange's method for solving first-order linear partial differential equations, based on the content presented in MKS Tutorials videos. We will cover the definition, the solution techniques, and solve several illustrative examples.
+	
+	\begin{definition}[Lagrange's Linear PDE]
+		A first-order partial differential equation is called \textbf{Lagrange's linear PDE} if it can be written in the standard form:
+		\[
+		Pp + Qq = R \quad \quad (1)
+		\]
+	\end{definition}
+	
+	\subsection{Components of the Equation}
+	In the standard form $Pp + Qq = R$:
+	\begin{itemize}
+		\item $P, Q, R$ are functions of the independent variables $x, y$ and the dependent variable $z$. They can be constants or functions involving $x, y,$ and $z$.
+		\item $p$ denotes the partial derivative of $z$ with respect to $x$:
+		\[ p = \frac{\partial z}{\partial x} \]
+		\item $q$ denotes the partial derivative of $z$ with respect to $y$:
+		\[ q = \frac{\partial z}{\partial y} \]
+	\end{itemize}
+	It is crucial to distinguish between the coefficient functions $P, Q, R$ and the partial derivatives $p, q$.
+	
+	\subsection{Method of Solution}
+	
+	The core idea behind solving Lagrange's equation is to convert the PDE into a system of ordinary differential equations (ODEs), known as the auxiliary equations.
+	
+	\subsubsection{Step 1: Form the Auxiliary Equations}
+	From the given Lagrange PDE $Pp + Qq = R$, we form the \textbf{subsidiary equations} or \textbf{auxiliary equations} (AE):
+	\[
+	\frac{dx}{P} = \frac{dy}{Q} = \frac{dz}{R} \quad \quad (2)
+	\]
+	Note that $P, Q, R$ are the same functions as in Equation (1), and these equations relate the total differentials $dx, dy, dz$.
+	
+	\subsubsection{Step 2: Find Two Independent Solutions}
+	The next step is to find two functionally independent solutions to the system of auxiliary equations (2). These solutions are typically represented in the form:
+	\[ u(x, y, z) = c_1 \]
+	\[ v(x, y, z) = c_2 \]
+	where $c_1$ and $c_2$ are arbitrary integration constants, and $u$ and $v$ are specific functions determined from the auxiliary equations. There are several methods to find these solutions:
+	
+	\paragraph{Method 1: Pairing Fractions (Grouping Method)}
+	\label{lagrange:method:pairing}
+	This method involves selecting two fractions from the auxiliary equations (2) at a time and trying to integrate them.
+	\begin{procedure}
+		\begin{enumerate}
+			\item \textbf{Select a Pair:} Choose two ratios from $\frac{dx}{P} = \frac{dy}{Q} = \frac{dz}{R}$. For example, select $\frac{dx}{P} = \frac{dy}{Q}$.
+			\item \textbf{Simplify and Separate:} Try to simplify the chosen equation. Often, a variable might cancel out (e.g., if $P=az$ and $Q=bz$, then $\frac{dx}{az} = \frac{dy}{bz}$ simplifies to $\frac{dx}{a} = \frac{dy}{b}$). Ideally, the resulting equation should involve only the two variables corresponding to the chosen differentials (e.g., only $x$ and $y$ in $\frac{dx}{P'} = \frac{dy}{Q'}$). If the third variable is present but cannot be cancelled, check if it can be eliminated using a previously found solution (e.g., substitute $z = u(x,y,c_1)$ if $u=c_1$ is known).
+			\item \textbf{Integrate:} Integrate the simplified ordinary differential equation. Common techniques include:
+			\begin{itemize}
+				\item \textbf{Separation of Variables (SOV):} Rearrange the equation so that all terms involving one variable are on one side and all terms involving the other variable are on the opposite side, then integrate both sides. (e.g., $f(x)dx = g(y)dy \implies \int f(x)dx = \int g(y)dy + c$). This is the most common approach in this method.
+				\item \textbf{Recognizing Exact Differentials:} Sometimes, after rearrangement, the equation might take the form of a known exact differential, such as $y dx + x dy = d(xy)$ or $z dy + y dz = d(yz)$.
+				\item \textbf{Integrating Factors:} For linear first-order ODEs.
+				\item \textbf{Homogeneous Equations:} If the ODE is homogeneous.
+			\end{itemize}
+			\item \textbf{Obtain Solution:} The result of the integration gives the first solution, typically written as $u(x, y, z) = c_1$.
+			\item \textbf{Repeat for Second Solution:} Select a *different* pair of fractions (e.g., $\frac{dy}{Q} = \frac{dz}{R}$ or $\frac{dx}{P} = \frac{dz}{R}$) and repeat the process (simplify, separate/arrange, integrate) to find the second independent solution $v(x, y, z) = c_2$. It is crucial that $v$ is functionally independent of $u$ (i.e., $v$ is not just a constant multiple or function of $u$).
+		\end{enumerate}
+	\end{procedure}
+	\begin{applicability}
+		Works best when variables can be easily separated or cancelled within pairs.
+	\end{applicability}
+	
+	\paragraph{Method 2: Method of Multipliers (Denominator Combination Zero)}
+	\label{lagrange:method:multipliers}
+	Useful when pairing is difficult.
+	Based on the property: $\frac{dx}{P} = \frac{dy}{Q} = \frac{dz}{R} = \frac{l\,dx + m\,dy + n\,dz}{lP + mQ + nR}$.
+	\begin{procedure}
+		\begin{enumerate}
+			\item \textbf{Choose Multipliers ($l,m,n$):} Select multipliers (constants or functions) such that the denominator combination $lP + mQ + nR = 0$.
+			\item \textbf{Set Numerator to Zero:} If $lP+mQ+nR=0$, then $l\,dx + m\,dy + n\,dz = 0$.
+			\item \textbf{Check for Exact Differential:} Determine if $l\,dx + m\,dy + n\,dz = du$ is an exact differential. Common forms include $x dx = d(x^2/2)$, $y dx + x dy = d(xy)$, $dx+dy+dz = d(x+y+z)$, $\frac{dx}{x} + \frac{dy}{y} + \frac{dz}{z} = d(\ln(xyz))$.
+			\item \textbf{Integrate:} If exact, $\int du = 0 \implies u(x, y, z) = c_1$.
+			\item \textbf{Repeat for Second Solution:} Find a second, independent set of multipliers ($l', m', n'$) or use another method (like pairing) to find $v(x, y, z) = c_2$.
+		\end{enumerate}
+	\end{procedure}
+	\begin{applicability}
+		Powerful when P, Q, R structure allows combinations to sum to zero. Common multipliers include $(1,1,1), (x,y,z), (1/x, 1/y, 1/z)$, etc.
+	\end{applicability}
+	
+	\paragraph{Method 3: Using Combinations like $dx-dy$ (Numerator/Denominator Subtraction)}
+	\label{lagrange:method:subtraction}
+	Useful for cyclic/symmetric problems.
+	Based on the property: $\frac{dx}{P} = \frac{dy}{Q} = \frac{dz}{R} = \frac{dx-dy}{P-Q} = \frac{dy-dz}{Q-R} = \frac{dz-dx}{R-P}$.
+	\begin{procedure}
+		\begin{enumerate}
+			\item \textbf{Form Subtracted Ratios:} Construct $\frac{dx-dy}{P-Q}$, etc.
+			\item \textbf{Simplify Denominators:} Calculate and simplify $P-Q$, $Q-R$, $R-P$, looking for common factors (e.g., $(x-y)$, $(x+y+z)$).
+			\item \textbf{Select Pairs of New Ratios:} Choose pairs, e.g., $\frac{dx-dy}{P-Q} = \frac{dy-dz}{Q-R}$.
+			\item \textbf{Simplify and Integrate:} Simplify by cancelling common factors. Often leads to $\frac{d(\text{term1})}{\text{term1}} = \frac{d(\text{term2})}{\text{term2}}$. Integrate this logarithmic form to find $u=c_1$.
+			\item \textbf{Repeat for Second Solution:} Select another independent pair and integrate to find $v=c_2$.
+		\end{enumerate}
+	\end{procedure}
+	\begin{applicability}
+		Effective when P, Q, R have cyclic symmetry causing denominators to factor conveniently.
+	\end{applicability}
+	
+	\subsubsection{Step 3: Write the General Solution}
+	Once two independent solutions $u(x, y, z) = c_1$ and $v(x, y, z) = c_2$ are found, the \textbf{general solution} of the original Lagrange PDE (1) is given implicitly or explicitly by:
+	\begin{itemize}
+		\item $f(u, v) = 0$ (Implicit form)
+		\item $u = f(v)$ or $v = f(u)$ (Explicit forms)
+	\end{itemize}
+	where $f$ represents an \textbf{arbitrary function}.
+	
+	\subsection{Understanding the Lagrange General Solution}
+	
+	\subsubsection{What is a Solution to a PDE?}
+	Solving a PDE like $Pp+Qq=R$ means finding a function $z = z(x,y)$ whose partial derivatives $p = \partial z/\partial x$ and $q = \partial z/\partial y$, when substituted into the equation, satisfy the equality $P p + Q q = R$ for all relevant $x, y$. Geometrically, $z(x,y)$ represents a surface satisfying the PDE's condition at every point.
+	
+	\subsubsection{Why the Form $f(u,v)=0$?}
+	Lagrange's method identifies quantities $u(x,y,z)$ and $v(x,y,z)$ that are constant along characteristic curves defined by the auxiliary equations. $u=c_1$ and $v=c_2$ represent families of surfaces whose intersections are these curves. The general solution $f(u,v)=0$ signifies that any solution surface must be composed of these characteristics, meaning $u$ and $v$ are functionally related on the surface. The arbitrary nature of $f$ implies an infinite family of solution surfaces.
+	
+	\subsubsection{Mathematical Verification: Why $f(u,v)=0$ Satisfies the PDE}
+	\label{sec:verification_lagrange_main}
+	If $z(x,y)$ is defined by $f(u(x,y,z), v(x,y,z)) = 0$, we show it satisfies $Pp+Qq=R$.
+	Differentiating $f(u,v)=0$ w.r.t $x$ and $y$ gives:
+	\begin{align*} \frac{\partial f}{\partial u} (u_x + u_z p) + \frac{\partial f}{\partial v} (v_x + v_z p) &= 0 \quad \quad (\text{Eq. A}) \\ \frac{\partial f}{\partial u} (u_y + u_z q) + \frac{\partial f}{\partial v} (v_y + v_z q) &= 0 \quad \quad (\text{Eq. B}) \end{align*}
+	From the auxiliary equations, $P u_x + Q u_y = -R u_z$ (Rel. 1) and $P v_x + Q v_y = -R v_z$ (Rel. 2).
+	Multiply (Eq. A) by $P$, (Eq. B) by $Q$, add them, substitute Rel. 1 and 2, and factor:
+	\begin{align*} \frac{\partial f}{\partial u} [P(u_x + u_z p) + Q(u_y + u_z q)] + \frac{\partial f}{\partial v} [P(v_x + v_z p) + Q(v_y + v_z q)] &= 0 \\ \frac{\partial f}{\partial u} [(P u_x + Q u_y) + u_z (Pp + Qq)] + \frac{\partial f}{\partial v} [(P v_x + Q v_y) + v_z (Pp + Qq)] &= 0 \\ \frac{\partial f}{\partial u} [-R u_z + u_z (Pp + Qq)] + \frac{\partial f}{\partial v} [-R v_z + v_z (Pp + Qq)] &= 0 \\ (Pp + Qq - R) \left( u_z \frac{\partial f}{\partial u} + v_z \frac{\partial f}{\partial v} \right) &= 0 \end{align*}
+	Since the second factor is generally non-zero, we must have $Pp + Qq - R = 0$.
+	
+	\subsubsection{Verification for Example 1}
+	In this verification we not only check that our invariants satisfy the characteristic relations and recover the PDE, but also highlight a subtlety of differentiating an implicit function when one argument itself depends on another.
+	
+	\paragraph{Step 1: Recall the PDE and invariants}
+	We start with the PDE
+	\[
+	y\,z\,p \;+\; z\,x\,q \;=\; x\,y,
+	\]
+	where $p=\partial z/\partial x$ and $q=\partial z/\partial y$.  The proposed first integrals (invariants) are
+	\[
+	u(x,y,z)=x^2 - y^2,
+	\quad
+	v(x,y,z)=y^2 - z^2.
+	\]
+	
+	\paragraph{Step 2: Verify invariance on characteristics}
+	Compute partials:
+	\[
+	u_x=2x,\;u_y=-2y,\;u_z=0;
+	\quad
+	v_x=0,\;v_y=2y,\;v_z=-2z.
+	\]
+	Then check
+	\[
+	P\,u_x+Q\,u_y+R\,u_z=(yz)(2x)+(zx)(-2y)+(xy)(0)=0,
+	\]
+	\[
+	P\,v_x+Q\,v_y+R\,v_z=(yz)(0)+(zx)(2y)+(xy)(-2z)=0.
+	\]
+	Both vanish, confirming $u,v$ are constant along characteristics.
+	
+	\paragraph{Step 3: Implicit differentiation of $F(u,v)=0$}
+	We express the general solution by an arbitrary $\,F:\mathbb R^2\to\mathbb R$:
+	\[
+	F\bigl(u(x,y,z),\,v(x,y,z)\bigr)=0.
+	\]
+	Differentiating with respect to $x$ and $y$ (chain rule) yields two linear equations in $p$ and $q$.  But first, to illustrate the chain rule when one argument depends on another, consider a simpler case:
+	
+	\begin{remark}[Chain Rule with Dependent Argument]
+		Let $G(x,y)$ be a function of two variables, and suppose $y=y(x)$.  Then
+		\[
+		\frac{d}{dx}G\bigl(x,y(x)\bigr)
+		= G_x\bigl(x,y(x)\bigr)
+		+ G_y\bigl(x,y(x)\bigr)\,y'(x),
+		\]
+		where $G_x$ and $G_y$ are the partials of $G$ treating the other variable as constant.  We carry exactly the same idea forward: when differentiating
+		\(F(u(x,y,z),v(x,y,z))\), if $u$ or $v$ were functions of $x$ alone, we would add their derivatives accordingly.  In our PDE setup, $u,v$ depend on \emph{both} independent variables, so we explicitly keep partials.
+	\end{remark}
+	% Insert total expression for the chain rule in compact form
+	In full differential form (treating $u,v$ as functions of $(x,y,z)$), the chain rule reads:
+	\[F_u(u_x + u_z\,z_x) + F_v(v_x + v_z\,z_x) = 0.\]
+	This single-line expression encodes both the direct and indirect derivatives when differentiating $F(u,v)=0$ w.r.t.~$x$.    
+	
+	Now, differentiating $F(u,v)=0$ w.r.t.\ $x$ (treating $y,z$ as independent):
+	\begin{align*}
+		0 & = \frac{\partial}{\partial x}F(u,v)
+		= F_u(u,v)\,u_x + F_v(u,v)\,v_x.
+	\end{align*}
+	Since $u_x=2x$ and $v_x=-2z\,z_x$, we get
+	\[
+	2x\,F_u \;-\;2z\,p\,F_v =0
+	\quad\Longrightarrow\quad
+	x\,F_u = z\,p\,F_v. \tag{Eq A}
+	\]
+	Similarly, w.r.t.\ $y$:
+	\[
+	0 = F_u\,u_y + F_v\,v_y
+	= F_u(-2y) + F_v(2y -2z\,q)
+	\;\Longrightarrow\;
+	-y\,F_u + (y - zq)\,F_v =0. \tag{Eq B}
+	\]
+	
+	\paragraph{Step 4: Eliminate auxiliary derivatives to recover PDE}
+	From \(\rm Eq\;A\) solve for $F_u$:
+	\[
+	F_u = \frac{z\,p}{x}\,F_v.
+	\]
+	Substitute into \(\rm Eq\;B\):
+	\[
+	-y\Bigl(\tfrac{z\,p}{x}\,F_v\Bigr)+(y - zq)F_v=0
+	\quad\Longrightarrow\quad
+	\bigl(-\tfrac{y z p}{x} + y - zq\bigr)F_v=0.
+	\]
+	Since generically $F_v\neq0$, we require
+	\[
+	-\frac{y z p}{x} + y - zq = 0
+	\quad\Longrightarrow\quad
+	y z p + z x q = x y,
+	\]
+	which is exactly the original PDE.  This closes the loop and confirms the validity of the general solution form $F(x^2-y^2,\;y^2-z^2)=0$. \qed
+	
+	\subsection{Example Problems (Lagrange)}
+	
+	\begin{example}[Problem 1 - Solved using Pairing (Video 9)]
+		\label{ex:lagrange1}
+		Solve the PDE:
+		\[ yzp + zxq = xy \]
+	\end{example}
+	
+	\begin{proof}[Solution to Example \ref{ex:lagrange1}]
+		The given PDE is:
+		\[ yzp + zxq = xy \quad \quad (E1) \]
+		This is a Lagrange's linear PDE of the form $Pp + Qq = R$ with: $P = yz$, $Q = zx$, $R = xy$.
+		The auxiliary equations (AE) are:
+		\[
+		\frac{dx}{yz} = \frac{dy}{zx} = \frac{dz}{xy} \quad \quad (AE1)
+		\]
+		\paragraph{Finding the first solution (u):}
+		Take the first two fractions: $\frac{dx}{yz} = \frac{dy}{zx}$. Assuming $z \neq 0$, $\frac{dx}{y} = \frac{dy}{x}$.
+		Separating variables: $x \, dx = y \, dy$.
+		Integrating: $\int x \, dx = \int y \, dy \implies \frac{x^2}{2} = \frac{y^2}{2} + k_1$.
+		$\implies x^2 - y^2 = 2k_1 = c_1$. So, $u = x^2 - y^2 = c_1$.
+		
+		\paragraph{Finding the second solution (v):}
+		Take the last two fractions: $\frac{dy}{zx} = \frac{dz}{xy}$. Assuming $x \neq 0$, $\frac{dy}{z} = \frac{dz}{y}$.
+		Separating variables: $y \, dy = z \, dz$.
+		Integrating: $\int y \, dy = \int z \, dz \implies \frac{y^2}{2} = \frac{z^2}{2} + k_2$.
+		$\implies y^2 - z^2 = 2k_2 = c_2$. So, $v = y^2 - z^2 = c_2$.
+		
+		\paragraph{General Solution:} The general solution is $f(u, v) = 0$.
+		\[
+		f(x^2 - y^2, y^2 - z^2) = 0
+		\]
+		where $f$ is an arbitrary function.
+	\end{proof}
+	
+	\begin{example}[Problem 2 - Solved using Multipliers (Video 10)]
+		\label{ex:lagrange2}
+		Solve the PDE:
+		\[ x^2(y-z)p + y^2(z-x)q = z^2(x-y) \]
+	\end{example}
+	
+	\begin{proof}[Solution to Example \ref{ex:lagrange2}]
+		The given PDE is:
+		\[ x^2(y-z)p + y^2(z-x)q = z^2(x-y) \quad \quad (E2) \]
+		This is Lagrange's linear PDE with: $P = x^2(y-z)$, $Q = y^2(z-x)$, $R = z^2(x-y)$.
+		The auxiliary equations (AE) are:
+		\[
+		\frac{dx}{x^2(y-z)} = \frac{dy}{y^2(z-x)} = \frac{dz}{z^2(x-y)} \quad \quad (AE2)
+		\]
+		\paragraph{Finding the first solution (u):}
+		Choose multipliers $l=1/x, m=1/y, n=1/z$.
+		The denominator combination $lP + mQ + nR = x(y-z) + y(z-x) + z(x-y) = 0$.
+		Therefore, the numerator combination $l\,dx + m\,dy + n\,dz = 0$.
+		\[ \frac{1}{x}dx + \frac{1}{y}dy + \frac{1}{z}dz = 0 \]
+		Integrating $d(\ln(xyz)) = 0$ gives $\ln(xyz) = \ln c_1$.
+		So, $u = xyz = c_1$.
+		
+		\paragraph{Finding the second solution (v):}
+		Choose multipliers $l'=1/x^2, m'=1/y^2, n'=1/z^2$.
+		The denominator combination $l'P + m'Q + n'R = (y-z) + (z-x) + (x-y) = 0$.
+		Therefore, the numerator combination $l'\,dx + m'\,dy + n'\,dz = 0$.
+		\[ \frac{1}{x^2}dx + \frac{1}{y^2}dy + \frac{1}{z^2}dz = 0 \]
+		Integrating $d(-1/x - 1/y - 1/z) = 0$ gives $-\frac{1}{x} - \frac{1}{y} - \frac{1}{z} = k_2$.
+		$\implies \frac{1}{x} + \frac{1}{y} + \frac{1}{z} = -k_2 = c_2$.
+		So, $v = \frac{1}{x} + \frac{1}{y} + \frac{1}{z} = c_2$.
+		
+		\paragraph{General Solution:} The general solution is $f(u, v) = 0$.
+		\[
+		f \left( xyz, \frac{1}{x} + \frac{1}{y} + \frac{1}{z} \right) = 0
+		\]
+		where $f$ is an arbitrary function.
+	\end{proof}
+	
+	\begin{example}[Problem 3 - Solved using Multipliers Twice (Video 11)]
+		\label{ex:lagrange3}
+		Solve the PDE:
+		\[ (mz-ny)p + (nx-lz)q = ly-mx \]
+	\end{example}
+	
+	\begin{proof}[Solution to Example \ref{ex:lagrange3}]
+		The given PDE can be written in the $Pp+Qq=R$ form as:
+		\[ (mz-ny)p + (nx-lz)q = ly-mx \quad \quad (E3) \]
+		This is a Lagrange's linear PDE with:
+		\begin{itemize}
+			\item $P = mz-ny$
+			\item $Q = nx-lz$
+			\item $R = ly-mx$
+		\end{itemize}
+		The auxiliary equations (AE) are:
+		\[
+		\frac{dx}{P} = \frac{dy}{Q} = \frac{dz}{R}
+		\]
+		\[
+		\implies \frac{dx}{mz-ny} = \frac{dy}{nx-lz} = \frac{dz}{ly-mx} \quad \quad (AE3)
+		\]
+		Pairing fractions seems difficult. We will use the method of multipliers (\ref{lagrange:method:multipliers}).
+		
+		\paragraph{Finding the first solution (u):}
+		Let's choose the multipliers $l'=x, m'=y, n'=z$.
+		Calculate the combination $l'P + m'Q + n'R$:
+		\begin{align*} l'P + m'Q + n'R &= x(mz-ny) + y(nx-lz) + z(ly-mx) \\ &= xmz - xny + ynx - ylz + zly - zmx \\ &= (xmz - zmx) + (-xny + ynx) + (-ylz + zly) \\ &= 0 + 0 + 0 = 0 \end{align*}
+		Since the denominator combination is zero, the numerator combination must also be zero:
+		\[
+		l'\,dx + m'\,dy + n'\,dz = 0
+		\]
+		\[
+		\implies x\,dx + y\,dy + z\,dz = 0
+		\]
+		This expression is an exact differential: $d(x^2/2) + d(y^2/2) + d(z^2/2) = d\left(\frac{x^2+y^2+z^2}{2}\right)$.
+		So we have $d\left(\frac{x^2+y^2+z^2}{2}\right) = 0$.
+		Integrating both sides:
+		\[
+		\int d\left(\frac{x^2+y^2+z^2}{2}\right) = \int 0
+		\]
+		\[
+		\frac{x^2+y^2+z^2}{2} = k_1 \quad (\text{where } k_1 \text{ is an integration constant})
+		\]
+		\[
+		\implies x^2+y^2+z^2 = 2k_1
+		\]
+		Let $c_1 = 2k_1$. So, the first solution is:
+		\[
+		u = x^2+y^2+z^2 = c_1
+		\]
+		
+		\paragraph{Finding the second solution (v):}
+		Let's choose another set of multipliers $l''=l, m''=m, n''=n$ (these are the constants $l, m, n$ given in the PDE coefficients).
+		Calculate the combination $l''P + m''Q + n''R$:
+		\begin{align*} l''P + m''Q + n''R &= l(mz-ny) + m(nx-lz) + n(ly-mx) \\ &= lmz - lny + mnx - mlz + nly - nmx \\ &= (lmz - mlz) + (-lny + nly) + (mnx - nmx) \\ &= 0 + 0 + 0 = 0 \end{align*}
+		Since the denominator combination is zero, the numerator combination must also be zero:
+		\[
+		l''\,dx + m''\,dy + n''\,dz = 0
+		\]
+		\[
+		\implies l\,dx + m\,dy + n\,dz = 0
+		\]
+		This expression is also an exact differential: $d(lx) + d(my) + d(nz) = d(lx + my + nz)$.
+		So we have $d(lx + my + nz) = 0$.
+		Integrating both sides:
+		\[
+		\int d(lx + my + nz) = \int 0
+		\]
+		\[
+		lx + my + nz = c_2 \quad (\text{where } c_2 \text{ is an integration constant})
+		\]
+		So, the second solution is:
+		\[
+		v = lx + my + nz = c_2
+		\]
+		The functions $u=x^2+y^2+z^2$ and $v=lx+my+nz$ are independent.
+		
+		\paragraph{General Solution:}
+		Using the form $f(u, v) = 0$, the general solution of the PDE (E3) is:
+		\[
+		f (x^2+y^2+z^2, lx+my+nz) = 0
+		\]
+		where $f$ is an arbitrary function.
+	\end{proof}
+	
+	\begin{example}[Problem 4 - Solved using Pairing Twice (Video 12)]
+		\label{ex:lagrange4}
+		Solve the PDE:
+		\[ y^2p - xyq = x(z-2y) \]
+	\end{example}
+	
+	\begin{proof}[Solution to Example \ref{ex:lagrange4}]
+		The given PDE is:
+		\[ y^2p - xyq = x(z-2y) \quad \quad (E4) \]
+		This is Lagrange's linear PDE with:
+		\begin{itemize}
+			\item $P = y^2$
+			\item $Q = -xy$
+			\item $R = x(z-2y) = xz - 2xy$
+		\end{itemize}
+		The auxiliary equations (AE) are:
+		\[ \frac{dx}{y^2} = \frac{dy}{-xy} = \frac{dz}{x(z-2y)} \quad \quad (AE4) \]
+		We will use the method of pairing fractions (\ref{lagrange:method:pairing}).
+		
+		\paragraph{Finding the first solution (u):}
+		Take the first two fractions from (AE4):
+		\[ \frac{dx}{y^2} = \frac{dy}{-xy} \]
+		Assuming $y \neq 0$, cancel $y$:
+		\[ \frac{dx}{y} = \frac{dy}{-x} \]
+		Separate variables (SOV):
+		\[ -x \, dx = y \, dy \implies x \, dx + y \, dy = 0 \]
+		Integrate:
+		\[ \int x \, dx + \int y \, dy = \int 0 \]
+		\[ \implies \frac{x^2}{2} + \frac{y^2}{2} = k_1 \]
+		\[ x^2 + y^2 = 2k_1 \]
+		Let $c_1 = 2k_1$. So, $u = x^2 + y^2 = c_1$.
+		
+		\paragraph{Finding the second solution (v):}
+		Take the last two fractions from (AE4):
+		\[ \frac{dy}{-xy} = \frac{dz}{x(z-2y)} \]
+		Assuming $x \neq 0$, cancel $x$:
+		\[ \frac{dy}{-y} = \frac{dz}{z-2y} \]
+		Cross-multiply: $(z-2y) \, dy = -y \, dz$.
+		Expand and rearrange: $z \, dy - 2y \, dy = -y \, dz \implies z \, dy + y \, dz = 2y \, dy$.
+		Recognize the left side as $d(yz)$. The equation becomes $d(yz) = 2y \, dy$.
+		Integrate both sides:
+		\[ \int d(yz) = \int 2y \, dy \]
+		\[ \implies yz = 2 \left( \frac{y^2}{2} \right) + c_2 \]
+		\[ yz = y^2 + c_2 \]
+		Rearrange: $yz - y^2 = c_2$.
+		So, $v = yz - y^2 = c_2$.
+		
+		\paragraph{General Solution:}
+		Using the implicit form $f(u, v) = 0$, the required general solution is:
+		\[ f(x^2 + y^2, yz - y^2) = 0 \]
+		where $f$ is an arbitrary function.
+	\end{proof}
+	
+	\begin{example}[Problem 5 - Mentioned in Video 8]
+		\label{ex:lagrange5}
+		Solve the PDE:
+		\[ (z^2-2yz-y^2)p + (xy+zx)q = xy-zx \]
+		\textit{(Note: This problem was listed but not solved in the video sequence covered so far.)}
+	\end{example}
+	
+	\begin{example}[Problem 6 - Solved using Subtraction Method (Video 14)]
+		\label{ex:lagrange6}
+		Solve the PDE:
+		\[ (x^2-yz)p + (y^2-zx)q = z^2-xy \]
+	\end{example}
+	
+	\begin{proof}[Solution to Example \ref{ex:lagrange6}]
+		The given PDE is:
+		\[ (x^2-yz)p + (y^2-zx)q = z^2-xy \quad \quad (E6) \]
+		This is Lagrange's linear PDE with: $P = x^2-yz$, $Q = y^2-zx$, $R = z^2-xy$.
+		The auxiliary equations (AE) are:
+		\[ \frac{dx}{x^2-yz} = \frac{dy}{y^2-zx} = \frac{dz}{z^2-xy} \quad \quad (AE6) \]
+		The cyclic symmetry suggests using Method 3 (\ref{lagrange:method:subtraction}).
+		
+		We form the subtracted ratios: $\frac{dx-dy}{P-Q} = \frac{dy-dz}{Q-R} = \frac{dz-dx}{R-P}$.
+		The denominators were calculated as:
+		$P-Q = (x-y)(x+y+z)$, $Q-R = (y-z)(x+y+z)$, $R-P = (z-x)(x+y+z)$.
+		So the extended auxiliary equations are:
+		\[ \dots = \frac{dx-dy}{(x-y)(x+y+z)} = \frac{dy-dz}{(y-z)(x+y+z)} = \frac{dz-dx}{(z-x)(x+y+z)} \quad (AE6') \]
+		
+		\paragraph{Finding the first solution (u):}
+		Equate the first two subtracted ratios from (AE6'):
+		\[ \frac{dx-dy}{(x-y)(x+y+z)} = \frac{dy-dz}{(y-z)(x+y+z)} \]
+		Assuming $x+y+z \neq 0$, cancel the common factor:
+		\[ \frac{dx-dy}{x-y} = \frac{dy-dz}{y-z} \]
+		Integrating $\int \frac{d(x-y)}{x-y} = \int \frac{d(y-z)}{y-z}$:
+		\[ \ln|x-y| = \ln|y-z| + \ln |c_1| \implies \ln|x-y| = \ln|c_1 (y-z)| \]
+		Removing the logarithm: $x-y = C_1 (y-z)$, where $C_1 = \pm c_1$.
+		\[ u = \frac{x-y}{y-z} = C_1 \]
+		
+		\paragraph{Finding the second solution (v):}
+		Equate the second and third subtracted ratios from (AE6'), after cancelling $(x+y+z)$:
+		\[ \frac{dy-dz}{y-z} = \frac{dz-dx}{z-x} \]
+		Integrating $\int \frac{d(y-z)}{y-z} = \int \frac{d(z-x)}{z-x}$:
+		\[ \ln|y-z| = \ln|z-x| + \ln |c_2| \implies \ln|y-z| = \ln|c_2 (z-x)| \]
+		Removing the logarithm: $y-z = C_2 (z-x)$, where $C_2 = \pm c_2$.
+		\[ v = \frac{y-z}{z-x} = C_2 \]
+		
+		\paragraph{General Solution:}
+		We have found two independent solutions: $u = \frac{x-y}{y-z}$ and $v = \frac{y-z}{z-x}$.
+		Using the implicit form $f(u, v) = 0$, the required general solution of the PDE (E6) is:
+		\[ f \left( \frac{x-y}{y-z}, \frac{y-z}{z-x} \right) = 0 \]
+		where $f$ is an arbitrary function.
+	\end{proof}
+	
+	\newpage % Start Charpit's Method on a new page
+	
+	\section{Charpit's Method for Non-Linear First-Order PDEs}
+	\label{sec:charpit}
+	
+	\subsection{Introduction}
+	While Lagrange's method effectively handles linear first-order PDEs, many PDEs encountered in physics and engineering are non-linear in the partial derivatives $p$ and $q$. Charpit's method provides a general and powerful technique to find solutions for these non-linear first-order PDEs.
+	
+	\subsection{Purpose}
+	Charpit's method is a systematic procedure to find the \textbf{complete integral} (also known as the complete solution) of a general first-order PDE, which may be non-linear. The method is applicable to equations of the form $f(x, y, z, p, q) = 0$.
+	
+	\subsection{The Standard Form of the PDE}
+	The method applies to any first-order PDE that can be expressed in the general form:
+	\begin{equation*}
+		f(x, y, z, p, q) = 0 \quad \quad (3)
+	\end{equation*}
+	where $z=z(x,y)$ is the dependent variable, $x, y$ are independent variables, and $p = \partial z/\partial x$, $q = \partial z/\partial y$. The function $f$ can involve any combination of these five variables, including non-linear terms like $p^2, q^3, pq, z^2p, \sqrt{q}$, etc.
+	
+	\subsection{The Complete Integral}
+	\label{charpit:sec:complete_integral}
+	The primary objective of Charpit's method is to find a solution that contains as many independent arbitrary constants as there are independent variables in the PDE. Since we are dealing with $z$ as a function of two independent variables $x$ and $y$, the complete integral will involve two arbitrary constants, typically denoted by $a$ and $b$. The complete integral can be expressed implicitly or explicitly:
+	\[ \phi(x, y, z, a, b) = 0 \quad \text{or} \quad z = \psi(x, y, a, b) \]
+	
+	\paragraph{Significance of the Complete Integral}
+	The complete integral represents a two-parameter family of surfaces, each of which is a solution to the original non-linear PDE (3). It's considered "complete" because it captures the general structure of solutions involving arbitrary constants. As discussed in Section \ref{sec:complete_integral}, it serves as the foundation from which other types of solutions (general and singular integrals) can potentially be derived through processes of differentiation and elimination of constants. Charpit's method, however, focuses directly on obtaining this fundamental complete integral.
+	
+	\subsection{The Core Idea of Charpit's Method}
+	The challenge in solving $f(x, y, z, p, q) = 0$ is that we only have one equation relating the five variables ($x, y, z, p, q$). To determine $p$ and $q$ uniquely (up to constants) so we can integrate $dz = p\,dx + q\,dy$, we need a second equation.
+	Charpit's method provides a way to find such a second equation, say:
+	\begin{equation*}
+		g(x, y, z, p, q, a) = 0 \quad \quad (4)
+	\end{equation*}
+	involving an arbitrary constant $a$. This equation $g=0$ must be \textit{compatible} with the original PDE $f=0$. Compatibility here means two things:
+	\begin{enumerate}
+		\item The system of equations $f=0$ and $g=0$ can be solved algebraically to express $p$ and $q$ in terms of the remaining variables and the constant $a$: $p = P(x, y, z, a)$ and $q = Q(x, y, z, a)$.
+		\item When these expressions for $p$ and $q$ are substituted into the total differential equation $dz = p \, dx + q \, dy$, the resulting equation $dz = P(x, y, z, a) \, dx + Q(x, y, z, a) \, dy$ is guaranteed to be integrable (i.e., it satisfies the condition for exactness or can be made exact).
+	\end{enumerate}
+	If we can find such a compatible function $g$, integrating the total differential equation $dz = P\,dx + Q\,dy$ introduces the second arbitrary constant $b$, leading directly to the complete integral.
+	
+	\subsection{Charpit's Auxiliary Equations: Finding the Compatible Equation}
+	The genius of Charpit's method lies in providing a systematic way to find the compatible equation $g=0$. This is achieved through \textbf{Charpit's auxiliary equations} (or subsidiary equations), which are derived from the mathematical condition ensuring compatibility. The equations form a system of ODEs relating the differentials of all five variables:
+	\begin{align} \label{eq:charpit_ae_main_detailed}
+		\frac{dx}{-f_p} = \frac{dy}{-f_q} = \frac{dz}{-p f_p - q f_q} = \frac{dp}{f_x + p f_z} = \frac{dq}{f_y + q f_z}
+	\end{align}
+	where $f_p = \partial f/\partial p$, $f_q = \partial f/\partial q$, $f_x = \partial f/\partial x$, $f_y = \partial f/\partial y$, $f_z = \partial f/\partial z$, and $f$ is the function from the original PDE $f(x, y, z, p, q) = 0$.
+	
+	\paragraph{Key Insight:} Any integral of this system of auxiliary equations which involves $p$ or $q$ (or both) can be taken as the required compatible relation $g(x, y, z, p, q, a) = 0$. We only need to find *one* such integral.
+	
+	\subsection{Solving Strategy using Auxiliary Equations}
+	The practical workflow for applying Charpit's method is as follows:
+	\begin{procedure}
+		\begin{enumerate}
+			\item \textbf{Define f:} Write the given PDE in the standard form $f(x, y, z, p, q) = 0$.
+			\item \textbf{Calculate Derivatives:} Find the five partial derivatives: $f_x, f_y, f_z, f_p, f_q$. Remember to treat $x, y, z, p, q$ as independent variables during this differentiation.
+			\item \textbf{Form Auxiliary Equations:} Carefully substitute these derivatives into the standard form of Charpit's auxiliary equations \eqref{eq:charpit_ae_main_detailed}. Write down the full set of equal ratios.
+			\item \textbf{Find Simplest Integral ($g=0$):} Inspect the auxiliary equations. The crucial step is to identify the easiest way to get an integral involving $p$ or $q$. Look for the simplest possible relation by pairing fractions:
+			\begin{itemize}
+				\item \textbf{Target Zero Denominators:} If any denominator is zero, the corresponding numerator's differential must be zero. For example, if $f_x + p f_z = 0$, then $dp = 0$, which integrates immediately to $p = a$. This is often the quickest route if available. Similarly, if $f_y + q f_z = 0$, then $dq = 0 \implies q = a$.
+				\item \textbf{Utilize Missing Variables in f:} The absence of certain variables in the original function $f$ simplifies the AE denominators.
+				\subitem If $f$ is independent of $x$ ($f_x=0$) and $z$ ($f_z=0$), then $\frac{dp}{0} \implies dp=0 \implies p=a$.
+				\subitem If $f$ is independent of $y$ ($f_y=0$) and $z$ ($f_z=0$), then $\frac{dq}{0} \implies dq=0 \implies q=a$.
+				\subitem If $f$ is independent of $x$ and $y$ ($f_x=0, f_y=0$), consider the $dp$ and $dq$ fractions: $\frac{dp}{p f_z} = \frac{dq}{q f_z}$. If $f_z \neq 0$, this gives $\frac{dp}{p} = \frac{dq}{q} \implies \ln p = \ln q + \ln a \implies p=aq$.
+				\item \textbf{Simple Pairings:} Look for any pair of fractions that allows for easy integration after potential cancellations, e.g., $\frac{dp}{-pq} = \frac{dq}{p^2}$ simplifies to $p\,dp = -q\,dq$.
+			\end{itemize}
+			Integrate the chosen relation to get $g(x, y, z, p, q, a) = 0$, where $a$ is the constant of integration.
+			\item \textbf{Solve for p and q:} You now have two equations: the original PDE $f(x, y, z, p, q) = 0$ and the relation $g(x, y, z, p, q, a) = 0$. Solve these algebraically for $p$ and $q$ in terms of $x, y, z,$ and $a$. (e.g., $p = P(x,y,z,a)$, $q = Q(x,y,z,a)$).
+			\item \textbf{Substitute into $dz = p \, dx + q \, dy$:} Plug the obtained expressions for $p$ and $q$ into the total differential equation:
+			\[ dz = P(x,y,z,a) \, dx + Q(x,y,z,a) \, dy \]
+			\item \textbf{Integrate:} Integrate this equation. This is the final step and might require rearranging terms, identifying exact differentials, or using other integration methods. The result will contain the constant $a$ from step 4 and a new constant of integration $b$. This final relation between $x, y, z, a,$ and $b$ is the \textbf{complete integral}.
+		\end{enumerate}
+	\end{procedure}
+	
+	\subsection{Example (Charpit): Solving $(p^2 + q^2)y = qz$}
+	Let's apply the detailed strategy to solve this non-linear PDE.
+	
+	\subsubsection{Problem Statement}
+	Solve the partial differential equation:
+	\begin{equation}
+		(p^2 + q^2)y = qz \quad \quad (\text{PDE})
+	\end{equation}
+	
+	\subsubsection{Solution Steps}
+	
+	\paragraph{Step 1: Define the function f}
+	The PDE is already in a good form. Let:
+	\begin{equation} \label{eq:f_def_ex_charpit_example}
+		f(x, y, z, p, q) \equiv (p^2 + q^2)y - qz = 0
+	\end{equation}
+	
+	\paragraph{Step 2 \& 3: Calculate Partial Derivatives}
+	\begin{itemize}
+		\item $f_x = 0$
+		\item $f_y = p^2 + q^2$
+		\item $f_z = -q$
+		\item $f_p = 2py$
+		\item $f_q = 2qy - z$
+	\end{itemize}
+	
+	\paragraph{Step 4: Form Charpit's Auxiliary Equations}
+	Substitute into the AE formula \eqref{eq:charpit_ae_main_detailed}:
+	\begin{align*}
+		\frac{dx}{-f_p} &= \frac{dx}{-2py} \\
+		\frac{dy}{-f_q} &= \frac{dy}{-(2qy - z)} = \frac{dy}{z - 2qy} \\
+		\frac{dz}{-p f_p - q f_q} &= \frac{dz}{-p(2py) - q(2qy - z)} = \frac{dz}{-2p^2y - 2q^2y + qz} \\
+		\frac{dp}{f_x + p f_z} &= \frac{dp}{0 + p(-q)} = \frac{dp}{-pq} \\
+		\frac{dq}{f_y + q f_z} &= \frac{dq}{(p^2 + q^2) + q(-q)} = \frac{dq}{p^2}
+	\end{align*}
+	The complete set of auxiliary equations is:
+	\begin{equation} \label{eq:charpit_ae_final_ex_charpit_example}
+		\frac{dx}{-2py} = \frac{dy}{z - 2qy} = \frac{dz}{-2y(p^2+q^2) + qz} = \frac{dp}{-pq} = \frac{dq}{p^2}
+	\end{equation}
+	
+	\paragraph{Step 5: Find the Simplest Integral ($g=0$)}
+	We inspect the fractions. The last two fractions involve only $p$ and $q$, making them the simplest choice:
+	\begin{equation*}
+		\frac{dp}{-pq} = \frac{dq}{p^2}
+	\end{equation*}
+	Assuming $p \neq 0$, we can multiply by $p$:
+	\begin{equation*}
+		\frac{dp}{-q} = \frac{dq}{p}
+	\end{equation*}
+	Cross-multiply to separate variables:
+	\begin{equation*}
+		p \, dp = -q \, dq \implies p \, dp + q \, dq = 0
+	\end{equation*}
+	Integrate both sides:
+	\begin{equation*}
+		\int p \, dp + \int q \, dq = \int 0 \implies \frac{p^2}{2} + \frac{q^2}{2} = C_1' \quad (\text{constant})
+	\end{equation*}
+	Multiply by 2 and let $a^2 = 2C_1'$ (using $a^2$ for the arbitrary constant for convenience):
+	\begin{equation} \label{eq:p2q2_rel_ex_charpit_example}
+		p^2 + q^2 = a^2
+	\end{equation}
+	This is our compatible relation $g(p,q,a)=0$.
+	
+	\paragraph{Step 6: Solve for p and q}
+	We use the original PDE \eqref{eq:f_def_ex_charpit_example} and the relation \eqref{eq:p2q2_rel_ex_charpit_example}:
+	\begin{align*}
+		(p^2 + q^2)y - qz &= 0 \\
+		p^2 + q^2 &= a^2
+	\end{align*}
+	Substitute $p^2+q^2=a^2$ into the first equation:
+	\begin{equation*}
+		a^2 y - qz = 0 \implies qz = a^2 y
+	\end{equation*}
+	Solving for $q$:
+	\begin{equation} \label{eq:q_sol_ex_charpit_example}
+		q = \frac{a^2 y}{z}
+	\end{equation}
+	Substitute this expression for $q$ into $p^2 + q^2 = a^2$:
+	\begin{align*}
+		p^2 + \left(\frac{a^2 y}{z}\right)^2 &= a^2 \\
+		p^2 &= a^2 - \frac{a^4 y^2}{z^2} = \frac{a^2 z^2 - a^4 y^2}{z^2} = \frac{a^2 (z^2 - a^2 y^2)}{z^2}
+	\end{align*}
+	Solving for $p$:
+	\begin{equation} \label{eq:p_sol_ex_charpit_example}
+		p = \frac{a \sqrt{z^2 - a^2 y^2}}{z}
+	\end{equation}
+	
+	\paragraph{Step 7: Substitute into $dz = p \, dx + q \, dy$}
+	Plug the expressions for $p$ and $q$ into the total differential equation:
+	\begin{equation*}
+		dz = \left( \frac{a \sqrt{z^2 - a^2 y^2}}{z} \right) dx + \left( \frac{a^2 y}{z} \right) dy
+	\end{equation*}
+	
+	\paragraph{Step 8: Integrate}
+	Multiply the equation by $z$ to simplify:
+	\begin{equation*}
+		z \, dz = a \sqrt{z^2 - a^2 y^2} \, dx + a^2 y \, dy
+	\end{equation*}
+	Rearrange the terms to group potentially exact differentials:
+	\begin{equation*}
+		z \, dz - a^2 y \, dy = a \sqrt{z^2 - a^2 y^2} \, dx
+	\end{equation*}
+	Divide by $\sqrt{z^2 - a^2 y^2}$ (assuming the term inside the square root is positive):
+	\[ \frac{z \, dz - a^2 y \, dy}{\sqrt{z^2 - a^2 y^2}} = a \, dx \]
+	We recognize that the numerator is related to the differential of the term inside the square root: $d(z^2 - a^2 y^2) = 2z \, dz - 2a^2 y \, dy$.
+	So, the left side is exactly $\frac{1}{2} \frac{d(z^2 - a^2 y^2)}{\sqrt{z^2 - a^2 y^2}}$, which is $d(\sqrt{z^2 - a^2 y^2})$.
+	The equation becomes:
+	\[ d(\sqrt{z^2 - a^2 y^2}) = a \, dx \]
+	Integrate both sides with respect to their variables:
+	\[ \int d(\sqrt{z^2 - a^2 y^2}) = \int a \, dx \]
+	\[ \sqrt{z^2 - a^2 y^2} = ax + b \]
+	where $b$ is the second arbitrary constant of integration.
+	Squaring both sides gives the complete integral:
+	\[ z^2 - a^2 y^2 = (ax + b)^2 \]
+	Finally, express $z^2$:
+	\begin{equation} \label{eq:final_sol_ex_charpit_example}
+		\boxed{z^2 = a^2 y^2 + (ax + b)^2}
+	\end{equation}
+	This is the complete integral of the PDE $(p^2 + q^2)y = qz$, containing the two arbitrary constants $a$ and $b$.
+	
+	\newpage
+	
+	\section{Introduction: Homogeneous Linear Equation with Constant Coefficients}
+	
+	A partial differential equation (PDE) of the form:
+	\[
+	\frac{\partial^n z}{\partial x^n} + K_1 \frac{\partial^n z}{\partial x^{n-1} \partial y} + \dots + K_n \frac{\partial^n z}{\partial y^n} = F(x, y)
+	\]
+	is called a \textbf{Homogeneous Linear Partial Differential Equation of $n^{th}$ order with Constant Coefficients}.
+	
+	Here:
+	\begin{itemize}
+		\item $z$ is the dependent variable, typically a function of $x$ and $y$, i.e., $z = z(x, y)$.
+		\item $x$ and $y$ are the independent variables.
+		\item $K_1, K_2, \dots, K_n$ are constants.
+		\item $F(x, y)$ is a function of $x$ and $y$ only, or a constant. If $F(x,y) = 0$, the equation is homogeneous in the sense of ODEs, but here "homogeneous" refers to the derivatives.
+		\item \textbf{Note (Homogeneity of Derivatives):} The crucial characteristic of this type of equation is that \textit{all the derivative terms are of the same order}, which is $n$.
+	\end{itemize}
+	
+	\subsection{Symbolic Form}
+	To simplify the notation, we use differential operators. Let:
+	\[
+	D \equiv \frac{\partial}{\partial x} \quad \text{and} \quad D' \equiv \frac{\partial}{\partial y}
+	\]
+	Then, the powers of these operators represent repeated differentiation:
+	\[
+	D^n = \frac{\partial^n}{\partial x^n}, \quad D^{n-1}D' = \frac{\partial^n}{\partial x^{n-1} \partial y}, \quad (D')^n = \frac{\partial^n}{\partial y^n}
+	\]
+	Using these operators, the PDE can be written in its symbolic form:
+	\[
+	[D^n + K_1 D^{n-1}D' + \dots + K_n (D')^n] z = F(x, y)
+	\]
+	This can be further condensed as:
+	\[
+	f(D, D') z = F(x, y)
+	\]
+	where $f(D, D') = D^n + K_1 D^{n-1}D' + \dots + K_n (D')^n$ is a homogeneous polynomial function of the operators $D$ and $D'$ of degree $n$.
+	
+	\subsection{Complete Solution}
+	The complete solution to such a PDE consists of two parts:
+	\[
+	z = \text{Complementary Function (CF)} + \text{Particular Integral (PI)}
+	\]
+	\begin{itemize}
+		\item The \textbf{Complementary Function (CF)} is the general solution to the associated homogeneous equation, $f(D, D') z = 0$. (Finding the CF typically involves solving the auxiliary equation obtained by replacing $D$ with $m$ and $D'$ with 1).
+		\item The \textbf{Particular Integral (PI)} is any particular solution to the non-homogeneous equation $f(D, D') z = F(x, y)$.
+	\end{itemize}
+	This document focuses on the methods for finding the Particular Integral (PI).
+	
+	\section{Finding the Complementary Function (CF)}
+	
+	The CF solves the \emph{homogeneous} equation
+	\[
+	f(D,D')\,z = 0.
+	\]
+	\begin{itemize}
+		\item[1.] Replace $D\to m$ and $D'\to1$ in the operator polynomial $f(m,1)$:
+		\[
+		f(m,1) = m^n + K_1\,m^{n-1} + \dots + K_n = 0.
+		\]
+		This is the \emph{auxiliary (characteristic) equation} in $m$.
+		\item[2.] Solve for the $n$ roots $m_1,m_2,\dots,m_n$ (which may be real, repeated, or complex).
+		\item[3.] Write down the CF according to the nature of the roots:
+		\begin{itemize}
+			\item If all roots $m_i$ are \emph{distinct real}, then
+			\[
+			\text{CF} = F_1(y + m_1\,x) + F_2(y + m_2\,x) + \cdots + F_n(y + m_n\,x),
+			\]
+			where each $F_i$ is an arbitrary function.
+			\item If \(m = r\) is a \emph{repeated root} of multiplicity \(k\), then
+			\[
+			\text{CF} = F_1\bigl(y + r x\bigr)
+			+\;x\,F_2\bigl(y + r x\bigr)
+			+\;x^2\,F_3\bigl(y + r x\bigr)
+			+\;\cdots
+			+\;x^{\,k-1}\,F_k\bigl(y + r x\bigr),
+			\]
+			where each \(F_j\) is an arbitrary function of the characteristic \(y + r x\).
+			\item If roots are \emph{complex} $m = \alpha \pm i\beta$, use real combinations:
+			\[
+			e^{\alpha x}\bigl\{A(y)\cos(\beta x) + B(y)\sin(\beta x)\bigr\}.
+			\]
+		\end{itemize}
+		\item[4.] The resulting sum is the \emph{most general} solution of $f(D,D')\,z=0$.
+	\end{itemize}
+	
+	\textbf{Example.}
+	For a second‐order operator $D^2 - DD'$,
+	\[
+	f(m,1) = m^2 - m = m(m-1)=0,
+	\quad m_1=0,\;m_2=1.
+	\]
+	Hence
+	\[
+	\boxed{
+		\text{CF} = F_1(y) \;+\; F_2(y + x).
+	}
+	\]
+	
+	\section{Finding the Particular Integral (PI)}
+	
+	Symbolically, the PI is given by operating the inverse operator $1/f(D, D')$ on the right-hand side function $F(x, y)$:
+	\[
+	\text{PI} = \frac{1}{f(D, D')} F(x, y)
+	\]
+	The method used to evaluate this expression depends heavily on the form of the function $F(x, y)$. The video outlines four main cases for $F(x, y)$:
+	
+	\begin{enumerate}
+		\item $F(x, y) = e^{ax + by}$ (Exponential function)
+		\item $F(x, y) = \sin(mx + ny)$ or $F(x, y) = \cos(mx + ny)$ (Trigonometric function)
+		\item $F(x, y) = x^m y^n$ (Algebraic/Polynomial function)
+		\item $F(x, y)$ is a combination of the above or any other function.
+	\end{enumerate}
+	
+	We will discuss the methods for each case.
+	
+	\subsection{Case 1: $F(x, y) = e^{ax+by}$}
+	When the right-hand side is an exponential function.
+	\[
+	\text{PI} = \frac{1}{f(D, D')} e^{ax+by}
+	\]
+	\textbf{Method:} Replace the operator $D$ with the coefficient of $x$ (which is $a$) and the operator $D'$ with the coefficient of $y$ (which is $b$) in the expression $f(D, D')$, provided the denominator does not become zero.
+	\[
+	\text{Put } D = a, \quad D' = b
+	\]
+	So,
+	\[
+	\text{PI} = \frac{1}{f(a, b)} e^{ax+by}, \quad \text{provided } f(a, b) \neq 0
+	\]
+	\textit{Note:} If $f(a, b) = 0$, this is a "case of failure". Special methods are needed, often involving multiplying by $x$ and differentiating the denominator with respect to $D$. This is analogous to the method used in ordinary differential equations (ODEs).
+	
+	\subsection{Case 2: $F(x, y) = \sin(mx+ny)$ or $\cos(mx+ny)$}
+	When the right-hand side is a sine or cosine function.
+	\[
+	\text{PI} = \frac{1}{f(D^2, DD', (D')^2)} [\sin(mx+ny) \text{ or } \cos(mx+ny)]
+	\]
+	(Note: We write the denominator function $f$ in terms of $D^2, DD',$ and $(D')^2$ because the substitutions involve these second-order combinations.)
+	
+	\textbf{Method:} Replace the operators as follows:
+	\[
+	\text{Put } D^2 = -(m^2), \quad DD' = -(mn), \quad (D')^2 = -(n^2)
+	\]
+	where $m$ is the coefficient of $x$ and $n$ is the coefficient of $y$ inside the trigonometric function. Apply these substitutions to the denominator $f(D^2, DD', (D')^2)$, provided the denominator does not become zero.
+	\[
+	\text{PI} = \frac{1}{f(-m^2, -mn, -n^2)} [\sin(mx+ny) \text{ or } \cos(mx+ny)], \quad \text{provided denominator} \neq 0
+	\]
+	\textit{Note:} If the denominator becomes zero after substitution, it's a "case of failure". Similar to Case 1, special methods are required.
+	
+	\subsection{Case 3: $F(x, y) = x^m y^n$}
+	When the right-hand side is an algebraic/polynomial function.
+	\[
+	\text{PI} = \frac{1}{f(D, D')} x^m y^n
+	\]
+	\textbf{Method:}
+	\begin{enumerate}
+		\item Rewrite the operator part as $[f(D, D')]^{-1}$.
+		\item \textbf{Expand} $[f(D, D')]^{-1}$ using the binomial theorem in \textbf{ascending powers} of $D$ or $D'$. This usually involves taking the lowest degree term common from $f(D, D')$ to get it in the form $(1 + \phi(D, D'))^{-1}$ or $(1 - \phi(D, D'))^{-1}$.
+		\[
+		\frac{1}{f(D, D')} = [f(D, D')]^{-1} = (\text{Series involving } D, D')
+		\]
+		\item \textbf{Operate} this series expansion on the term $x^m y^n$ term by term. Remember:
+		\begin{itemize}
+			\item $D$ represents differentiation with respect to $x$.
+			\item $D'$ represents differentiation with respect to $y$.
+			\item $1/D$ represents integration with respect to $x$.
+			\item $1/D'$ represents integration with respect to $y$.
+		\end{itemize}
+		\item Continue operating until the derivatives yield zero or until the required terms are obtained.
+	\end{enumerate}
+	Example structure of expansion:
+	\[
+	\text{PI} = [f(D, D')]^{-1} x^m y^n = (c_0 + c_1 D + c_2 D' + c_3 D^2 + \dots) x^m y^n
+	\]
+	Operate each term like $c_1 D(x^m y^n) = c_1 \frac{\partial}{\partial x}(x^m y^n)$, etc.
+	
+	\subsection{Case 4: General Function $F(x, y)$}
+	This method is used when $F(x, y)$ is any function of $x$ and $y$, including combinations (like $e^{ax} \sin(by)$) or functions not covered by the previous cases.
+	\[
+	\text{PI} = \frac{1}{f(D, D')} F(x, y)
+	\]
+	\textbf{Method:}
+	\begin{enumerate}
+		\item \textbf{Resolve} the operator $\frac{1}{f(D, D')}$ into \textbf{partial fractions}. Since $f(D, D')$ is a homogeneous polynomial, it can often be factorized into linear factors of the form $(D - m_i D')$.
+		\[
+		\frac{1}{f(D, D')} = \sum \frac{C_i}{D - m_i D'} \quad (\text{or similar partial fraction decomposition})
+		\]
+		Consider $f(D, D')$ as a function of $D$ alone (treating $D'$ as a constant temporarily) for factorization and partial fractions.
+		\item \textbf{Operate} each partial fraction term on $F(x, y)$. The key is evaluating terms like:
+		\[
+		\frac{1}{D - m D'} F(x, y)
+		\]
+		\item \textbf{Evaluation Rule:} To evaluate $\frac{1}{D - m D'} F(x, y)$, we use the following integration formula:
+		\[
+		\frac{1}{D - m D'} F(x, y) = \int F(x, c - mx) \, dx
+		\]
+		where, after performing the integration with respect to $x$ (treating $c$ as a constant during integration), we must \textbf{replace $c$ with $y + mx$}.
+		
+		\textbf{Steps for the rule:}
+		a. In the function $F(x, y)$, replace $y$ with $c - mx$.
+		b. Integrate the resulting function $F(x, c - mx)$ with respect to $x$.
+		c. In the result of the integration, replace the constant $c$ back with $y + mx$.
+	\end{enumerate}
+	This method essentially transforms the partial differential operation into an ordinary integration problem.
+	
+	\section{Example Problems}
+	
+	This section provides examples illustrating the application of these methods.
+	
+	\subsection{Problem 1: Solved Example}
+	\textbf{Problem Statement:} Find the complete solution for the PDE:
+	\[
+	\frac{\partial^2 z}{\partial x^2} - \frac{\partial^2 z}{\partial x \partial y} = \cos x \cos 2y
+	\]
+	
+	\subsubsection{Finding the Complementary Function (CF)}
+	The associated homogeneous equation is $\frac{\partial^2 z}{\partial x^2} - \frac{\partial^2 z}{\partial x \partial y} = 0$.
+	
+	\textbf{Symbolic Form:} Using $D = \frac{\partial}{\partial x}$ and $D' = \frac{\partial}{\partial y}$, the symbolic form is:
+	\[
+	(D^2 - DD')z = 0
+	\]
+	The operator function is $f(D, D') = D^2 - DD'$.
+	
+	\textbf{The Auxiliary Equation (AE):} Replace $D$ with $m$ and $D'$ with 1, and set to zero:
+	\[
+	m^2 - m(1) = 0 \implies m^2 - m = 0
+	\]
+	
+	\textbf{Solving the AE:} Factor the equation:
+	\[
+	m(m-1) = 0
+	\]
+	The roots are $m_1 = 0$ and $m_2 = 1$.
+	
+	\textbf{Writing the CF:} Since the roots are real and distinct, the CF is:
+	\[
+	\text{CF} = f_1(y + m_1 x) + f_2(y + m_2 x)
+	\]
+	Substituting $m_1=0$ and $m_2=1$:
+	\[
+	\text{CF} = f_1(y + 0 \cdot x) + f_2(y + 1 \cdot x)
+	\]
+	\[
+	\boxed{\text{CF} = f_1(y) + f_2(y+x)}
+	\]
+	where $f_1$ and $f_2$ are arbitrary functions.
+	
+	\subsubsection{Finding the Particular Integral (PI)}
+	The PI is a particular solution to $(D^2 - DD')z = \cos x \cos 2y$.
+	\[
+	\text{PI} = \frac{1}{D^2 - DD'} (\cos x \cos 2y)
+	\]
+	
+	\textbf{Simplifying the RHS:} Use the product-to-sum formula $\cos A \cos B = \frac{1}{2} [\cos(A+B) + \cos(A-B)]$. Let $A=x, B=2y$.
+	\[
+	\cos x \cos 2y = \frac{1}{2} [\cos(x+2y) + \cos(x-2y)]
+	\]
+	So, the PI expression becomes:
+	\[
+	\text{PI} = \frac{1}{D^2 - DD'} \left( \frac{1}{2} [\cos(x+2y) + \cos(x-2y)] \right)
+	\]
+	We can pull the constant $1/2$ out and apply the operator to each term using linearity:
+	\[
+	\text{PI} = \frac{1}{2} \left[ \frac{1}{D^2 - DD'} \cos(x+2y) + \frac{1}{D^2 - DD'} \cos(x-2y) \right]
+	\]
+	
+	\textbf{Applying the PI Rule for Cosine (Case 2):}
+	The general rule for $F(x,y) = \cos(mx+ny)$ or $\sin(mx+ny)$ is to apply the substitutions $D^2 \rightarrow -m^2$, $DD' \rightarrow -mn$, and $(D')^2 \rightarrow -n^2$ to the operator $\frac{1}{f(D^2, DD', (D')^2)}$, provided the denominator does not become zero. Our operator is $f(D,D') = D^2 - DD'$.
+	
+	\vspace{\baselineskip} % Add some vertical space
+	\textit{Part 1: Evaluate $\frac{1}{D^2 - DD'} \cos(x+2y)$}
+	\begin{itemize}
+		\item Identify coefficients: Comparing $\cos(x+2y)$ with $\cos(mx+ny)$, we have $m=1$ and $n=2$.
+		\item Determine substitutions:
+		\begin{itemize}
+			\item $D^2$ is replaced by $-m^2 = -(1^2) = -1$.
+			\item $DD'$ is replaced by $-mn = -(1 \times 2) = -2$.
+		\end{itemize}
+		\item Apply substitutions to the denominator $D^2 - DD'$:
+		\[ D^2 - DD' \longrightarrow (-1) - (-2) = -1 + 2 = 1 \]
+		\item Check for failure: The denominator is $1$, which is not zero. The rule applies directly.
+		\item Calculate the result for Part 1:
+		\[ \frac{1}{D^2 - DD'} \cos(x+2y) = \frac{1}{1} \cos(x+2y) = \cos(x+2y) \]
+	\end{itemize}
+	
+	\vspace{\baselineskip} % Add some vertical space
+	\textit{Part 2: Evaluate $\frac{1}{D^2 - DD'} \cos(x-2y)$}
+	\begin{itemize}
+		\item Identify coefficients: Comparing $\cos(x-2y)$ or $\cos(x+(-2)y)$ with $\cos(mx+ny)$, we have $m=1$ and $n=-2$.
+		\item Determine substitutions:
+		\begin{itemize}
+			\item $D^2$ is replaced by $-m^2 = -(1^2) = -1$.
+			\item $DD'$ is replaced by $-mn = -(1 \times (-2)) = -(-2) = 2$.
+		\end{itemize}
+		\item Apply substitutions to the denominator $D^2 - DD'$:
+		\[ D^2 - DD' \longrightarrow (-1) - (2) = -1 - 2 = -3 \]
+		\item Check for failure: The denominator is $-3$, which is not zero. The rule applies directly.
+		\item Calculate the result for Part 2:
+		\[ \frac{1}{D^2 - DD'} \cos(x-2y) = \frac{1}{-3} \cos(x-2y) = -\frac{1}{3}\cos(x-2y) \]
+	\end{itemize}
+	
+	\vspace{\baselineskip} % Add some vertical space
+	\textbf{Combining the Parts for the Final PI:}
+	Now substitute the results of Part 1 and Part 2 back into the expression for PI:
+	\[
+	\text{PI} = \frac{1}{2} \left[ (\cos(x+2y)) + \left(-\frac{1}{3}\cos(x-2y)\right) \right]
+	\]
+	Simplifying this gives:
+	\[
+	\boxed{\text{PI} = \frac{1}{2}\cos(x+2y) - \frac{1}{6}\cos(x-2y)}
+	\]
+	
+	\subsubsection{The Complete Solution}
+	The complete solution $z$ is the sum of the Complementary Function (CF) and the Particular Integral (PI):
+	\[
+	z = \text{CF} + \text{PI}
+	\]
+	Substituting the expressions we found:
+	\[
+	z = \left( f_1(y) + f_2(y+x) \right) + \left( \frac{1}{2}\cos(x+2y) - \frac{1}{6}\cos(x-2y) \right)
+	\]
+	Therefore, the final solution to the given PDE is:
+	\[
+	\boxed{z = f_1(y) + f_2(y+x) + \frac{1}{2}\cos(x+2y) - \frac{1}{6}\cos(x-2y)}
+	\]
+	where $f_1$ and $f_2$ are arbitrary functions, representing the general solution component.
+	
+	\subsection{Problem 5: Solved Example (Simplified Explanation)}
+	\textbf{Problem Statement:} Find the complete solution for the PDE:
+	\[
+	\frac{\partial^3 z}{\partial x^3} - 2 \frac{\partial^3 z}{\partial x^2 \partial y} = 2e^{2x} + 3x^2y
+	\]
+	
+	\subsubsection{Finding the Complementary Function (CF)}
+	The auxiliary equation is:
+	\[
+	m^3 - 2m^2 = 0
+	\]
+	which has roots \(m_1=0\), \(m_2=0\), and \(m_3=2\). Therefore,
+	\[
+	\boxed{\text{CF} = f_1(y) + x\,f_2(y) + f_3(y+2x)}
+	\]
+	where \(f_1\), \(f_2\), and \(f_3\) are arbitrary functions.
+	
+	\subsubsection{Finding the Particular Integral (PI)}
+	We split the right-hand side and find the PI for each term:
+	\[
+	\text{PI} = \text{PI}_1 + \text{PI}_2
+	\]
+	with
+	\[
+	\text{PI}_1 = \frac{1}{D^3 - 2D^2D'}\bigl(2e^{2x}\bigr),\quad
+	\text{PI}_2 = \frac{1}{D^3 - 2D^2D'}\bigl(3x^2y\bigr).
+	\]
+	
+	\textbf{Calculation of \(\text{PI}_1\) (Exponential Term):}
+	\begin{itemize}
+		\item Use Case 1: substitute \(D=2\), \(D'=0\).  
+		\item Denominator: \(2^3 - 2\,(2^2)(0)=8\).  
+		\item Hence,
+		\[
+		\text{PI}_1 = 2 \times \frac{1}{8}e^{2x} = \frac{1}{4}e^{2x}.
+		\]
+	\end{itemize}
+	
+	\textbf{Calculation of \(\text{PI}_2\) (Polynomial Term \(3x^2y\)):}
+	\begin{enumerate}
+		\item Factor the operator:
+		\[
+		\frac{1}{D^3 -2D^2D'} 
+		= \frac{1}{D^3\bigl(1 -2\tfrac{D'}{D}\bigr)}
+		= \frac{1}{D^3}\bigl(1 -2\tfrac{D'}{D}\bigr)^{-1}.
+		\]
+		\item Binomial expansion with \(u=2\tfrac{D'}{D}\): 
+		\((1-u)^{-1}\approx1+u\).
+		\item Apply to \(x^2y\):
+		\[
+		[1+2\tfrac{D'}{D}](x^2y)
+		= x^2y +2\tfrac{1}{D}(D'(x^2y))
+		= x^2y +2\tfrac{1}{D}(x^2)
+		= x^2y + \frac{2x^3}{3}.
+		\]
+		\item Integrate three times wrt \(x\):
+		\[
+		\int(x^2y+\tfrac{2x^3}{3})dx
+		= \frac{yx^3}{3}+\frac{x^4}{6},\quad
+		\int\bigl(\frac{yx^3}{3}+\frac{x^4}{6}\bigr)dx
+		= \frac{yx^4}{12}+\frac{x^5}{30},\quad
+		\int\bigl(\frac{yx^4}{12}+\frac{x^5}{30}\bigr)dx
+		= \frac{yx^5}{60}+\frac{x^6}{180}.
+		\]
+		\item Multiply by 3:
+		\[
+		\text{PI}_2 =3\Bigl(\frac{yx^5}{60}+\frac{x^6}{180}\Bigr)
+		= \frac{yx^5}{20}+\frac{x^6}{60}.
+		\]
+	\end{enumerate}
+	
+	\textbf{Combine}:
+	\[
+	\text{PI} 
+	= \text{PI}_1 + \text{PI}_2
+	= \frac{1}{4}e^{2x} + \frac{x^5y}{20} + \frac{x^6}{60},
+	\]
+	\[
+	\boxed{\text{PI} 
+		= \frac{e^{2x}}{4} + \frac{x^5y}{20} + \frac{x^6}{60}}.
+	\]
+	
+	\textbf{Complete Solution:}
+	\[
+	\boxed{z = f_1(y) + x\,f_2(y) + f_3(y+2x) + \frac{e^{2x}}{4} + \frac{x^5y}{20} + \frac{x^6}{60}}.
+	\]
+	
+	\subsection{Problem 6: Solved Example (Simplified Explanation)}
+	\textbf{Problem Statement:} Solve the partial differential equation
+	\[
+	4\,\frac{\partial^2 z}{\partial x^2}
+	\;-\;4\,\frac{\partial^2 z}{\partial x\,\partial y}
+	\;+\;\frac{\partial^2 z}{\partial y^2}
+	\;=\;16\,\log\bigl(x+2y\bigr).
+	\]
+	
+	\subsubsection{Finding the Complementary Function (CF)}
+	The symbolic operator is
+	\[
+	(4D^2 - 4DD' + D'^2)\,z = 0,
+	\]
+	so the auxiliary equation is obtained by replacing \(D\mapsto m\) and \(D'\mapsto 1\):
+	\[
+	4m^2 - 4m + 1 = 0
+	\;\;\Longrightarrow\;\;
+	(2m - 1)^2 = 0,
+	\]
+	giving a repeated root \(m = \tfrac12\). Hence the general solution of the homogeneous equation is
+	\[
+	\boxed{\mathrm{CF}
+		= f_1\!\Bigl(y + \tfrac{x}{2}\Bigr)
+		\;+\;
+		x\,f_2\!\Bigl(y + \tfrac{x}{2}\Bigr),}
+	\]
+	where \(f_1\) and \(f_2\) are arbitrary functions reflecting the double multiplicity of the root.
+	
+	\subsubsection{Finding the Particular Integral (PI)}
+	We seek
+	\[
+	\mathrm{PI}
+	= \frac{1}{4D^2 - 4DD' + D'^2}\bigl[\,16\log(x+2y)\bigr]
+	= \frac{16}{(2D - D')^2}\,\log(x+2y).
+	\]
+	Noting \((2D - D')^2 = 4\,(D - \tfrac12D')^2\), we rewrite
+	\[
+	\mathrm{PI}
+	= 4\;\frac{1}{\bigl(D - \tfrac12D'\bigr)^2}\,\log(x+2y).
+	\]
+	We now apply the standard rule for a linear factor:
+	\[
+	\frac{1}{D - mD'}\,G(x,y)
+	=\int G\bigl(x,\;c - m x\bigr)\,\mathrm{d}x,
+	\]
+	treating \(y\) as \(c-mx\) during integration and restoring \(c=y+mx\) afterward.
+	
+	\begin{enumerate}
+		\item \textbf{First application of \(\frac{1}{D - \tfrac12D'}\):}\\
+		Replace \(y\to c - \tfrac12x\) in \(G(x,y)=\log(x+2y)\):
+		\[
+		\int \log\bigl(x + 2(c - \tfrac12x)\bigr)\,\mathrm{d}x
+		= \int \log(2c)\,\mathrm{d}x
+		= x\,\log(2c).
+		\]
+		Restore \(c=y+\tfrac12x\):
+		\[
+		= x\,\log\!\bigl(2(y+\tfrac12x)\bigr)
+		= x\,\log(x+2y).
+		\]
+		Thus the intermediate result is \(x\log(x+2y)\).
+		
+		\item \textbf{Second application of \(\frac{1}{D - \tfrac12D'}\):}\\
+		Now integrate \(G(x,y)=x\log(x+2y)\) similarly:
+		\[
+		\int x\,\log\bigl(x + 2(c - \tfrac12x)\bigr)\,\mathrm{d}x
+		= \int x\,\log(2c)\,\mathrm{d}x
+		= \log(2c)\,\frac{x^2}{2}.
+		\]
+		Restore \(c=y+\tfrac12x\):
+		\[
+		= \frac{x^2}{2}\,\log\!\bigl(2(y+\tfrac12x)\bigr)
+		= x^2\,\log(x+2y).
+		\]
+	\end{enumerate}
+	
+	Putting it all together,
+	\[
+	\mathrm{PI}
+	= 4 \times \bigl[x^2\log(x+2y)\bigr]
+	= 4x^2\log(x+2y)
+	\quad\Longrightarrow\quad
+	\boxed{\mathrm{PI} = 2x^2\,\log(x+2y).}
+	\]
+	
+	\subsubsection{Complete Solution}
+	Combining CF and PI, the general solution is
+	\[
+	\boxed{%
+		z = f_1\!\Bigl(y+\tfrac{x}{2}\Bigr)
+		\;+\;
+		x\,f_2\!\Bigl(y+\tfrac{x}{2}\Bigr)
+		\;+\;
+		2x^2\,\log(x+2y).%
+	}
+	\]
+	
+	```latex
+	\subsubsection{Example: Mixed-Order Non-Homogeneous Operator}
+	\begin{example}[Non-homogeneous operator with mixed orders]
+		\label{ex:nonhomoTrig}
+		Solve the PDE
+		\[
+		(D^2 + 2DD' + D'^2 - 2D - 2D')\,z = \sin(x+2y).
+		\]
+	\end{example}
+	\begin{proof}[Solution]
+		\textbf{Complementary Function (CF).}\\
+		Factor the operator:
+		\begin{align*}
+			f(D,D') &= D^2 + 2DD' + D'^2 - 2(D+D') \\
+			&= (D + D')^2 - 2(D + D') \\
+			&= (D + D')\bigl((D + D') - 2\bigr).
+		\end{align*}
+		The two linear factors are
+		\[
+		(D - (-1)D' - 0)
+		\quad\text{and}\quad
+		(D - (-1)D' - 2).
+		\]
+		For each factor of the form $(D - mD' - c)$, the general solution to
+		$(D - mD' - c)z=0$ is
+		\[
+		z = e^{c x}\,\phi\bigl(y + m x\bigr),
+		\]
+		where $\phi$ is an arbitrary function.  Hence:
+		\[
+		z_1 = \phi_1(y - x),
+		\qquad
+		z_2 = e^{2x}\,\phi_2(y - x).
+		\]
+		Therefore
+		\[
+		\mathrm{CF} = \phi_1(y - x) \;+\; e^{2x}\,\phi_2(y - x).
+		\]
+		
+		\medskip
+		\textbf{Particular Integral (PI).}\\
+		We apply the trig‐PI rule (Case 2) with $a=1$, $b=2$.  Substitute
+		\[
+		D^2\to -1,\quad
+		DD'\to -2,\quad
+		D'^2\to -4
+		\]
+		into the second‐order terms of $f(D,D')$:
+		\begin{align*}
+			f(D,D') &= D^2 + 2DD' + D'^2 - 2(D+D') \\
+			&\longrightarrow -1 + 2(-2) + (-4) - 2(D+D') \\
+			&= -1 -4 -4 -2(D+D') = -9 -2(D+D').
+		\end{align*}
+		Thus
+		\[
+		\frac1{f(D,D')} \;\longrightarrow\;
+		-\frac1{9 + 2(D+D')}.
+		\]
+		Since $9+2(D+D')$ still contains $D+D'$, rationalize by multiplying
+		numerator and denominator by $9-2(D+D')$:
+		\[
+		-\frac{9 - 2(D+D')}{(9 + 2(D+D'))(9 - 2(D+D'))}
+		=
+		-\frac{9 - 2(D+D')}{81 - 4(D+D')^2}.
+		\]
+		Expand $(D+D')^2 = D^2 + 2DD' + D'^2$, substitute again:
+		\[
+		(D + D')^2\longrightarrow -1 -4 -4 = -9,
+		\quad
+		81 - 4(-9) = 117.
+		\]
+		Hence the PI‐operator is
+		\[
+		-\frac{9 - 2(D+D')}{117}.
+		\]
+		Applying this to $\sin(x+2y)$:
+		\begin{align*}
+			\mathrm{PI}
+			&= -\frac1{117}\bigl[\,9 - 2(D+D')\bigr]\sin(x+2y) \\
+			&= -\frac1{117}\Bigl[9\sin(x+2y)
+			- 2\bigl(D\sin(x+2y) + D'\sin(x+2y)\bigr)\Bigr].
+		\end{align*}
+		Now compute the derivatives:
+		\[
+		D\sin(x+2y) = \cos(x+2y),
+		\quad
+		D'\sin(x+2y) = 2\cos(x+2y),
+		\quad
+		(D+D')\sin = 3\cos(x+2y).
+		\]
+		Therefore
+		\[
+		\mathrm{PI}
+		= -\frac1{117}\bigl[9\sin(x+2y) - 6\cos(x+2y)\bigr]
+		= \frac1{39}\bigl[2\cos(x+2y) - 3\sin(x+2y)\bigr].
+		\]
+		
+		\medskip
+		\textbf{General Solution.}\\
+		Combining CF and PI:
+		\[
+		\boxed{
+			z = \phi_1(y - x)
+			+ e^{2x}\,\phi_2(y - x)
+			+ \tfrac1{39}\bigl[2\cos(x+2y) - 3\sin(x+2y)\bigr]
+		}.
+		\]
+	\end{proof}
+	
+	\subsection{Further Example Problems (To be Solved)}
+	The following problems from the video can be solved using the methods outlined above:
+	\begin{enumerate}
+		\setcounter{enumi}{1} % Start numbering from 2 since problem 1 is solved
+		\item $(D^2 + 4DD' - 5(D')^2) z = \sin(2x + 3y)$
+		\item $\frac{\partial^2 z}{\partial x^2} + \frac{\partial^2 z}{\partial x \partial y} - 6 \frac{\partial^2 z}{\partial y^2} = \cos(2x + y)$
+		\item $r - 4s + 4t = e^{2x+y}$ (Note: $r=\frac{\partial^2 z}{\partial x^2}, s=\frac{\partial^2 z}{\partial x \partial y}, t=\frac{\partial^2 z}{\partial y^2}$)
+		\item $\frac{\partial^3 z}{\partial x^3} - 2 \frac{\partial^3 z}{\partial x^2 \partial y} = 2e^{2x} + 3x^2y$
+		\item $4\frac{\partial^2 z}{\partial x^2} - 4\frac{\partial^2 z}{\partial x \partial y} + \frac{\partial^2 z}{\partial y^2} = 16 \log(x + 2y)$
+		\item $\frac{\partial^2 z}{\partial x^2} + \frac{\partial^2 z}{\partial x \partial y} - 6 \frac{\partial^2 z}{\partial y^2} = y \cos x$
+		\item $(D^2 - DD' - 2(D')^2) z = (y-1)e^x$
+	\end{enumerate}
+	
+\end{document}
